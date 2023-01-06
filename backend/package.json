@@ -1,0 +1,18 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend For PerkeX app",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "firebase-admin": "^11.3.0",
+    "pg": "^8.8.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Perke",
+  "license": "ISC"
+}
