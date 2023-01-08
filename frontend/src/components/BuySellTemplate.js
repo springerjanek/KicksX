@@ -42,7 +42,6 @@ const BuySellTemplate = (props) => {
         size,
         bids: bid_by_size[size] !== undefined ? bid_by_size[size] : [],
       }));
-      console.log(bids);
       setAsks(asks);
       setBids(bids);
     }
@@ -69,8 +68,10 @@ const BuySellTemplate = (props) => {
     const asksOfDesiredSize = asks.find((x) => x.size === size);
     const lowestAsk = Math.min(...asksOfDesiredSize.asks);
     console.log("YS", asksOfDesiredSize);
-
+    console.log(lowestAsk);
     if (lowestAsk === 0) {
+      setLowestAsk("--");
+    } else if (lowestAsk === Infinity) {
       setLowestAsk("--");
     } else {
       setLowestAsk(lowestAsk);

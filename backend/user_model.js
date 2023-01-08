@@ -109,7 +109,11 @@ const setUserBid = (payload) => {
           price: payload.price,
           size: payload.size,
         }),
-      })
+      });
+    pool
+      .query(
+        `UPDATE shoes SET bids = bids || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+      )
       .then(() => {
         resolve("Successfully set bid!");
       })
@@ -130,7 +134,14 @@ const setUserPurchases = (payload) => {
           price: payload.price,
           size: payload.size,
         }),
-      })
+      });
+    pool.query(
+      `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+    );
+    pool
+      .query(
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+      )
       .then(() => {
         resolve("Successfull Buy!");
       })
@@ -151,12 +162,21 @@ const setUserSales = (payload) => {
           price: payload.price,
           size: payload.size,
         }),
-      })
+      });
+    pool.query(
+      `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+    );
+    //add to last sales
+    pool
+      .query(
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+      )
       .then(() => {
         resolve("Successfully SOLD!");
       })
       .catch((error) => {
         reject("Error selling: ", error);
+        console.log(error);
       });
   });
 };

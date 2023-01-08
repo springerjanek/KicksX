@@ -30,10 +30,6 @@ const AskModal = (props) => {
   const navigate = useNavigate();
   console.log(lowestAsk);
   useEffect(() => {
-    if (switchToSellNow && highestBid === "--") {
-      setSmartText("NO BIDS AVAILABLE");
-      setDisableButton(true);
-    }
     if (askPrice < lowestAsk && lowestAsk !== 0) {
       setSmartText("You are about to be the lowest Ask");
       setDisableButton(false);
@@ -57,6 +53,10 @@ const AskModal = (props) => {
     }
     if (askPrice === 0) {
       setSmartText("Minimum ask is 1$");
+      setDisableButton(true);
+    }
+    if (switchToSellNow && highestBid === "--") {
+      setSmartText("NO BIDS AVAILABLE");
       setDisableButton(true);
     }
     let timeout = setTimeout(() => {
@@ -149,15 +149,14 @@ const AskModal = (props) => {
           <div className="flex justify-between mt-24">
             <button
               onClick={() => navigate(`/product/${id}`)}
-              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2"
+              className="button"
             >
               Back
             </button>
             <button
               onClick={askHandler}
               disabled={disableButton}
-              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2
-            disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="button disabled:cursor-not-allowed disabled:bg-gray-300"
             >
               {!switchToSellNow ? "Review Ask" : "Review Sale"}
             </button>

@@ -48,7 +48,6 @@ const UserInfoSummary = (props) => {
   const getUserData = () => {
     if (props.type === "buying") {
       props.getUserSummary(shippingText, paymentText);
-      console.log("ESSA");
     }
     if (props.type === "selling") {
       props.getUserSummary(payoutText);

@@ -38,10 +38,7 @@ const Dashboard = () => {
         <h2 className="text-2xl font-medium">DASHBOARD</h2>
         <div className="text-lg relative mt-5 left-0 right-0">
           <p className="mb-5">YOUR UID: {uid}</p>
-          <button
-            onClick={() => dispatch(logout())}
-            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2"
-          >
+          <button onClick={() => dispatch(logout())} className="button">
             Logout
           </button>
         </div>

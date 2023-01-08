@@ -22,7 +22,5 @@ export const getLowestAskAndHighestBid = (product) => {
   const lowestAsk = Math.min(...asksPrices);
   const highestBid = Math.max(...bidsPrices);
 
-  console.log(lowestAsk);
-
   return [lowestAsk, highestBid];
 };
