@@ -10,3 +10,5 @@ YOU NEED FIREBASE APP AND POSTGRES DB TO RUN IT
 - /frontend/src/firebase.js <- INPUT YOUR FIREBASE APP CONFIG INFO
 
 - NPM START
+
+![image](https://user-images.githubusercontent.com/54078220/211035217-8ddcbfc1-cd84-42db-8852-9878ae774c8b.png)
