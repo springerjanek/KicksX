@@ -8,7 +8,7 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 body {
@@ -16,6 +16,50 @@ body {
   background-color: #131312;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+.slide-animation {
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  animation: slide 0.5s forwards;
+  -webkit-animation: slide 0.5s forwards;
+}
+
+.slide-out {
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide {
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide {
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+  }
 }
 
 .button {

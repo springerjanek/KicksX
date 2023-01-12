@@ -7,6 +7,7 @@ import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
 import {
   ArrowTrendingUpIcon,
   ArrowLongDownIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 const ProductPage = () => {
@@ -15,6 +16,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState([]);
   const [productName, setProductName] = useState("");
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [lastsales, setLastSales] = useState([]);
   const [showSales, setShowSales] = useState(false);
 
   const { id } = useParams();
@@ -36,6 +38,7 @@ const ProductPage = () => {
       const lowestAskAndHighestBid = getLowestAskAndHighestBid(product[0]);
       setLowestAsk(lowestAskAndHighestBid[0]);
       setHighestBid(lowestAskAndHighestBid[1]);
+      setLastSales(product[0].lastsales);
     }
     if (showSales) {
       console.log("TEST");
@@ -45,7 +48,7 @@ const ProductPage = () => {
   return (
     <>
       <Navbar />
-      <div className="absolute inset-x-1/4	mt-16">
+      <div className="absolute inset-x-1/4 mt-16">
         {product.length > 0 &&
           product.map((product) => {
             const { id, name, thumbnail, releasedate, lastsales } = product;
@@ -60,7 +63,6 @@ const ProductPage = () => {
             const reducedSalePriceDifferencePercent =
               (saleBeforeLastSale.price - lastSale.price) /
               saleBeforeLastSale.price;
-            console.log(raisedSalePriceDifferencePercent);
             return (
               <div key={id} className="text-white">
                 <h1 className="text-2xl font-bold">{name}</h1>
@@ -145,6 +147,40 @@ const ProductPage = () => {
           productName={productName}
           relatedProducts={relatedProducts}
         />
+      </div>
+      <div
+        className={`${
+          showSales ? "slide-animation block" : "slide-out hidden"
+        } bg-white h-full w-1/5 z-1 text-black absolute top-0 right-0`}
+      >
+        <div className="flex justify-between mt-3">
+          <h1 className="mr-10 text-2xl ml-4">All Sales</h1>
+          <XMarkIcon
+            onClick={() => setShowSales(false)}
+            className="w-6 h-6 mr-2 mt-1 cursor-pointer	"
+          />
+        </div>
+
+        <p className="text-xl ml-4">
+          The data below is global and does not include applicable fees
+          calculated at checkout.
+        </p>
+        <div className="grid grid-cols-3 mt-4 ml-7 text-lg">
+          <h2 className="">Date</h2>
+          <h2 className="">Size</h2>
+          <h2 className="">Sale Price</h2>
+
+          {lastsales.map((sale) => {
+            const { id, size, price } = sale;
+            return (
+              <>
+                <div className="">Jan 12, 2023</div>
+                <div className=""> {size}</div>
+                <div className=""> {price}</div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );
