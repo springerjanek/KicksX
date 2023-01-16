@@ -35,12 +35,14 @@ const createUserData = (uid) => {
         }),
         sales: FieldValue.arrayUnion({
           id: "",
+          date: "",
           name: "",
           price: null,
           size: "",
         }),
         purchases: FieldValue.arrayUnion({
           id: "",
+          date: "",
           name: "",
           price: null,
           size: "",
@@ -130,6 +132,7 @@ const setUserPurchases = (payload) => {
       .update({
         purchases: FieldValue.arrayUnion({
           id: payload.id,
+          date: payload.date,
           name: payload.name,
           price: payload.price,
           size: payload.size,
@@ -140,7 +143,7 @@ const setUserPurchases = (payload) => {
     );
     pool
       .query(
-        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
       )
       .then(() => {
         resolve("Successfull Buy!");
@@ -158,6 +161,7 @@ const setUserSales = (payload) => {
       .update({
         sales: FieldValue.arrayUnion({
           id: payload.id,
+          date: payload.date,
           name: payload.name,
           price: payload.price,
           size: payload.size,
@@ -169,7 +173,7 @@ const setUserSales = (payload) => {
     //add to last sales
     pool
       .query(
-        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
       )
       .then(() => {
         resolve("Successfully SOLD!");
