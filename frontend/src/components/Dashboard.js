@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { PencilSquareIcon, MinusCircleIcon } from "@heroicons/react/24/outline";
 
 const Dashboard = () => {
   const [userData, setUserData] = useState([]);
@@ -50,17 +51,17 @@ const Dashboard = () => {
                 const { id, name, price, size } = bid;
                 const condition = id.length > 0;
                 return (
-                  <>
-                    <div key={id}>
-                      {condition && (
-                        <>
-                          <h1>
-                            {name} {size}, ${price}
-                          </h1>
-                        </>
-                      )}
-                    </div>
-                  </>
+                  <div key={id} className="flex justify-center gap-4">
+                    {condition && (
+                      <>
+                        <h1>
+                          {name} {size}, ${price}
+                        </h1>
+                        <PencilSquareIcon className="h-5 w-5" />
+                        <MinusCircleIcon className="h-5 w-5" />
+                      </>
+                    )}
+                  </div>
                 );
               })}
             <h1>ASKS:</h1>
@@ -69,17 +70,15 @@ const Dashboard = () => {
                 const { id, name, price, size } = ask;
                 const condition = id.length > 0;
                 return (
-                  <>
-                    <div key={id}>
-                      {condition && (
-                        <>
-                          <h1>
-                            {name} {size}, ${price}
-                          </h1>
-                        </>
-                      )}
-                    </div>
-                  </>
+                  <div key={id}>
+                    {condition && (
+                      <>
+                        <h1>
+                          {name} {size}, ${price}
+                        </h1>
+                      </>
+                    )}
+                  </div>
                 );
               })}
             <h1>PURCHASES:</h1>
@@ -88,17 +87,15 @@ const Dashboard = () => {
                 const { id, name, price, size } = purchase;
                 const condition = id.length > 0;
                 return (
-                  <>
-                    <div key={id}>
-                      {condition && (
-                        <>
-                          <h1>
-                            {name} {size}, ${price}
-                          </h1>
-                        </>
-                      )}
-                    </div>
-                  </>
+                  <div key={id}>
+                    {condition && (
+                      <>
+                        <h1>
+                          {name} {size}, ${price}
+                        </h1>
+                      </>
+                    )}
+                  </div>
                 );
               })}
             <h1> SALES:</h1>
@@ -108,17 +105,15 @@ const Dashboard = () => {
                 console.log(sale);
                 const condition = id.length > 0;
                 return (
-                  <>
-                    <div key={id}>
-                      {condition && (
-                        <>
-                          <h1>
-                            {name} {size}, ${price}
-                          </h1>
-                        </>
-                      )}
-                    </div>
-                  </>
+                  <div key={id}>
+                    {condition && (
+                      <>
+                        <h1>
+                          {name} {size}, ${price}
+                        </h1>
+                      </>
+                    )}
+                  </div>
                 );
               })}
           </>

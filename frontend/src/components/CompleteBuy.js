@@ -26,6 +26,7 @@ const CompleteBuy = (props) => {
   const buyPayload = {
     uid: uid,
     id: uuidv4(),
+    date: new Date(),
     name: name,
     price: price,
     size: size,

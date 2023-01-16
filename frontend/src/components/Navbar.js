@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  MagnifyingGlassIcon,
+  UserCircleIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const Navbar = () => {
   const [input, setInput] = useState("");
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState(false);
+  const [showMobileInput, setShowMobileInput] = useState(false);
 
   const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
@@ -41,7 +47,11 @@ const Navbar = () => {
     } else {
       setDisplayProducts(true);
     }
-  }, [input]);
+    if (showMobileInput == false) {
+      setDisplayProducts(false);
+      setInput("");
+    }
+  }, [input, showMobileInput]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,28 +70,59 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex justify-center gap-10 gap-x-20 mt-5 text-white">
-        <h2 className="mt-2 font-2xl">PerkeX</h2>
+      <div className="flex sm:justify-end  md:justify-center md:gap-x-5 mt-5 text-white">
+        <h2 className="mt-2 font-2xl sm:mr-28 md:ml-0">PerkeX</h2>
+
         <input
           type="text"
           placeholder="Search for sneaker"
           value={input}
           onChange={handleSearch}
-          className="w-1/2 h-10 p-2 rounded text-black"
+          className={`w-1/2 h-10 p-2 rounded text-black  ${
+            showMobileInput ? "sm:block absolute left-9 w-[320px]" : "sm:hidden"
+          }  md:block`}
         />
-        <h3 className="mt-2">Sell</h3>
+
+        <div className="flex mt-2 mr-2 gap-2 md:hidden">
+          <MagnifyingGlassIcon
+            className="h-5 w-5"
+            onClick={() => setShowMobileInput(true)}
+          />
+          {showMobileInput ? (
+            <XCircleIcon
+              onClick={() => setShowMobileInput(false)}
+              className="w-5 h-5"
+            />
+          ) : (
+            <UserCircleIcon
+              className="h-5 w-5"
+              onClick={() => navigate("/dashboard")}
+            />
+          )}
+        </div>
+        <h3 className="mt-2 sm:hidden md:block">Sell</h3>
         {isLoggedCondition ? (
           <Link to={"/dashboard"}>
-            <h3 className="mt-2">Dashboard</h3>
+            <h3 className="mt-2 sm:hidden md:block">Dashboard</h3>
           </Link>
         ) : (
           <>
-            <button onClick={() => navigate("/login")}>Login</button>
-            <button onClick={() => navigate("/register")}>Sign Up</button>
+            <button
+              onClick={() => navigate("/login")}
+              className="sm:hidden md:block"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => navigate("/register")}
+              className="sm:hidden md:block"
+            >
+              Sign Up
+            </button>
           </>
         )}
       </div>
-      <div>
+      <div className="mt-5">
         {displayProducts &&
           products.map((product) => {
             const { id, name } = product;

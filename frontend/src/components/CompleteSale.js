@@ -36,6 +36,7 @@ const CompleteSale = (props) => {
   const salePayload = {
     uid: uid,
     id: uuidv4(),
+    date: new Date(),
     name: name,
     price: sellPrice,
     size: size,
