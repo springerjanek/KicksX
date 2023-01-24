@@ -103,7 +103,7 @@ const BuySellTemplate = (props) => {
   return (
     <>
       <div className="flex mt-10 text-white">
-        <div className="w-1/2 text-center">
+        <div className="w-1/2 text-center sm:hidden lg:block">
           {data &&
             data.map((product) => {
               const { id, name, thumbnail } = product;
@@ -119,14 +119,14 @@ const BuySellTemplate = (props) => {
               );
             })}
         </div>
-        <div className="ml-10 w-1/2">
+        <div className="ml-10 sm:w-full  lg:w-1/2">
           {!showModal && (
             <>
               <h1>Select Size</h1>
               <p className="mb-3">
                 {props.template === "sell" && "Highest Bids"}
               </p>
-              <div className="flex flex-wrap gap-2 m-0">
+              <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-2 mr-5">
                 {props.template === "sell" &&
                   bids.map((bid) => {
                     const { size, bids } = bid;
@@ -135,13 +135,12 @@ const BuySellTemplate = (props) => {
                     if (bids.length > 0) {
                       highestBid = Math.max(...bids);
                     }
-                    console.log(highestBid);
 
                     return (
                       <div
                         key={size}
                         onClick={() => askModalHandler(size, highestBid, asks)}
-                        className="text-center w-[calc(25%_-_2rem)] mb-1 rounded border border-white border-solid p-5 cursor-pointer"
+                        className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
                       >
                         {size}
                         <br></br>${highestBid}
@@ -160,7 +159,7 @@ const BuySellTemplate = (props) => {
                       <div
                         key={size}
                         onClick={() => buyModalHandler(size, lowestAsk, bids)}
-                        className="text-center w-[calc(25%_-_2rem)] mb-1 rounded border border-white border-solid p-5 cursor-pointer"
+                        className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
                       >
                         {size}
                         <br></br>${lowestAsk}

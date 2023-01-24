@@ -2,13 +2,14 @@ import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const LastSales = (props) => {
+  // test on 100000 sales (scroll)
   return (
     <>
       {props.showSales && (
         <div
           className={`${
             props.showSales ? "slide-animation block" : "hidden"
-          } bg-stone-900 h-full w-1/5 z-1 absolute top-0 right-0`}
+          } bg-stone-900 w-full lg:w-1/5 z-10 top-0 right-0 h-full fixed overflow-y-auto`}
         >
           <div className="flex justify-between mt-3">
             <h1 className="mr-10 text-2xl ml-4">All Sales</h1>
@@ -22,7 +23,7 @@ const LastSales = (props) => {
             The data below is global and does not include applicable fees
             calculated at checkout.
           </p>
-          <div className="grid grid-cols-3 mt-4 ml-7 text-xl gap-x-5">
+          <div className="grid grid-cols-3 mt-4 ml-5 text-xl gap-x-5 ">
             <h2 className="">Date</h2>
             <h2 className="">Size</h2>
             <h2 className="">Sale Price</h2>

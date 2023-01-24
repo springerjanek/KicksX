@@ -47,11 +47,7 @@ const Navbar = () => {
     } else {
       setDisplayProducts(true);
     }
-    if (showMobileInput == false) {
-      setDisplayProducts(false);
-      setInput("");
-    }
-  }, [input, showMobileInput]);
+  }, [input]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,17 +64,24 @@ const Navbar = () => {
     setInput("");
   }, [location]);
 
+  const closeMobileInput = () => {
+    setShowMobileInput(false);
+    setInput("");
+  };
+
   return (
     <>
-      <div className="flex sm:justify-end  md:justify-center md:gap-x-5 mt-5 text-white">
-        <h2 className="mt-2 font-2xl sm:mr-28 md:ml-0">PerkeX</h2>
+      <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
+        <div className="sm:m-auto md:m-0">
+          <h2 className="mt-2 md:ml-0">PerkeX</h2>
+        </div>
 
         <input
           type="text"
           placeholder="Search for sneaker"
           value={input}
           onChange={handleSearch}
-          className={`w-1/2 h-10 p-2 rounded text-black  ${
+          className={`w-1/2 h-10 p-2 rounded text-black text-lg  ${
             showMobileInput ? "sm:block absolute left-9 w-[320px]" : "sm:hidden"
           }  md:block`}
         />
@@ -89,10 +92,7 @@ const Navbar = () => {
             onClick={() => setShowMobileInput(true)}
           />
           {showMobileInput ? (
-            <XCircleIcon
-              onClick={() => setShowMobileInput(false)}
-              className="w-5 h-5"
-            />
+            <XCircleIcon onClick={closeMobileInput} className="w-5 h-5" />
           ) : (
             <UserCircleIcon
               className="h-5 w-5"

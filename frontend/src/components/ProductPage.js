@@ -47,7 +47,7 @@ const ProductPage = () => {
   return (
     <>
       <Navbar />
-      <div className="absolute sm:left-[100px] md:left-[170px] xl:inset-x-1/4 w-full mt-5 2xl:mt-16">
+      <div className="w-full mt-8 lg:mt-10 2xl:mt-16 md:ml-3 lg:ml-48 xl:ml-60 2xl:ml-96">
         {product.length > 0 &&
           product.map((product) => {
             const { id, name, thumbnail, releasedate, lastsales } = product;
@@ -64,15 +64,12 @@ const ProductPage = () => {
               saleBeforeLastSale.price;
             return (
               <div key={id} className="text-white">
-                <h1 className="text-2xl font-bold md:absolute md:top-[160px] md:ml-10 md:mt-2 2xl:static">
-                  {name}
-                </h1>
-                <div className="flex sm:flex-col-reverse 2xl:flex-row 2xl:mt-10">
-                  <div className="flex flex-col 2xl:w-1/4 md:w-1/2">
+                <h1 className="text-2xl font-bold sm:ml-2">{name}</h1>
+                <div className="flex sm:flex-col md:flex-row md:mt-8 lg:mt-0">
+                  <div className="flex flex-col md:w-1/2 lg:w-1/3">
                     <img src={thumbnail} alt="Product" />
-                    {releasedate}
                   </div>
-                  <div className="flex flex-col ml-10 w-1/2 2xl:w-1/4">
+                  <div className="flex flex-col xl:mt-5 2xl:mt-14 ml-2 sm:w-[95%] md:w-1/2 lg:w-1/3 2xl:w-1/4 xl:h-96 md:mr-5">
                     <div className="rounded border border-white border-solid h-3/5 mb-6">
                       <div className="rounded border border-solid p-1.5 m-4">
                         <p className="">Size:</p>
@@ -91,7 +88,7 @@ const ProductPage = () => {
                         </Link>
                       </p>
                     </div>
-                    <div className="flex flex-wrap md:absolute md:top-[450px] md:left-[300px] 2xl:static ">
+                    <div className="grid grid-cols-2 justify-between">
                       {lastsales.length > 0 ? (
                         <>
                           <p className="text-lg">
@@ -99,7 +96,7 @@ const ProductPage = () => {
                           </p>
                           <button
                             onClick={() => setShowSales(true)}
-                            className="small-button w-1/2"
+                            className="small-button"
                           >
                             View Sales
                           </button>
@@ -143,7 +140,7 @@ const ProductPage = () => {
               </div>
             );
           })}
-        <div className="w-full mt-8 bg-black h-px"></div>
+        <div className="black-line"></div>
         <RelatedProducts
           productName={productName}
           relatedProducts={relatedProducts}

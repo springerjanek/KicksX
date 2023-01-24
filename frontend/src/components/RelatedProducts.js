@@ -1,7 +1,13 @@
-import React from "react";
-import { Slide } from "react-slideshow-image";
+import React, { useState } from "react";
+import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+
+import {
+  ArrowRightCircleIcon,
+  ArrowLeftCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const RelatedProducts = (props) => {
   const originalProductName = props.productName;
@@ -11,48 +17,53 @@ const RelatedProducts = (props) => {
   const combinedFilter = filterOne.concat(" ", filterTwo);
 
   const relatedProducts = props.relatedProducts;
+
+  const arrows = {
+    prevArrow: <ArrowLeftCircleIcon className="h-7 w-7" />,
+    nextArrow: <ArrowRightCircleIcon className="h-7 w-7" />,
+  };
+
   return (
     <>
       <h1 className="font-bold text-lg text-white">Related Products</h1>
 
-      <Slide autoplay={false}>
-        <div className="flex gap-4">
-          {relatedProducts.length > 0 &&
-            relatedProducts
-              .filter((product) => product.name.includes(combinedFilter))
-              .map((relatedProduct) => {
-                const { id, name, thumbnail } = relatedProduct;
-                const data = getLowestAskAndHighestBid(relatedProduct);
+      <Slider
+        className="sm:w-full lg:w-8/12 2xl:w-7/12"
+        autoplay={false}
+        slidesToShow={3}
+        slidesToScroll={3}
+        infinite={true}
+      >
+        {relatedProducts.length > 0 &&
+          relatedProducts
+            .filter(
+              (product) =>
+                product.name.includes(combinedFilter) &&
+                product.name !== originalProductName
+            )
+            .map((relatedProduct) => {
+              const { id, name, thumbnail } = relatedProduct;
+              const data = getLowestAskAndHighestBid(relatedProduct);
 
-                let lowestAsk = data[0];
+              let lowestAsk = data[0];
+              console.log(lowestAsk);
+              console.log("TEST");
 
-                const productIsNotTheSameAsOriginal =
-                  name !== originalProductName;
+              return (
+                <div className="ml-7" key={id}>
+                  <Link to={`/product/${id}`}>
+                    <img src={thumbnail} alt="Product" className="w-80 h-36" />
+                    {name}
+                    <br></br>
+                    Lowest Ask<br></br>
+                    {lowestAsk}$
+                  </Link>
+                </div>
+              );
+            })}
+      </Slider>
 
-                return (
-                  <div key={id}>
-                    {productIsNotTheSameAsOriginal && (
-                      <div className="text-white">
-                        <Link to={`/product/${id}`}>
-                          <img
-                            src={thumbnail}
-                            alt="Product"
-                            className="w-96 h-36"
-                          />
-                          {name}
-                          <br></br>
-                          Lowest Ask<br></br>
-                          {lowestAsk}$
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-        </div>
-      </Slide>
-
-      <div className="w-full mt-8 bg-black h-px"></div>
+      <div className="black-line"></div>
     </>
   );
 };
