@@ -170,7 +170,7 @@ const setUserSales = (payload) => {
     pool.query(
       `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
     );
-    //add to last sales
+
     pool
       .query(
         `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
@@ -180,6 +180,32 @@ const setUserSales = (payload) => {
       })
       .catch((error) => {
         reject("Error selling: ", error);
+        console.log(error);
+      });
+  });
+};
+
+const deleteUserBid = (payload) => {
+  return new Promise(function (resolve, reject) {
+    db.collection("users")
+      .doc(payload.uid)
+      .update({
+        bids: FieldValue.arrayRemove({
+          id: payload.id,
+          name: payload.name,
+          price: payload.price,
+          size: payload.size,
+        }),
+      });
+    pool
+      .query(
+        `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
+      )
+      .then(() => {
+        resolve("Successfully deleted bid!");
+      })
+      .catch((error) => {
+        reject("Error deleting bid: ", error);
         console.log(error);
       });
   });
@@ -267,6 +293,7 @@ module.exports = {
   setUserBid,
   setUserPurchases,
   setUserSales,
+  deleteUserBid,
   setUserShipping,
   setUserPayout,
   setUserPayment,

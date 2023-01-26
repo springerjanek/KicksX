@@ -109,6 +109,18 @@ app.post("/shipping", (req, res) => {
     });
 });
 
+app.post("/deleteBid", (req, res) => {
+  user_model
+    .deleteUserBid(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
 app.post("/payout", (req, res) => {
   user_model
     .setUserPayout(req.body)
