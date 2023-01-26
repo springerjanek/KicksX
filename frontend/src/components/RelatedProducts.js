@@ -26,7 +26,6 @@ const RelatedProducts = (props) => {
   return (
     <>
       <h1 className="font-bold text-lg text-white">Related Products</h1>
-
       <Slider
         className="sm:w-full lg:w-8/12 2xl:w-7/12"
         autoplay={false}
@@ -62,7 +61,6 @@ const RelatedProducts = (props) => {
               );
             })}
       </Slider>
-
       <div className="black-line"></div>
     </>
   );

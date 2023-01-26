@@ -47,15 +47,15 @@ const FinalChecks = (props) => {
       )}
       {props.type === "buying" && (
         <>
-          <div className="ml-10 mt-10">
+          <div className="ml-1 mt-7 mb-6">
             <input
               type="checkbox"
               id="new_sneakers"
               checked={true}
               readOnly={true}
-              className="h-5 w-5 accent-white	"
+              className="h-5 w-5 accent-white	align-middle relative bottom-[1px]"
             />
-            <label htmlFor="new_sneakers" className="">
+            <label htmlFor="new_sneakers" className="ml-1.5">
               New & Unworn
             </label>
             <br></br>
@@ -64,18 +64,22 @@ const FinalChecks = (props) => {
               id="box"
               checked={true}
               readOnly={true}
-              className="h-5 w-5 accent-white	"
+              className="h-5 w-5 accent-white	align-middle relative bottom-[1px]"
             />
-            <label htmlFor="box">In Original Box</label>
+            <label htmlFor="box" className="ml-1.5">
+              In Original Box
+            </label>
             <br></br>
             <input
               type="checkbox"
               id="verified"
               checked={true}
               readOnly={true}
-              className="h-5 w-5 accent-white		"
+              className="h-5 w-5 accent-white	align-middle relative bottom-[2px]	"
             />
-            <label htmlFor="verified">PerkeX Verified</label>
+            <label htmlFor="verified" className="ml-1.5">
+              PerkeX Verified
+            </label>
           </div>
         </>
       )}

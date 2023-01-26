@@ -39,7 +39,7 @@ body {
 }
 
 .button {
-  @apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2;
+  @apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mb-2;
 }
 
 .small-button {
@@ -47,7 +47,7 @@ body {
 }
 
 .black-line {
-  @apply w-7/12 mt-8 bg-black h-px mb-3;
+  @apply sm:w-full lg:w-8/12 2xl:w-7/12 mt-8 bg-black h-px mb-3;
 }
 
 .slick-slider .slick-prev {

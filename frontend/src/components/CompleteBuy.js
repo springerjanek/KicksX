@@ -62,7 +62,7 @@ const CompleteBuy = (props) => {
         <>
           <h1 className="text-2xl">Review Bid</h1>
           <h2 className="text-xl">Please confirm your Bid details below</h2>
-          <div className="bg-white rounded text-black mt-5 mr-10 h-[300px]">
+          <div className="bg-white rounded text-black mt-5 mr-10 h-[250px]">
             <div className="flex justify-between ml-9 mr-14 py-2 text-lg">
               <p className="mt-10">Your Bid</p>
               <p className="mt-10">${bidPrice}</p>
@@ -86,17 +86,11 @@ const CompleteBuy = (props) => {
             disableButton={() => {}}
           />
 
-          <div className="flex justify-between mt-5">
-            <button
-              onClick={props.closeCompleteBuy}
-              className="ml-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2"
-            >
+          <div className="flex justify-between mt-7">
+            <button onClick={props.closeCompleteBuy} className="button">
               BACK
             </button>
-            <button
-              onClick={completeBidHandler}
-              className="mr-14 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2"
-            >
+            <button onClick={completeBidHandler} className="mr-10 button">
               PLACE BID
             </button>
           </div>
@@ -106,7 +100,7 @@ const CompleteBuy = (props) => {
           <h1 className="text-2xl">Review Order</h1>
           <p className="text-xl">Please confirm your purchase details below</p>
           <div className="bg-white rounded text-black mt-5 mr-10 h-[260px]">
-            <div className="flex justify-between ml-9 mr-14 py-2 text-lg">
+            <div className="flex justify-between sm:ml-3 md:ml-9 mr-14 py-2 text-lg">
               <p className="mt-10">Your Purchase Price</p>
               <p className="mt-10">${price}</p>
             </div>
@@ -128,7 +122,7 @@ const CompleteBuy = (props) => {
             disableButton={() => {}}
           />
           <div className="flex justify-between">
-            <button onClick={props.closeCompleteBuy} className="ml-5 button">
+            <button onClick={props.closeCompleteBuy} className=" button">
               BACK
             </button>
             <button onClick={completeBuyHandler} className="mr-14 button">

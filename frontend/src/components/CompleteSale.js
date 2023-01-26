@@ -132,17 +132,14 @@ const CompleteSale = (props) => {
             disableButton={disableButtonHandler}
           />
 
-          <div className="flex justify-between mt-5">
-            <button
-              onClick={props.closeCompleteSale}
-              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2"
-            >
+          <div className="flex justify-between mt-10">
+            <button onClick={props.closeCompleteSale} className="button">
               Back
             </button>
             <button
               onClick={confirmAskHandler}
               disabled={disableButton}
-              className="mr-14 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2
+              className="button mr-10
             disabled:cursor-not-allowed disabled:bg-gray-300"
             >
               Confirm Ask

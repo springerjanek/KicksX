@@ -81,15 +81,18 @@ const BuyModal = (props) => {
 
   const closeCompleteBuy = () => {
     setShowCompletePage(false);
+    setDisableButton(false);
   };
 
   const disableButtonHandler = () => {
+    console.log("TEST");
     setDisableButton(true);
   };
 
   const enableButtonHandler = () => {
-    if (!lowestAsk.length == 2) {
+    if (lowestAsk !== "--") {
       setDisableButton(false);
+      console.log("WLACZENIE");
     }
   };
 

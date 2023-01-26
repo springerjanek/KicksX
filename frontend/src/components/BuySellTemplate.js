@@ -102,24 +102,36 @@ const BuySellTemplate = (props) => {
 
   return (
     <>
-      <div className="flex mt-10 text-white">
-        <div className="w-1/2 text-center sm:hidden lg:block">
+      <div
+        className={`flex mt-10 text-white ${
+          showModal && "sm:flex-col lg:flex-row"
+        }`}
+      >
+        <div
+          className={`w-1/2 text-center ${
+            !showModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
+          }`}
+        >
           {data &&
             data.map((product) => {
               const { id, name, thumbnail } = product;
               return (
                 <div key={id} className="">
                   <h1>{name}</h1>
-                  <div className="flex gap-2 justify-center mb-10">
+                  <div className="flex gap-2 justify-center mb-2 lg:mb-10">
                     <p className="">Highest Bid: ${highestBid}</p>
                     <p>Lowest Ask: ${lowestAsk}</p>
                   </div>
-                  <img src={thumbnail} alt="Product" className="m-auto" />
+                  <img
+                    src={thumbnail}
+                    alt="Product"
+                    className="m-auto sm:h-48 lg:h-full"
+                  />
                 </div>
               );
             })}
         </div>
-        <div className="ml-10 sm:w-full  lg:w-1/2">
+        <div className="ml-5 lg:ml-10 sm:w-full  lg:w-1/2">
           {!showModal && (
             <>
               <h1>Select Size</h1>

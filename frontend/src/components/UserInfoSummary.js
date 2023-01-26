@@ -66,7 +66,7 @@ const UserInfoSummary = (props) => {
     } else {
       props.disableButton();
     }
-  }, [userData]);
+  }, [userHavePayment, userHaveShipping]);
 
   useEffect(() => {
     if (userHavePayout) {
@@ -75,7 +75,7 @@ const UserInfoSummary = (props) => {
     } else {
       props.disableButton();
     }
-  }, [userData]);
+  }, [userHavePayout]);
 
   useEffect(() => {
     getUserData();
@@ -102,7 +102,7 @@ const UserInfoSummary = (props) => {
 
           <div className="w-11/12 bg-black h-px ml-9"></div>
           <div className="p-4 flex gap-2">
-            <HomeIcon className="h-5 ml-6 mt-[3px]" />
+            <HomeIcon className="h-5 ml-6 mt-[3px] mb-4" />
             {shippingText}
             <button
               onClick={editHandler}

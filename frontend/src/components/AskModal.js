@@ -146,7 +146,7 @@ const AskModal = (props) => {
               getUserSummary={(payout) => getUserSummary(payout)}
             />
           )}
-          <div className="flex justify-between mt-24">
+          <div className="flex justify-between sm:mt-14 lg:mt-18">
             <button
               onClick={() => navigate(`/product/${id}`)}
               className="button"
