@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 
 const EditShipping = () => {
   const { user } = useSelector((state) => state.auth);

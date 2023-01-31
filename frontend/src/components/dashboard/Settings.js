@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 
@@ -91,7 +91,7 @@ const Settings = () => {
   }, [uid]);
 
   const shippingHandler = () => {
-    navigate("/settings/shipping");
+    navigate("/dashboard/settings/shipping");
   };
 
   const payoutHandler = () => {

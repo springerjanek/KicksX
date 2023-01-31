@@ -102,7 +102,7 @@ const Navbar = () => {
         </div>
         <h3 className="mt-2 sm:hidden md:block">Sell</h3>
         {isLoggedCondition ? (
-          <Link to={"/dashboard"}>
+          <Link to={"/dashboard/profile"}>
             <h3 className="mt-2 sm:hidden md:block">Dashboard</h3>
           </Link>
         ) : (

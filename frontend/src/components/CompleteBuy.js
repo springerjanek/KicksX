@@ -45,7 +45,7 @@ const CompleteBuy = (props) => {
       .post("http://localhost:3001/buy", buyPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
-    navigate("/dashboard");
+    navigate("/dashboard/buying");
   };
 
   const completeBidHandler = () => {
@@ -53,7 +53,7 @@ const CompleteBuy = (props) => {
       .post("http://localhost:3001/bid", bidPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
-    navigate("/dashboard");
+    navigate("/dashboard/buying");
   };
 
   return (

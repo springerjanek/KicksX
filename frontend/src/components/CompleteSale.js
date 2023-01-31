@@ -55,7 +55,7 @@ const CompleteSale = (props) => {
       .post("http://localhost:3001/sell", salePayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
-    navigate("/dashboard");
+    navigate("/dashboard/selling");
   };
 
   const confirmAskHandler = () => {
@@ -63,7 +63,7 @@ const CompleteSale = (props) => {
       .post("http://localhost:3001/ask", askPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
-    navigate("/dashboard");
+    navigate("/dashboard/selling");
   };
 
   return (
