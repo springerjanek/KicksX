@@ -43,6 +43,7 @@ const RelatedProducts = (props) => {
             .map((relatedProduct) => {
               const { id, name, thumbnail } = relatedProduct;
               const data = getLowestAskAndHighestBid(relatedProduct);
+              console.log(data);
 
               let lowestAsk = data[0];
               console.log(lowestAsk);

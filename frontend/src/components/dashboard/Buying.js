@@ -1,49 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDeleteBid, useEditBid } from "../../api/dashboard";
-import { useFetch2 } from "../../hooks/useQuery";
-import { PencilSquareIcon, MinusCircleIcon } from "@heroicons/react/24/outline";
+import { useGetBids } from "../../hooks/useGetQuery";
+import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import Navbar from "./Navbar";
+import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 
 const Buying = () => {
-  const [showEditInput, setShowEditInput] = useState(false);
-  const [editedPrice, setEditedPrice] = useState(150);
   const [showHistory, setShowHistory] = useState(false);
+  const [lowestAsk, setLowestAsk] = useState(0);
 
   const { user } = useSelector((state) => state.auth);
   const uid = user.id;
 
-  const { isLoading, data } = useFetch2(
-    `http://localhost:3001/getUserData/${uid}`
-  );
-
-  const { mutate: editBid } = useEditBid();
+  const { isLoading, data } = useGetBids(`/getUserData/${uid}`);
+  useEffect(() => {
+    if (!isLoading) {
+      console.log("GOWNO");
+    }
+  }, [isLoading]);
+  console.log(isLoading);
   const { mutate: deleteBid } = useDeleteBid();
-
-  const editHandler = (editPayload) => {
-    editBid(editPayload);
-    setShowEditInput(false);
-  };
 
   return (
     <>
       <div className="ml-96">
         <div className="flex gap-20 text-xl mt-20 mb-5">
-          <button onClick={() => setShowHistory(false)}>Bids</button>
+          <button onClick={() => setShowHistory(false)}>Current Bids</button>
           <button onClick={() => setShowHistory(true)}>History</button>
         </div>
         <div className="flex gap-10 text-xl mb-2">
           <p>Item</p>
-          <p> Ask </p>
-          <p>Price </p>
+          <p>Bid Price </p>
           <p>Highest Bid </p>
-          <p>Lowest Ask</p> <p>Spread</p>
+          <p>Lowest Ask</p>
         </div>
         {!showHistory ? (
           <>
-            {!isLoading && data.bids.length > 1 ? (
-              data.bids.map((bid) => {
-                const { id, name, price, size } = bid;
+            {!isLoading && data.length > 1 ? (
+              (console.log(data),
+              data.map((bid) => {
+                console.log(bid);
+                const { id, name, price, size, highestBid, lowestAsk } = bid;
                 const deletePayload = {
                   uid: uid,
                   id: id,
@@ -51,62 +49,27 @@ const Buying = () => {
                   price: price,
                   size: size,
                 };
-
-                const editPayload = {
-                  uid: uid,
-                  id: id,
-                  name: name,
-                  price: price,
-                  editedPrice: editedPrice,
-                  size: size,
-                };
+                console.log(id);
                 const condition = id.length > 0;
                 return (
                   <div key={id} className="flex gap-4">
                     {condition && (
                       <>
-                        <h1>
-                          {name} {size}, ${price}
-                        </h1>
-                        {!showEditInput && (
-                          <>
-                            <PencilSquareIcon
-                              onClick={() => setShowEditInput(true)}
-                              className="h-5 w-5 cursor-pointer"
-                            />
-                            <MinusCircleIcon
-                              onClick={() => deleteBid(deletePayload)}
-                              className="h-5 w-5 cursor-pointer"
-                            />
-                          </>
-                        )}
-                        {showEditInput && (
-                          <>
-                            <div className="flex">
-                              <input
-                                type="number"
-                                value={editedPrice}
-                                onChange={(e) => setEditedPrice(e.target.value)}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                              ></input>
-                              <div className="flex flex-col">
-                                <button
-                                  onClick={() => editHandler(editPayload)}
-                                >
-                                  Save
-                                </button>
-                                <button onClick={() => setShowEditInput(false)}>
-                                  Return
-                                </button>
-                              </div>
-                            </div>
-                          </>
-                        )}
+                        {name}
+                        <br></br>
+                        Size: {size}
+                        <p>${price}</p>
+                        <p>${highestBid}</p>
+                        <p>${lowestAsk}</p>
+                        <MinusCircleIcon
+                          onClick={() => deleteBid(deletePayload)}
+                          className="h-5 w-5 cursor-pointer mt-1"
+                        />
                       </>
                     )}
                   </div>
                 );
-              })
+              }))
             ) : (
               <h1>--</h1>
             )}

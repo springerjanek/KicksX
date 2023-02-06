@@ -35,12 +35,17 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (product.length > 0) {
-      console.log("siema");
-      setProductName(product[0].name);
-      const lowestAskAndHighestBid = getLowestAskAndHighestBid(product[0]);
-      setLowestAsk(lowestAskAndHighestBid[0]);
-      setHighestBid(lowestAskAndHighestBid[1]);
-      setLastSales(product[0].lastsales);
+      const setProductData = async () => {
+        setProductName(product[0].name);
+        const lowestAskAndHighestBid = await getLowestAskAndHighestBid(
+          product[0]
+        );
+        console.log(lowestAskAndHighestBid);
+        setLowestAsk(lowestAskAndHighestBid[0]);
+        setHighestBid(lowestAskAndHighestBid[1]);
+        setLastSales(product[0].lastsales);
+      };
+      setProductData();
     }
   }, [product]);
 

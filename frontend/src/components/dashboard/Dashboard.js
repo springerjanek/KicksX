@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
-import { useFetch2 } from "../../hooks/useQuery";
+import { useGetQuery } from "../../hooks/useGetQuery";
 import Navbar from "./Navbar";
 
 const Dashboard = () => {
@@ -10,8 +10,9 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const uid = user.id;
 
-  const { isLoading, data } = useFetch2(
-    `http://localhost:3001/getUserData/${uid}`
+  const { isLoading, data } = useGetQuery(
+    `/getUserData/${uid}`,
+    "dashboardData"
   );
 
   return (
