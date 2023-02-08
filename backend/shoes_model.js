@@ -31,4 +31,19 @@ const getSpecificShoeById = (shoeId) => {
   });
 };
 
-module.exports = { getAllShoes, getSpecificShoeById };
+const getSpecificShoeByName = (shoeName) => {
+  console.log(shoeName);
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      `SELECT * FROM shoes WHERE name='${shoeName}'`,
+      (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+};
+
+module.exports = { getAllShoes, getSpecificShoeById, getSpecificShoeByName };

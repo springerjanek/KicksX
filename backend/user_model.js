@@ -26,12 +26,14 @@ const createUserData = (uid) => {
           name: "",
           price: null,
           size: "",
+          thumbnail: "",
         }),
         bids: FieldValue.arrayUnion({
           id: "",
           name: "",
           price: null,
           size: "",
+          thumbnail: "",
         }),
         sales: FieldValue.arrayUnion({
           id: "",
@@ -39,6 +41,7 @@ const createUserData = (uid) => {
           name: "",
           price: null,
           size: "",
+          thumbnail: "",
         }),
         purchases: FieldValue.arrayUnion({
           id: "",
@@ -46,6 +49,7 @@ const createUserData = (uid) => {
           name: "",
           price: null,
           size: "",
+          thumbnail: "",
         }),
         shipping: {
           name: "",
@@ -84,6 +88,7 @@ const setUserAsk = (payload) => {
           name: payload.name,
           price: payload.price,
           size: payload.size,
+          thumbnail: payload.thumbnail,
         }),
       });
     pool
@@ -110,6 +115,7 @@ const setUserBid = (payload) => {
           name: payload.name,
           price: payload.price,
           size: payload.size,
+          thumbnail: payload.thumbnail,
         }),
       });
     pool
@@ -136,6 +142,7 @@ const setUserPurchases = (payload) => {
           name: payload.name,
           price: payload.price,
           size: payload.size,
+          thumbnail: payload.thumbnail,
         }),
       });
     pool.query(
@@ -165,6 +172,7 @@ const setUserSales = (payload) => {
           name: payload.name,
           price: payload.price,
           size: payload.size,
+          thumbnail: payload.thumbnail,
         }),
       });
     pool.query(
@@ -197,12 +205,14 @@ const deleteUserBid = (payload) => {
           size: payload.size,
         }),
       });
-    pool
-      .query(
-        `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
-      )
-      .then(() => {
-        resolve("Successfully deleted bid!");
+    pool.query(
+      `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
+    );
+    db.collection("users")
+      .doc(payload.uid)
+      .get()
+      .then((doc) => {
+        resolve(["Successfully deleted bid!", doc.data()]);
       })
       .catch((error) => {
         reject("Error deleting bid: ", error);

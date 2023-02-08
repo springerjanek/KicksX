@@ -1,4 +1,5 @@
-require("dotenv").config();
+const dotenv = require("fix-esm").require("dotenv");
+dotenv.config();
 const express = require("express");
 const app = express();
 const port = 3001;
@@ -18,14 +19,25 @@ app.use(function (req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  shoes_model
-    .getAllShoes()
-    .then((response) => {
-      res.status(200).send(response);
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
+  if (req.query.name) {
+    shoes_model
+      .getSpecificShoeByName(req.query.name)
+      .then((response) => {
+        res.status(200).send(response);
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
+  } else {
+    shoes_model
+      .getAllShoes()
+      .then((response) => {
+        res.status(200).send(response);
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
+  }
 });
 
 app.get("/:id", (req, res) => {
@@ -41,6 +53,19 @@ app.get("/:id", (req, res) => {
       });
   }
 });
+
+// app.get("/get", (req, res) => {
+//   console.log("XD");
+
+//   shoes_model
+//     .getSpecificShoeByName(req.query.name)
+//     .then((response) => {
+//       res.status(200).send(response);
+//     })
+//     .catch((error) => {
+//       res.status(500).send(error);
+//     });
+// });
 
 app.post("/createUserData", (req, res) => {
   user_model
@@ -134,7 +159,7 @@ app.post("/payout", (req, res) => {
 
 app.post("/payment", (req, res) => {
   user_model
-    .setUserPayment(req.body)
+    .etUserPayment(req.body)
     .then((response) => {
       res.status(200).send(response);
     })
