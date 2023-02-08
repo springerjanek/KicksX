@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
-
-import {
-  ArrowRightCircleIcon,
-  ArrowLeftCircleIcon,
-} from "@heroicons/react/24/outline";
 
 const RelatedProducts = (props) => {
+  const [relatedProductsFormatted, setRelatedProductsFormatted] = useState([]);
   const originalProductName = props.productName;
   const splittedString = originalProductName.split(" ");
   const filterOne = splittedString[0];
@@ -18,10 +13,30 @@ const RelatedProducts = (props) => {
 
   const relatedProducts = props.relatedProducts;
 
-  const arrows = {
-    prevArrow: <ArrowLeftCircleIcon className="h-7 w-7" />,
-    nextArrow: <ArrowRightCircleIcon className="h-7 w-7" />,
-  };
+  useEffect(() => {
+    const essa = async () => {
+      if (relatedProducts.length > 0 && relatedProducts) {
+        const result = await Promise.all(
+          relatedProducts
+            .filter(
+              (product) =>
+                product.name.includes(combinedFilter) &&
+                product.name !== originalProductName
+            )
+            .map(async (relatedProduct) => {
+              const { id, name, thumbnail } = relatedProduct;
+              const data = await getLowestAskAndHighestBid(relatedProduct);
+
+              let lowestAsk = data[0];
+              return { id, name, thumbnail, lowestAsk };
+            })
+        );
+
+        setRelatedProductsFormatted(result);
+      }
+    };
+    essa();
+  }, []);
 
   return (
     <>
@@ -33,34 +48,22 @@ const RelatedProducts = (props) => {
         slidesToScroll={3}
         infinite={true}
       >
-        {relatedProducts.length > 0 &&
-          relatedProducts
-            .filter(
-              (product) =>
-                product.name.includes(combinedFilter) &&
-                product.name !== originalProductName
-            )
-            .map((relatedProduct) => {
-              const { id, name, thumbnail } = relatedProduct;
-              const data = getLowestAskAndHighestBid(relatedProduct);
-              console.log(data);
+        {relatedProductsFormatted.length > 0 &&
+          relatedProductsFormatted.map((relatedProduct) => {
+            const { id, name, thumbnail, lowestAsk } = relatedProduct;
 
-              let lowestAsk = data[0];
-              console.log(lowestAsk);
-              console.log("TEST");
-
-              return (
-                <div className="ml-7" key={id}>
-                  <Link to={`/product/${id}`}>
-                    <img src={thumbnail} alt="Product" className="w-80 h-36" />
-                    {name}
-                    <br></br>
-                    Lowest Ask<br></br>
-                    {lowestAsk}$
-                  </Link>
-                </div>
-              );
-            })}
+            return (
+              <div className="ml-7" key={id}>
+                <Link to={`/product/${id}`}>
+                  <img src={thumbnail} alt="Product" className="w-80 h-36" />
+                  {name}
+                  <br></br>
+                  Lowest Ask<br></br>
+                  {lowestAsk}$
+                </Link>
+              </div>
+            );
+          })}
       </Slider>
       <div className="black-line"></div>
     </>

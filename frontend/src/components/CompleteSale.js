@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Fees from "./Fees";
 import FinalChecks from "./FinalChecks";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
@@ -7,8 +7,10 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../hooks/notify";
 import { useNavigate } from "react-router-dom";
+import { useGetQuery } from "../hooks/useGetQuery";
 
 const CompleteSale = (props) => {
+  const [thumbnail, setThumbnail] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
   const { user } = useSelector((state) => state.auth);
@@ -33,6 +35,14 @@ const CompleteSale = (props) => {
     setDisableButton(true);
   };
 
+  const { data, isLoading } = useGetQuery(`/${name}`);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setThumbnail(data[0].thumbnail);
+    }
+  }, [isLoading]);
+
   const salePayload = {
     uid: uid,
     id: uuidv4(),
@@ -40,6 +50,7 @@ const CompleteSale = (props) => {
     name: name,
     price: sellPrice,
     size: size,
+    thumbnail: thumbnail,
   };
 
   const askPayload = {
@@ -48,6 +59,7 @@ const CompleteSale = (props) => {
     name: name,
     price: askPrice,
     size: size,
+    thumbnail: thumbnail,
   };
 
   const confirmSaleHandler = () => {

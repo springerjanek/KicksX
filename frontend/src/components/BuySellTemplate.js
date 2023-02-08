@@ -67,8 +67,6 @@ const BuySellTemplate = (props) => {
     setHighestBid(highestBid);
     const asksOfDesiredSize = asks.find((x) => x.size === size);
     const lowestAsk = Math.min(...asksOfDesiredSize.asks);
-    console.log("YS", asksOfDesiredSize);
-    console.log(lowestAsk);
     if (lowestAsk === 0) {
       setLowestAsk("--");
     } else if (lowestAsk === Infinity) {
@@ -85,7 +83,6 @@ const BuySellTemplate = (props) => {
     setLowestAsk(lowestAsk);
     const bidsOfDesiredSize = bids.find((x) => x.size === size);
     const highestBid = Math.max(bidsOfDesiredSize.bids);
-    console.log(highestBid);
     if (highestBid === 0) {
       setHighestBid("--");
     } else {

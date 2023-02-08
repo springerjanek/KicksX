@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Fees from "./Fees";
 import FinalChecks from "./FinalChecks";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
@@ -7,8 +7,10 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../hooks/notify";
 import { useNavigate } from "react-router-dom";
+import { useGetQuery } from "../hooks/useGetQuery";
 
 const CompleteBuy = (props) => {
+  const [thumbnail, setThumbnail] = useState("");
   const price = props.price;
   const isSwitchedToPlaceBid = props.isSwitchedToPlaceBid;
   const userSummary = props.userSummary;
@@ -23,6 +25,15 @@ const CompleteBuy = (props) => {
 
   const navigate = useNavigate();
 
+  const { data, isLoading } = useGetQuery(`/?name=${name}`);
+
+  useEffect(() => {
+    if (!isLoading) {
+      console.log(data);
+      setThumbnail(data[0].thumbnail);
+    }
+  }, [isLoading]);
+
   const buyPayload = {
     uid: uid,
     id: uuidv4(),
@@ -30,6 +41,7 @@ const CompleteBuy = (props) => {
     name: name,
     price: price,
     size: size,
+    thumbnail: thumbnail,
   };
 
   const bidPayload = {
@@ -38,6 +50,7 @@ const CompleteBuy = (props) => {
     name: name,
     price: bidPrice,
     size: size,
+    thumbnail: thumbnail,
   };
 
   const completeBuyHandler = () => {

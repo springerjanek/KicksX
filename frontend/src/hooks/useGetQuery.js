@@ -25,19 +25,21 @@ export const useGetBids = (path) => {
 
       const result = Promise.all(
         res.data.bids.map(async (bid) => {
-          ///      const { id, productId, name, price, size } = bid;
           if (bid.price !== null) {
-            const data = await getLowestAskAndHighestBid(1);
-            console.log(data);
+            const data = await getLowestAskAndHighestBid(bid.name);
+
             const lowestAsk = data[0];
             const highestBid = data[1];
+
             return { ...bid, lowestAsk: lowestAsk, highestBid: highestBid };
           }
+
           return bid;
         })
       );
       const xd = await result;
-      return xd;
+
+      return [xd, res.data];
     },
   });
 

@@ -5,10 +5,9 @@ export const getLowestAskAndHighestBid = async (product) => {
   let bids = [];
   let asksPrices = [];
   let bidsPrices = [];
-
-  if (Number.isInteger(product)) {
+  if (typeof product === "string") {
     console.log("TEST");
-    const response = await axios.get(`http://localhost:3001/${product}`);
+    const response = await axios.get(`http://localhost:3001/?name=${product}`);
     const productData = response.data[0];
 
     for (let i = 0; i < productData.asks.length; i++) {
@@ -29,8 +28,6 @@ export const getLowestAskAndHighestBid = async (product) => {
 
     const lowestAsk = Math.min(...asksPrices);
     const highestBid = Math.max(...bidsPrices);
-
-    console.log(lowestAsk);
 
     return [lowestAsk, highestBid];
   } else {

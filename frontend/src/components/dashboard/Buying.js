@@ -16,7 +16,7 @@ const Buying = () => {
   const { isLoading, data } = useGetBids(`/getUserData/${uid}`);
   useEffect(() => {
     if (!isLoading) {
-      console.log("GOWNO");
+      console.log(data);
     }
   }, [isLoading]);
   console.log(isLoading);
@@ -31,17 +31,23 @@ const Buying = () => {
         </div>
         <div className="flex gap-10 text-xl mb-2">
           <p>Item</p>
-          <p>Bid Price </p>
+          <p className="ml-52">Bid Price </p>
           <p>Highest Bid </p>
           <p>Lowest Ask</p>
         </div>
         {!showHistory ? (
           <>
-            {!isLoading && data.length > 1 ? (
-              (console.log(data),
-              data.map((bid) => {
-                console.log(bid);
-                const { id, name, price, size, highestBid, lowestAsk } = bid;
+            {!isLoading && data[0].length > 1 ? (
+              data[0].map((bid) => {
+                const {
+                  id,
+                  name,
+                  price,
+                  size,
+                  highestBid,
+                  lowestAsk,
+                  thumbnail,
+                } = bid;
                 const deletePayload = {
                   uid: uid,
                   id: id,
@@ -49,12 +55,12 @@ const Buying = () => {
                   price: price,
                   size: size,
                 };
-                console.log(id);
                 const condition = id.length > 0;
                 return (
                   <div key={id} className="flex gap-4">
                     {condition && (
                       <>
+                        <img src={thumbnail} className="w-24 h-20" />
                         {name}
                         <br></br>
                         Size: {size}
@@ -69,15 +75,15 @@ const Buying = () => {
                     )}
                   </div>
                 );
-              }))
+              })
             ) : (
               <h1>--</h1>
             )}
           </>
         ) : (
           <>
-            {!isLoading && data.purchases.length > 1 ? (
-              data.purchases.map((purchase) => {
+            {!isLoading && data[1].purchases.length > 1 ? (
+              data[1].purchases.map((purchase) => {
                 const { id, name, price, size } = purchase;
                 const condition = id.length > 0;
                 return (
