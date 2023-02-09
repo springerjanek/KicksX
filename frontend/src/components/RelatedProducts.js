@@ -12,9 +12,8 @@ const RelatedProducts = (props) => {
   const combinedFilter = filterOne.concat(" ", filterTwo);
 
   const relatedProducts = props.relatedProducts;
-
   useEffect(() => {
-    const essa = async () => {
+    const formatRelatedProducts = async () => {
       if (relatedProducts.length > 0 && relatedProducts) {
         const result = await Promise.all(
           relatedProducts
@@ -35,8 +34,8 @@ const RelatedProducts = (props) => {
         setRelatedProductsFormatted(result);
       }
     };
-    essa();
-  }, []);
+    formatRelatedProducts();
+  }, [originalProductName]);
 
   return (
     <>

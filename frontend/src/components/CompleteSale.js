@@ -35,10 +35,11 @@ const CompleteSale = (props) => {
     setDisableButton(true);
   };
 
-  const { data, isLoading } = useGetQuery(`/${name}`);
-
+  const { data, isLoading } = useGetQuery(`/?name=${name}`);
+  console.log(data);
   useEffect(() => {
     if (!isLoading) {
+      console.log(data);
       setThumbnail(data[0].thumbnail);
     }
   }, [isLoading]);

@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useDeleteBid, useEditBid } from "../../api/dashboard";
-import { useGetBids } from "../../hooks/useGetQuery";
+import { useGetBids, useDeleteBid } from "../../api/dashboard/buying";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
-import Navbar from "./Navbar";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
+import DashboardNavbar from "./DashboardNavbar";
 
 const Buying = () => {
   const [showHistory, setShowHistory] = useState(false);
-  const [lowestAsk, setLowestAsk] = useState(0);
 
   const { user } = useSelector((state) => state.auth);
   const uid = user.id;
@@ -19,7 +16,6 @@ const Buying = () => {
       console.log(data);
     }
   }, [isLoading]);
-  console.log(isLoading);
   const { mutate: deleteBid } = useDeleteBid();
 
   return (
@@ -31,9 +27,15 @@ const Buying = () => {
         </div>
         <div className="flex gap-10 text-xl mb-2">
           <p>Item</p>
-          <p className="ml-52">Bid Price </p>
-          <p>Highest Bid </p>
-          <p>Lowest Ask</p>
+          {!showHistory ? (
+            <>
+              <p className="ml-52">Bid Price </p>
+              <p>Highest Bid </p>
+              <p>Lowest Ask</p>
+            </>
+          ) : (
+            <p className="ml-52">Purchase Price</p>
+          )}
         </div>
         {!showHistory ? (
           <>
@@ -54,6 +56,7 @@ const Buying = () => {
                   name: name,
                   price: price,
                   size: size,
+                  thumbnail: thumbnail,
                 };
                 const condition = id.length > 0;
                 return (
@@ -61,9 +64,11 @@ const Buying = () => {
                     {condition && (
                       <>
                         <img src={thumbnail} className="w-24 h-20" />
-                        {name}
-                        <br></br>
-                        Size: {size}
+                        <div className="flex flex-col">
+                          <p> {name}</p>
+
+                          <p> Size: {size}</p>
+                        </div>
                         <p>${price}</p>
                         <p>${highestBid}</p>
                         <p>${lowestAsk}</p>
@@ -84,15 +89,19 @@ const Buying = () => {
           <>
             {!isLoading && data[1].purchases.length > 1 ? (
               data[1].purchases.map((purchase) => {
-                const { id, name, price, size } = purchase;
+                const { id, name, price, size, thumbnail } = purchase;
                 const condition = id.length > 0;
                 return (
-                  <div key={id}>
+                  <div key={id} className="flex gap-4">
                     {condition && (
                       <>
-                        <h1>
-                          {name} {size}, ${price}
-                        </h1>
+                        <img src={thumbnail} className="w-24 h-20" />
+                        <div className="flex flex-col">
+                          <p> {name}</p>
+
+                          <p> Size: {size}</p>
+                        </div>
+                        <p>${price}</p>
                       </>
                     )}
                   </div>
@@ -104,7 +113,7 @@ const Buying = () => {
           </>
         )}
       </div>
-      <Navbar />
+      <DashboardNavbar />
     </>
   );
 };

@@ -7,7 +7,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 
-const Navbar = () => {
+const DashboardNavbar = () => {
   return (
     <div className="absolute grid grid-cols-2 top-20 text-left gap-2 w-max text-2xl mt-36">
       <ShoppingBagIcon className="w-5 h-5 mt-2" />
@@ -22,4 +22,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default DashboardNavbar;

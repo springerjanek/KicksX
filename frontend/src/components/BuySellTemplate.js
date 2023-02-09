@@ -53,9 +53,9 @@ const BuySellTemplate = (props) => {
     }
   }, [bids]);
 
-  const changeLowestAskAndBid = () => {
+  const changeLowestAskAndBid = async () => {
     if (data) {
-      const dataFromFunction = getLowestAskAndHighestBid(data[0]);
+      const dataFromFunction = await getLowestAskAndHighestBid(data[0]);
       setLowestAsk(dataFromFunction[0]);
 
       setHighestBid(dataFromFunction[1]);

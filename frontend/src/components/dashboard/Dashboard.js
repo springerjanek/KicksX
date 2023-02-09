@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
 import { useGetQuery } from "../../hooks/useGetQuery";
-import Navbar from "./Navbar";
+import Navbar from "./DashboardNavbar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
