@@ -19,6 +19,18 @@ body {
   background-attachment: fixed;
 }
 
+.test {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.related-products {
+  animation: related;
+  animation-duration: 1s;
+}
+
 .slide-animation {
   transform: translateX(100%);
   -webkit-transform: translateX(100%);
@@ -35,6 +47,20 @@ body {
 @-webkit-keyframes slide {
   100% {
     -webkit-transform: translateX(0%);
+  }
+}
+
+@keyframes related {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

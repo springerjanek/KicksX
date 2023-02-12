@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
+import { CSSTransition } from "react-transition-group";
 
 const RelatedProducts = (props) => {
   const [relatedProductsFormatted, setRelatedProductsFormatted] = useState([]);
@@ -52,7 +53,7 @@ const RelatedProducts = (props) => {
             const { id, name, thumbnail, lowestAsk } = relatedProduct;
 
             return (
-              <div className="ml-7" key={id}>
+              <div className="ml-7 related-products" key={id}>
                 <Link to={`/product/${id}`}>
                   <img src={thumbnail} alt="Product" className="w-80 h-36" />
                   {name}

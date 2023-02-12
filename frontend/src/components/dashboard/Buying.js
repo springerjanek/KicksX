@@ -66,12 +66,13 @@ const Buying = () => {
                         <img src={thumbnail} className="w-24 h-20" />
                         <div className="flex flex-col">
                           <p> {name}</p>
-
                           <p> Size: {size}</p>
                         </div>
                         <p>${price}</p>
-                        <p>${highestBid}</p>
-                        <p>${lowestAsk}</p>
+                        <div className="flex ml-[60px] gap-x-[110px]">
+                          <p>${highestBid}</p>
+                          <p>${lowestAsk}</p>
+                        </div>
                         <MinusCircleIcon
                           onClick={() => deleteBid(deletePayload)}
                           className="h-5 w-5 cursor-pointer mt-1"
