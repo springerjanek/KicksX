@@ -8,6 +8,8 @@ import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
 import {
   ArrowTrendingUpIcon,
   ArrowLongDownIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 
 const ProductPage = () => {
@@ -18,6 +20,7 @@ const ProductPage = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [lastsales, setLastSales] = useState([]);
   const [showSales, setShowSales] = useState(false);
+  const [showSizes, setShowSizes] = useState(false);
 
   const { id } = useParams();
 
@@ -40,7 +43,6 @@ const ProductPage = () => {
         const lowestAskAndHighestBid = await getLowestAskAndHighestBid(
           product[0]
         );
-        console.log(lowestAskAndHighestBid);
         setLowestAsk(lowestAskAndHighestBid[0]);
         setHighestBid(lowestAskAndHighestBid[1]);
         setLastSales(product[0].lastsales);
@@ -49,13 +51,22 @@ const ProductPage = () => {
     }
   }, [product]);
 
+  const showSizesHandler = () => {
+    if (showSizes) {
+      setShowSizes(false);
+    } else {
+      setShowSizes(true);
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="w-full mt-8 lg:mt-10 2xl:mt-16 md:ml-3 lg:ml-48 xl:ml-60 2xl:ml-96">
         {product.length > 0 &&
           product.map((product) => {
-            const { id, name, thumbnail, releasedate, lastsales } = product;
+            const { id, name, thumbnail, releasedate, lastsales, sizes } =
+              product;
 
             const lastSale = lastsales[lastsales.length - 1];
             const saleBeforeLastSale = lastsales[lastsales.length - 2];
@@ -76,9 +87,34 @@ const ProductPage = () => {
                   </div>
                   <div className="flex flex-col xl:mt-5 2xl:mt-14 ml-2 sm:w-[95%] md:w-1/2 lg:w-1/3 2xl:w-1/4 xl:h-96 md:mr-5">
                     <div className="rounded border border-white border-solid h-3/5 mb-6">
-                      <div className="rounded border border-solid p-1.5 m-4">
-                        <p className="">Size:</p>
-                      </div>
+                      <button
+                        className="w-11/12 m-4"
+                        onClick={showSizesHandler}
+                      >
+                        <span className="flex rounded border border-solid p-1.5">
+                          <p className="">Size:</p>
+                          <div className="flex flex-1 gap-1 justify-end">
+                            <p className="">All</p>
+                            {!showSizes ? (
+                              <ChevronDownIcon className="w-5 h-5 mt-0.5" />
+                            ) : (
+                              <ChevronUpIcon className="w-5 h-5 mt-0.5" />
+                            )}
+                          </div>
+                        </span>
+                      </button>
+                      {showSizes && (
+                        <div className="grid grid-cols-3">
+                          <p className="col-span-3 text-center">ALL 20$</p>
+                          {sizes.map((size) => {
+                            return (
+                              <div key={size}>
+                                <p>{size}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                       <div className="flex text-center">
                         <div className="rounded border  border-solid p-1.5 m-3 w-1/2">
                           <p>Place Bid</p>
@@ -145,7 +181,7 @@ const ProductPage = () => {
               </div>
             );
           })}
-        <div className="black-line"></div>
+
         <RelatedProducts
           productName={productName}
           relatedProducts={relatedProducts}

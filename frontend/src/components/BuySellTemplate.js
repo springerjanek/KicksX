@@ -4,58 +4,29 @@ import { useFetch } from "../hooks/useFetch";
 import AskModal from "./AskModal";
 import BuyModal from "./BuyModal";
 import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
+import { useGetProduct } from "../api/product/product";
 
 const BuySellTemplate = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [productDataToModal, setProductDataToModal] = useState([]);
-  const [asks, setAsks] = useState([]);
-  const [bids, setBids] = useState([]);
+  // const [asks, setAsks] = useState([]);
+  // const [bids, setBids] = useState([]);
   const [highestBid, setHighestBid] = useState("--");
   const [lowestAsk, setLowestAsk] = useState("--");
 
   const { id } = useParams();
-  const { data } = useFetch(`http://localhost:3001/${id}`);
+  const { isLoading, data } = useGetProduct(`/${id}`);
+  console.log(isLoading);
 
-  useEffect(() => {
-    if (data) {
-      const setdefault = (obj, key, fallback) => {
-        if (!(key in obj)) {
-          obj[key] = fallback;
-        }
-        return obj[key];
-      };
-
-      const ask_by_size = {};
-      const bid_by_size = {};
-      for (const ask of data[0].asks) {
-        setdefault(ask_by_size, ask.size, []).push(ask.price);
-      }
-      for (const bid of data[0].bids) {
-        setdefault(bid_by_size, bid.size, []).push(bid.price);
-      }
-      let asks = data[0].sizes.map((size) => ({
-        size,
-        asks: ask_by_size[size] !== undefined ? ask_by_size[size] : [],
-      }));
-
-      let bids = data[0].sizes.map((size) => ({
-        size,
-        bids: bid_by_size[size] !== undefined ? bid_by_size[size] : [],
-      }));
-      setAsks(asks);
-      setBids(bids);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (bids) {
-      changeLowestAskAndBid();
-    }
-  }, [bids]);
+  // useEffect(() => {
+  //   if (bids) {
+  //     changeLowestAskAndBid();
+  //   }
+  // }, [bids]);
 
   const changeLowestAskAndBid = async () => {
     if (data) {
-      const dataFromFunction = await getLowestAskAndHighestBid(data[0]);
+      const dataFromFunction = await getLowestAskAndHighestBid(data);
       setLowestAsk(dataFromFunction[0]);
 
       setHighestBid(dataFromFunction[1]);
@@ -109,24 +80,20 @@ const BuySellTemplate = (props) => {
             !showModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
           }`}
         >
-          {data &&
-            data.map((product) => {
-              const { id, name, thumbnail } = product;
-              return (
-                <div key={id} className="">
-                  <h1>{name}</h1>
-                  <div className="flex gap-2 justify-center mb-2 lg:mb-10">
-                    <p className="">Highest Bid: ${highestBid}</p>
-                    <p>Lowest Ask: ${lowestAsk}</p>
-                  </div>
-                  <img
-                    src={thumbnail}
-                    alt="Product"
-                    className="m-auto sm:h-48 lg:h-full"
-                  />
-                </div>
-              );
-            })}
+          {data && (
+            <div key={data.id}>
+              <h1>{data.name}</h1>
+              <div className="flex gap-2 justify-center mb-2 lg:mb-10">
+                <p className="">Highest Bid: ${highestBid}</p>
+                <p>Lowest Ask: ${lowestAsk}</p>
+              </div>
+              <img
+                src={data.thumbnail}
+                alt="Product"
+                className="m-auto sm:h-48 lg:h-full"
+              />
+            </div>
+          )}
         </div>
         <div className="ml-5 lg:ml-10 sm:w-full  lg:w-1/2">
           {!showModal && (
@@ -136,45 +103,51 @@ const BuySellTemplate = (props) => {
                 {props.template === "sell" && "Highest Bids"}
               </p>
               <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-2 mr-5">
-                {props.template === "sell" &&
-                  bids.map((bid) => {
-                    const { size, bids } = bid;
-                    let highestBid = "--";
+                {props.template === "sell" && !isLoading
+                  ? data.bidsBySize.map((bid) => {
+                      const { size, bids } = bid;
+                      let highestBid = "--";
 
-                    if (bids.length > 0) {
-                      highestBid = Math.max(...bids);
-                    }
+                      if (bids.length > 0) {
+                        highestBid = Math.max(...bids);
+                      }
 
-                    return (
-                      <div
-                        key={size}
-                        onClick={() => askModalHandler(size, highestBid, asks)}
-                        className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
-                      >
-                        {size}
-                        <br></br>${highestBid}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={size}
+                          onClick={() =>
+                            askModalHandler(size, highestBid, data.asksBySize)
+                          }
+                          className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
+                        >
+                          {size}
+                          <br></br>${highestBid}
+                        </div>
+                      );
+                    })
+                  : ""}
 
-                {props.template === "buy" &&
-                  asks.map((ask) => {
-                    const { size, asks } = ask;
-                    let lowestAsk = "--";
-                    if (asks.length > 0) {
-                      lowestAsk = Math.min(...asks);
-                    }
-                    return (
-                      <div
-                        key={size}
-                        onClick={() => buyModalHandler(size, lowestAsk, bids)}
-                        className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
-                      >
-                        {size}
-                        <br></br>${lowestAsk}
-                      </div>
-                    );
-                  })}
+                {props.template === "buy" && !isLoading
+                  ? data.asksBySize.map((ask) => {
+                      const { size, asks } = ask;
+                      let lowestAsk = "--";
+                      if (asks.length > 0) {
+                        lowestAsk = Math.min(...asks);
+                      }
+                      return (
+                        <div
+                          key={size}
+                          onClick={() =>
+                            buyModalHandler(size, lowestAsk, data.bidsBySize)
+                          }
+                          className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
+                        >
+                          {size}
+                          <br></br>${lowestAsk}
+                        </div>
+                      );
+                    })
+                  : ""}
               </div>
             </>
           )}
@@ -182,14 +155,14 @@ const BuySellTemplate = (props) => {
             <>
               {props.template === "sell" && (
                 <AskModal
-                  product={data[0].name}
+                  product={data.name}
                   productData={productDataToModal}
                   turnOffModal={turnOffModal}
                 />
               )}
               {props.template === "buy" && (
                 <BuyModal
-                  product={data[0].name}
+                  product={data.name}
                   productData={productDataToModal}
                   turnOffModal={turnOffModal}
                 />

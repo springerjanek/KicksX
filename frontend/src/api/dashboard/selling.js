@@ -30,7 +30,7 @@ export const useGetAsks = (path) => {
       return [result, res.data];
     },
   });
-
+  console.log(data);
   return { isLoading, data };
 };
 

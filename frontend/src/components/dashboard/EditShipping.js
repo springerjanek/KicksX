@@ -5,31 +5,37 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import { notify } from "../../hooks/notify";
+import { useForm, Controller } from "react-hook-form";
 
 const EditShipping = () => {
   const { user } = useSelector((state) => state.auth);
   const uid = user.id;
-  const [userShipping, setUserShipping] = useState({
-    uid: uid,
-    name: "",
-    surname: "",
-    street: "",
-    street_number: "",
-    city: "",
-    zip: "",
-    country: "",
-    phone: "",
-  });
   const options = useMemo(() => countryList().getData(), []);
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
-  const formHandler = (e) => {
-    e.preventDefault();
+  const formHandler = (data) => {
+    console.log(data);
     axios
-      .post("http://localhost:3001/shipping", userShipping)
+      .post("http://localhost:3001/shipping", {
+        uid: uid,
+        name: data.name,
+        surname: data.surname,
+        street: data.address,
+        street_number: data.streetNumber,
+        city: data.city,
+        zip: data.zipcode,
+        country: data.country.label,
+        phone: data.phone,
+      })
       .then((response) => {
-        notify(response.data);
-        navigate("/settings");
+        notify(response.data, "success");
+        navigate("/dashboard/settings");
       })
       .catch((error) => {
         console.log(error);
@@ -37,139 +43,167 @@ const EditShipping = () => {
   };
 
   const backToSettingsHandler = () => {
-    navigate("/settings");
+    navigate("/dashboard/settings");
   };
 
   return (
     <>
       <div className="text-center mt-10 w-max ml-auto mr-auto">
         <h1 className="text-2xl">Shipping</h1>
-        <p className="text-lg">Please provide your shipping info</p>
+        <p className="text-xl">Please provide your shipping info</p>
         <div className="text-left">
-          <h2 className="text-xl mt-8">Shipping Info</h2>
-          <form className="text-black" onSubmit={formHandler}>
+          <h2 className="text-xl mt-8 mb-1">Shipping Info</h2>
+          <form className="text-black" onSubmit={handleSubmit(formHandler)}>
             <label htmlFor="name" className="block text-white">
               First Name
             </label>
             <input
-              type="text"
               id="name"
-              value={userShipping.name}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, name: e.target.value })
-              }
+              {...register("name", {
+                minLength: 1,
+                pattern: /^[A-Za-z]+$/i,
+              })}
               required
-              placeholder="Name"
+              placeholder="First Name"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.name?.type === "minLength" &&
+              notify("First name must contain more than 1 character", "error")}
             <label htmlFor="surname" className="block text-white">
               Last Name
             </label>
             <input
               type="text"
               id="surname"
-              value={userShipping.surname}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, surname: e.target.value })
-              }
+              {...register("surname", {
+                minLength: 1,
+                pattern: /^[A-Za-z]+$/i,
+              })}
               required
-              placeholder="Name"
+              placeholder="Last Name"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.surname?.type === "minLength" &&
+              notify("Last name must contain more than 1 character", "error")}
             <label htmlFor="country" className="block text-white">
               Country
             </label>
-            <Select
-              styles={{
-                control: (styles) => ({ ...styles, width: "500px" }),
-              }}
-              id="country"
-              options={options}
-              value={userShipping.country}
-              onChange={(e) => setUserShipping({ ...userShipping, country: e })}
+            <Controller
+              name="country"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                console.log(field),
+                (
+                  <Select
+                    onChange={(e) => field.onChange(e)}
+                    styles={{
+                      control: (styles) => ({ ...styles, width: "500px" }),
+                    }}
+                    id="country"
+                    options={options}
+                  />
+                )
+              )}
             />
+            {errors?.country?.type === "required" &&
+              notify("You must choose your country", "error")}
             <label htmlFor="address" className="block text-white">
               Address
             </label>
             <input
               type="text"
               id="address"
-              value={userShipping.street}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, street: e.target.value })
-              }
+              {...register("address", {
+                minLength: 3,
+              })}
               required
               placeholder="Street Address"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.address?.type === "minLength" &&
+              notify(
+                "Street Address must contain more than 3 characters",
+                "error"
+              )}
             <label htmlFor="streetNumber" className="block text-white">
               Street Number
             </label>
             <input
               type="text"
               id="streetNumber"
-              value={userShipping.street_number}
-              onChange={(e) =>
-                setUserShipping({
-                  ...userShipping,
-                  street_number: e.target.value,
-                })
-              }
+              {...register("streetNumber", {
+                maxLength: 20,
+              })}
               required
               placeholder="Street Number"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.streetNumber?.type === "maxLength" &&
+              notify(
+                "Street Number can not contain more than 20 characters",
+                "error"
+              )}
             <label htmlFor="city" className="block text-white">
               City
             </label>
             <input
               type="text"
               id="city"
-              value={userShipping.city}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, city: e.target.value })
-              }
+              {...register("city", {
+                minLength: 1,
+              })}
               required
               placeholder="City"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.city?.type === "minLength" &&
+              notify("City must contain more than 1 character", "error")}
             <label htmlFor="zipcode" className="block text-white">
               Postal Code
             </label>
             <input
               type="text"
               id="zipcode"
-              value={userShipping.zip}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, zip: e.target.value })
-              }
+              {...register("zipcode", {
+                minLength: 1,
+              })}
               required
               placeholder="Postal Code"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
+            {errors?.zipcode?.type === "minLength" &&
+              notify("Postal code must contain more than 1 character", "error")}
             <label htmlFor="phone" className="block text-white">
               Phone Number
             </label>
             <input
-              type="text"
+              type="number"
               id="phone"
-              value={userShipping.phone}
-              onChange={(e) =>
-                setUserShipping({ ...userShipping, phone: e.target.value })
-              }
+              {...register("phone", {
+                minLength: 3,
+              })}
               required
               placeholder="Phone"
               className="p-2 border border-solid border-inherit w-full"
             ></input>
-            <div className="flex justify-between">
+            {errors?.phone?.type === "minLength" &&
+              notify(
+                "Phone number must contain more than 3 characters",
+                "error"
+              )}
+            <div className="flex justify-between mt-4">
               <button
                 onClick={backToSettingsHandler}
-                className="text-white text-center"
+                className="text-white text-center small-button p-5"
                 type="button"
               >
                 BACK
               </button>
-              <button type="submit" className="text-white text-center">
+              <button
+                type="submit"
+                className="text-white text-center small-button p-5"
+              >
                 SUBMIT
               </button>
             </div>

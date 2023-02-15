@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
+import DashboardNavbar from "./DashboardNavbar";
 
 const Settings = () => {
   const [userData, setUserData] = useState([]);
@@ -38,7 +39,9 @@ const Settings = () => {
 
   const uid = user.id;
 
-  const country = userInfo[0].shipping.country.label;
+  const userShipping = userInfo[0].shipping;
+  const userPayout = userInfo[0]?.payout;
+  const userPayment = userInfo[0]?.payment;
 
   const checkForUserInfo = (userData) => {
     if (userData.shipping.street.length > 0) {
@@ -50,7 +53,6 @@ const Settings = () => {
           };
         })
       );
-      console.log("1: ", userInfo);
     }
     if (userData.payout.type.length > 0) {
       setUserInfo((prev) =>
@@ -58,7 +60,6 @@ const Settings = () => {
           return { ...info, payout: userData.payout };
         })
       );
-      console.log("2: ", userInfo);
     }
     if (userData.payment.type.length > 0) {
       setUserInfo((prev) =>
@@ -66,7 +67,6 @@ const Settings = () => {
           return { ...info, payment: userData.payment };
         })
       );
-      console.log("3: ", userInfo);
     }
     setLoading(false);
   };
@@ -76,7 +76,6 @@ const Settings = () => {
       const response = await axios.get(
         `http://localhost:3001/getUserData/${uid}`
       );
-      console.log("FETCHING...");
       const userData = response.data;
       setUserData(userData);
       if (userData) {
@@ -103,10 +102,9 @@ const Settings = () => {
   };
 
   const editPayoutHandler = () => {
-    console.log(userInfo[0].payout.type);
     axios.post("http://localhost:3001/payout", {
       uid: uid,
-      payout: userInfo[0].payout.type,
+      payout: userPayout.type,
     });
     setEditPayout(false);
   };
@@ -114,12 +112,10 @@ const Settings = () => {
   const editPaymentHandler = () => {
     axios.post("http://localhost:3001/payment", {
       uid: uid,
-      payment: userInfo[0].payment.type,
+      payment: userPayment.type,
     });
     setEditPayment(false);
   };
-
-  console.log(userInfo);
   return (
     <>
       {!loading ? (
@@ -131,23 +127,25 @@ const Settings = () => {
 
               <button onClick={shippingHandler}>EDIT</button>
             </div>
-            {userInfo[0].shipping.street.length > 0 && (
-              <>
-                <div className="block">
-                  <p>Name: {userInfo[0].shipping.name}</p>
-                  <p>Street: {userInfo[0].shipping.street}</p>
-                  <p>Street Number: {userInfo[0].shipping.street_number}</p>
-                  <p>Zip Code: {userInfo[0].shipping.zip}</p>
-                  <p>Country: {country}</p>
-                  <p>Phone: {userInfo[0].shipping.phone}</p>
-                </div>
-              </>
-            )}
+            {userShipping.street.length > 0 &&
+              (console.log(userShipping),
+              (
+                <>
+                  <div className="block">
+                    <p>Name: {userShipping.name}</p>
+                    <p>Street: {userShipping.street}</p>
+                    <p>Street Number: {userShipping.street_number}</p>
+                    <p>Zip Code: {userShipping.zip}</p>
+                    <p>Country: {userShipping.country}</p>
+                    <p>Phone: {userShipping.phone}</p>
+                  </div>
+                </>
+              ))}
             <div className="flex justify-center mt-16 mb-1">
               <h2>PAYOUT DETAILS</h2>
               <button onClick={payoutHandler}>EDIT</button>
             </div>
-            {userInfo[0].payout.type.length > 0 && (
+            {userPayout.type.length > 0 && (
               <>
                 <div className="block">
                   {editPayout ? (
@@ -155,7 +153,7 @@ const Settings = () => {
                       <div className="flex justify-center gap-2">
                         <div
                           className={`border border-2	rounded ${
-                            userInfo[0].payout.type === "PAYPAL" && "bg-white"
+                            userPayout.type === "PAYPAL" && "bg-white"
                           }`}
                         >
                           <img
@@ -175,7 +173,7 @@ const Settings = () => {
                         </div>
                         <div
                           className={`border border-2	rounded ${
-                            userInfo[0].payout.type === "CC" && "bg-white"
+                            userPayout.type === "CC" && "bg-white"
                           }`}
                         >
                           <img
@@ -199,7 +197,7 @@ const Settings = () => {
                     </>
                   ) : (
                     <>
-                      {userInfo[0].payout.type === "PAYPAL" ? (
+                      {userPayout.type === "PAYPAL" ? (
                         <>
                           <img
                             src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
@@ -221,7 +219,7 @@ const Settings = () => {
               <h2>PAYMENT DETAILS</h2>
               <button onClick={paymentHandler}>EDIT</button>
             </div>
-            {userInfo[0].payment.type.length > 0 && (
+            {userPayment.type.length > 0 && (
               <>
                 <div className="block">
                   {editPayment ? (
@@ -229,7 +227,7 @@ const Settings = () => {
                       <div className="flex justify-center gap-2">
                         <div
                           className={`border border-2	rounded ${
-                            userInfo[0].payment.type === "PAYPAL" && "bg-white"
+                            userPayment.type === "PAYPAL" && "bg-white"
                           }`}
                         >
                           <img
@@ -249,7 +247,7 @@ const Settings = () => {
                         </div>
                         <div
                           className={`border border-2	rounded ${
-                            userInfo[0].payment.type === "CC" && "bg-white"
+                            userPayment.type === "CC" && "bg-white"
                           }`}
                         >
                           <img
@@ -273,7 +271,7 @@ const Settings = () => {
                     </>
                   ) : (
                     <>
-                      {userInfo[0].payment.type === "PAYPAL" ? (
+                      {userPayment.type === "PAYPAL" ? (
                         <>
                           <img
                             src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
@@ -307,6 +305,7 @@ const Settings = () => {
           />
         </div>
       )}
+      <DashboardNavbar />
     </>
   );
 };
