@@ -1,9 +1,10 @@
-import React, { useState, useEffect, memo, useMemo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import RelatedProducts from "./RelatedProducts";
 import LastSales from "./LastSales";
+import { useGetProduct } from "../api/product/product";
 import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
 import {
   ArrowTrendingUpIcon,
@@ -15,20 +16,18 @@ import {
 const ProductPage = () => {
   const [lowestAsk, setLowestAsk] = useState(0);
   const [highestBid, setHighestBid] = useState(0);
-  const [product, setProduct] = useState([]);
-  const [productName, setProductName] = useState("");
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [lastsales, setLastSales] = useState([]);
   const [showSales, setShowSales] = useState(false);
   const [showSizes, setShowSizes] = useState(false);
 
   const { id } = useParams();
+  const { isLoading, data } = useGetProduct(`/${id}`);
+  const productName = !isLoading ? data.name : "";
+  const lastSales = !isLoading ? data.lastsales : [];
 
   useEffect(() => {
     const fetchData = async () => {
-      const productData = await axios(`http://localhost:3001/${id}`);
       const relatedProductsData = await axios("http://localhost:3001/");
-      setProduct(productData.data);
       setRelatedProducts(relatedProductsData.data);
       setShowSales(false);
     };
@@ -37,19 +36,15 @@ const ProductPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (product.length > 0) {
+    if (!isLoading) {
       const setProductData = async () => {
-        setProductName(product[0].name);
-        const lowestAskAndHighestBid = await getLowestAskAndHighestBid(
-          product[0]
-        );
+        const lowestAskAndHighestBid = await getLowestAskAndHighestBid(data);
         setLowestAsk(lowestAskAndHighestBid[0]);
         setHighestBid(lowestAskAndHighestBid[1]);
-        setLastSales(product[0].lastsales);
       };
       setProductData();
     }
-  }, [product]);
+  }, [isLoading]);
 
   const showSizesHandler = () => {
     if (showSizes) {
@@ -63,8 +58,8 @@ const ProductPage = () => {
     <>
       <Navbar />
       <div className="w-full mt-8 lg:mt-10 2xl:mt-16 md:ml-3 lg:ml-48 xl:ml-60 2xl:ml-96">
-        {product.length > 0 &&
-          product.map((product) => {
+        {!isLoading &&
+          [data].map((product) => {
             const { id, name, thumbnail, releasedate, lastsales, sizes } =
               product;
 
@@ -86,7 +81,7 @@ const ProductPage = () => {
                     <img src={thumbnail} alt="Product" />
                   </div>
                   <div className="flex flex-col xl:mt-5 2xl:mt-14 ml-2 sm:w-[95%] md:w-1/2 lg:w-1/3 2xl:w-1/4 xl:h-96 md:mr-5">
-                    <div className="rounded border border-white border-solid h-3/5 mb-6">
+                    <div className="rounded border border-white border-solid h-3/5 mb-6 relative">
                       <button
                         className="w-11/12 m-4"
                         onClick={showSizesHandler}
@@ -104,12 +99,21 @@ const ProductPage = () => {
                         </span>
                       </button>
                       {showSizes && (
-                        <div className="grid grid-cols-3">
-                          <p className="col-span-3 text-center">ALL 20$</p>
-                          {sizes.map((size) => {
+                        <div className="absolute w-full h-3/5 -mt-3 bg-stone-900 grid grid-cols-3">
+                          <p className="col-span-3 text-center">
+                            ALL ${lowestAsk}
+                          </p>
+                          {data.asksBySize.map((ask) => {
+                            const { size, asks } = ask;
+                            let lowestAsk = "--";
+                            if (asks.length > 0) {
+                              lowestAsk = Math.min(...asks);
+                            }
                             return (
-                              <div key={size}>
-                                <p>{size}</p>
+                              <div key={size} className="ml-5">
+                                <p>
+                                  {size} ${lowestAsk}
+                                </p>
                               </div>
                             );
                           })}
@@ -130,7 +134,7 @@ const ProductPage = () => {
                       </p>
                     </div>
                     <div className="grid grid-cols-2 justify-between">
-                      {lastsales.length > 0 ? (
+                      {lastSales.length > 0 ? (
                         <>
                           <p className="text-lg">
                             Last Sale: {lastSale.price}$
@@ -188,7 +192,7 @@ const ProductPage = () => {
         />
       </div>
       <LastSales
-        lastsales={lastsales}
+        lastsales={lastSales}
         showSales={showSales}
         closeSales={() => setShowSales(false)}
       />

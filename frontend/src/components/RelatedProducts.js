@@ -15,6 +15,7 @@ const RelatedProducts = (props) => {
   const relatedProducts = props.relatedProducts;
   useEffect(() => {
     const formatRelatedProducts = async () => {
+      console.log(originalProductName);
       if (relatedProducts.length > 0 && relatedProducts) {
         const result = await Promise.all(
           relatedProducts

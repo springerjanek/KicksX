@@ -15,7 +15,6 @@ export const useGetAsks = (path) => {
       console.log(res.data);
       const result = await Promise.all(
         res.data.asks.map(async (ask) => {
-          console.log("soemka");
           if (ask.price !== null) {
             const data = await getLowestAskAndHighestBid(ask.name);
 
