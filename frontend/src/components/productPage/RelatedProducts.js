@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
+import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 import { CSSTransition } from "react-transition-group";
 
 const RelatedProducts = (props) => {

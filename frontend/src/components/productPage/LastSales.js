@@ -2,7 +2,6 @@ import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const LastSales = (props) => {
-  // test on 100000 sales (scroll)
   return (
     <>
       {props.showSales && (

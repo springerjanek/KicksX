@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPassword, resetErorr, resetSuccess } from "../redux/authSlice";
+import { resetPassword, resetErorr, resetSuccess } from "../../redux/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
 
 const ResetPasswordPage = () => {

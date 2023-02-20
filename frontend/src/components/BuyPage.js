@@ -1,5 +1,5 @@
 import React from "react";
-import BuySellTemplate from "./BuySellTemplate";
+import BuySellTemplate from "./productPage/BuySellTemplate";
 
 const BuyPage = () => {
   return (

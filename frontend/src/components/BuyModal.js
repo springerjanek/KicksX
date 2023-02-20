@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import Switcher from "./Switcher";
+import Switcher from "./ui/Switcher";
 import CompleteBuy from "./CompleteBuy";
 import UserInfoSummary from "./UserInfoSummary";
 
 const BuyModal = (props) => {
   const productData = props.productData;
-  const size = productData[0];
   const highestBid = productData[1];
-  const lowestAsk = productData[2];
   const [bidPrice, setBidPrice] = useState(highestBid);
   const [smartText, setSmartText] = useState("You are not the highest Bid");
   const [switchToPlaceBid, setSwitchToPlaceBid] = useState(false);
@@ -19,19 +17,10 @@ const BuyModal = (props) => {
   });
   const [showCompletePage, setShowCompletePage] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
-
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const userHavePaymentAndShipping =
-    userSummary.payment.length > 0 && userSummary.shipping.length > 0;
-  console.log(!switchToPlaceBid && lowestAsk.length == 2);
-  console.log(lowestAsk);
-  let x = 2;
-  console.log(x.length);
-
   useEffect(() => {
-    // if lowest ask =  0 (no ask)
     if (bidPrice < highestBid) {
       setSmartText("You are not the highest bid");
       setDisableButton(false);
@@ -55,10 +44,16 @@ const BuyModal = (props) => {
       setBidPrice(0);
     }
     if (!switchToPlaceBid && lowestAsk.length == 2) {
-      console.log("essa");
       setDisableButton(true);
     }
   }, [bidPrice, switchToPlaceBid]);
+
+  useEffect(() => {
+    if (props.isFromPlaceBid) {
+      setSwitchToPlaceBid(true);
+    }
+  }, [props.isFromPlaceBid]);
+  console.log(switchToPlaceBid);
 
   const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
   const uid = user.id;
@@ -66,6 +61,9 @@ const BuyModal = (props) => {
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
+
+  const size = productData[0];
+  const lowestAsk = productData[2];
 
   const switchHandler = () => {
     setSwitchToPlaceBid(!switchToPlaceBid);
@@ -85,14 +83,12 @@ const BuyModal = (props) => {
   };
 
   const disableButtonHandler = () => {
-    console.log("TEST");
     setDisableButton(true);
   };
 
   const enableButtonHandler = () => {
     if (lowestAsk !== "--") {
       setDisableButton(false);
-      console.log("WLACZENIE");
     }
   };
 

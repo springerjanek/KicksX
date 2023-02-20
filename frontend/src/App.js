@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Main from "./components/Main";
-import ProductPage from "./components/ProductPage";
+import ProductPage from "./components/productPage/ProductPage";
 import SellPage from "./components/SellPage";
 import BuyPage from "./components/BuyPage";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -13,10 +13,10 @@ import EditShipping from "./components/dashboard/EditShipping";
 import Selling from "./components/dashboard/Selling";
 import Buying from "./components/dashboard/Buying";
 
-import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
-import ForgotPasswordPage from "./components/ForgotPasswordPage";
-import ResetPasswordPage from "./components/ResetPasswordPage";
+import LoginPage from "./components/auth/LoginPage";
+import RegisterPage from "./components/auth/RegisterPage";
+import ForgotPasswordPage from "./components/auth/ForgotPasswordPage";
+import ResetPasswordPage from "./components/auth/ResetPasswordPage";
 import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();

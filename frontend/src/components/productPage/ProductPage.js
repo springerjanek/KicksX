@@ -1,17 +1,13 @@
 import React, { useState, useEffect, memo } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
+import Navbar from "../ui/Navbar";
 import RelatedProducts from "./RelatedProducts";
 import LastSales from "./LastSales";
-import { useGetProduct } from "../api/product/product";
-import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
-import {
-  ArrowTrendingUpIcon,
-  ArrowLongDownIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@heroicons/react/24/outline";
+import MarketActivity from "./MarketActivity";
+import { useGetProduct } from "../../api/product/product";
+import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
 const ProductPage = () => {
   const [lowestAsk, setLowestAsk] = useState(0);
@@ -60,19 +56,7 @@ const ProductPage = () => {
       <div className="w-full mt-8 lg:mt-10 2xl:mt-16 md:ml-3 lg:ml-48 xl:ml-60 2xl:ml-96">
         {!isLoading &&
           [data].map((product) => {
-            const { id, name, thumbnail, releasedate, lastsales, sizes } =
-              product;
-
-            const lastSale = lastsales[lastsales.length - 1];
-            const saleBeforeLastSale = lastsales[lastsales.length - 2];
-            const lastSalePriceHigherThanSaleBefore =
-              lastSale.price > saleBeforeLastSale.price;
-            const raisedSalePriceDifferencePercent =
-              (lastSale.price - saleBeforeLastSale.price) /
-              saleBeforeLastSale.price;
-            const reducedSalePriceDifferencePercent =
-              (saleBeforeLastSale.price - lastSale.price) /
-              saleBeforeLastSale.price;
+            const { id, name, thumbnail, releasedate } = product;
             return (
               <div key={id} className="text-white">
                 <h1 className="text-2xl font-bold sm:ml-2">{name}</h1>
@@ -99,8 +83,8 @@ const ProductPage = () => {
                         </span>
                       </button>
                       {showSizes && (
-                        <div className="absolute w-full h-3/5 -mt-3 bg-stone-900 grid grid-cols-3">
-                          <p className="col-span-3 text-center">
+                        <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium">
+                          <p className="col-span-3 text-center mt-1">
                             ALL ${lowestAsk}
                           </p>
                           {data.asksBySize.map((ask) => {
@@ -121,7 +105,9 @@ const ProductPage = () => {
                       )}
                       <div className="flex text-center">
                         <div className="rounded border  border-solid p-1.5 m-3 w-1/2">
-                          <p>Place Bid</p>
+                          <Link to={`/buy/${id}`} state={{ bid: true }}>
+                            Place Bid
+                          </Link>
                         </div>
                         <div className="rounded border border-solid p-1.5 m-3 w-1/2">
                           <Link to={`/buy/${id}`}>Buy For {lowestAsk}$</Link>
@@ -133,53 +119,10 @@ const ProductPage = () => {
                         </Link>
                       </p>
                     </div>
-                    <div className="grid grid-cols-2 justify-between">
-                      {lastSales.length > 0 ? (
-                        <>
-                          <p className="text-lg">
-                            Last Sale: {lastSale.price}$
-                          </p>
-                          <button
-                            onClick={() => setShowSales(true)}
-                            className="small-button"
-                          >
-                            View Sales
-                          </button>
-
-                          {lastSalePriceHigherThanSaleBefore ? (
-                            <div className="flex gap-1 text-green-600 text-lg">
-                              <ArrowTrendingUpIcon className="w-8 h-10" />
-                              <p className="mt-1">
-                                ${lastSale.price - saleBeforeLastSale.price}
-                              </p>
-                              <p className="mt-1">
-                                (%
-                                {Math.round(
-                                  raisedSalePriceDifferencePercent * 1000
-                                ) / 10}
-                                )
-                              </p>
-                            </div>
-                          ) : (
-                            <div className="flex gap-1 text-red-600 text-lg">
-                              <ArrowLongDownIcon className="w-8 h-10" />
-                              <p className="mt-1">
-                                -${saleBeforeLastSale.price - lastSale.price}
-                              </p>
-                              <p className="mt-1">
-                                (-%
-                                {Math.round(
-                                  reducedSalePriceDifferencePercent * 1000
-                                ) / 10}
-                                )
-                              </p>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        "--"
-                      )}
-                    </div>
+                    <MarketActivity
+                      lastSales={lastSales}
+                      showSales={() => setShowSales(true)}
+                    />
                   </div>
                 </div>
               </div>

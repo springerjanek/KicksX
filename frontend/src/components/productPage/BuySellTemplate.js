@@ -1,34 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
-import AskModal from "./AskModal";
-import BuyModal from "./BuyModal";
-import { getLowestAskAndHighestBid } from "../hooks/getLowestAskAndHighestBid";
-import { useGetProduct } from "../api/product/product";
+import React, { useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import AskModal from "../AskModal";
+import BuyModal from "../BuyModal";
+import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
+import { useGetProduct } from "../../api/product/product";
 
 const BuySellTemplate = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [productDataToModal, setProductDataToModal] = useState([]);
-  // const [asks, setAsks] = useState([]);
-  // const [bids, setBids] = useState([]);
   const [highestBid, setHighestBid] = useState("--");
   const [lowestAsk, setLowestAsk] = useState("--");
 
   const { id } = useParams();
+  const location = useLocation();
+  const isFromPlaceBid = location.state?.bid;
   const { isLoading, data } = useGetProduct(`/${id}`);
-  console.log(isLoading);
-
-  // useEffect(() => {
-  //   if (bids) {
-  //     changeLowestAskAndBid();
-  //   }
-  // }, [bids]);
 
   const changeLowestAskAndBid = async () => {
     if (data) {
       const dataFromFunction = await getLowestAskAndHighestBid(data);
       setLowestAsk(dataFromFunction[0]);
-
       setHighestBid(dataFromFunction[1]);
     }
   };
@@ -164,6 +155,7 @@ const BuySellTemplate = (props) => {
                 <BuyModal
                   product={data.name}
                   productData={productDataToModal}
+                  isFromPlaceBid={isFromPlaceBid}
                   turnOffModal={turnOffModal}
                 />
               )}

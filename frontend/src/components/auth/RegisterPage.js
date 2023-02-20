@@ -5,10 +5,10 @@ import {
   signUpWithGithub,
   resetErorr,
   resetSuccess,
-} from "../redux/authSlice";
+} from "../../redux/authSlice";
 
 import { useNavigate } from "react-router-dom";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
 
 const RegisterPage = () => {

@@ -6,9 +6,9 @@ import {
   signUpWithGithub,
   resetErorr,
   resetSuccess,
-} from "../redux/authSlice";
+} from "../../redux/authSlice";
 import WhiteFormContainer from "./WhiteFormContainer";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");

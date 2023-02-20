@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword, resetErorr, resetSuccess } from "../redux/authSlice";
-import { notify } from "../hooks/notify";
+import {
+  forgotPassword,
+  resetErorr,
+  resetSuccess,
+} from "../../redux/authSlice";
+import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
 
 const ForgotPasswordPage = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import CompleteSale from "./CompleteSale";
-import Switcher from "./Switcher";
+import Switcher from "./ui/Switcher";
 import Fees from "./Fees";
 import UserInfoSummary from "./UserInfoSummary";
 
