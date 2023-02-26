@@ -1,10 +1,11 @@
 import { useQuery } from "react-query";
 import axios from "axios";
+import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 
 const BASE_URL = "http://localhost:3001";
 
 export const useGetProduct = (path) => {
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["product"],
     refetchOnWindowFocus: false,
     queryFn: async () => {
@@ -36,7 +37,17 @@ export const useGetProduct = (path) => {
         bids: bid_by_size[size] !== undefined ? bid_by_size[size] : [],
       }));
 
-      return { ...data, asksBySize: asksBySize, bidsBySize: bidsBySize };
+      const lowestAskAndHighestBid = await getLowestAskAndHighestBid(data);
+      const lowestAsk = lowestAskAndHighestBid[0];
+      const highestBid = lowestAskAndHighestBid[1];
+
+      return {
+        ...data,
+        asksBySize: asksBySize,
+        bidsBySize: bidsBySize,
+        lowestAsk: lowestAsk,
+        highestBid: highestBid,
+      };
     },
   });
   return { isLoading, data };

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import AskModal from "../AskModal";
 import BuyModal from "../BuyModal";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 import { useGetProduct } from "../../api/product/product";
 
 const BuySellTemplate = (props) => {
@@ -14,13 +13,20 @@ const BuySellTemplate = (props) => {
   const { id } = useParams();
   const location = useLocation();
   const isFromPlaceBid = location.state?.bid;
+
   const { isLoading, data } = useGetProduct(`/${id}`);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setHighestBid(data.highestBid);
+      setLowestAsk(data.lowestAsk);
+    }
+  }, [isLoading, data]);
 
   const changeLowestAskAndBid = async () => {
     if (data) {
-      const dataFromFunction = await getLowestAskAndHighestBid(data);
-      setLowestAsk(dataFromFunction[0]);
-      setHighestBid(dataFromFunction[1]);
+      setLowestAsk(data.lowestAsk);
+      setHighestBid(data.highestBid);
     }
   };
 

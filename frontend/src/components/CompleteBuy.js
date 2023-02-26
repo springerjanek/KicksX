@@ -29,10 +29,9 @@ const CompleteBuy = (props) => {
 
   useEffect(() => {
     if (!isLoading) {
-      console.log(data);
       setThumbnail(data[0].thumbnail);
     }
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   const buyPayload = {
     uid: uid,

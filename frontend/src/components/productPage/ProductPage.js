@@ -1,46 +1,19 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import Navbar from "../ui/Navbar";
 import RelatedProducts from "./RelatedProducts";
 import LastSales from "./LastSales";
 import MarketActivity from "./MarketActivity";
 import { useGetProduct } from "../../api/product/product";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
 const ProductPage = () => {
-  const [lowestAsk, setLowestAsk] = useState(0);
-  const [highestBid, setHighestBid] = useState(0);
-  const [relatedProducts, setRelatedProducts] = useState([]);
   const [showSales, setShowSales] = useState(false);
   const [showSizes, setShowSizes] = useState(false);
 
   const { id } = useParams();
   const { isLoading, data } = useGetProduct(`/${id}`);
-  const productName = !isLoading ? data.name : "";
   const lastSales = !isLoading ? data.lastsales : [];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const relatedProductsData = await axios("http://localhost:3001/");
-      setRelatedProducts(relatedProductsData.data);
-      setShowSales(false);
-    };
-
-    fetchData().catch((e) => console.error(e));
-  }, [id]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      const setProductData = async () => {
-        const lowestAskAndHighestBid = await getLowestAskAndHighestBid(data);
-        setLowestAsk(lowestAskAndHighestBid[0]);
-        setHighestBid(lowestAskAndHighestBid[1]);
-      };
-      setProductData();
-    }
-  }, [isLoading]);
 
   const showSizesHandler = () => {
     if (showSizes) {
@@ -56,7 +29,7 @@ const ProductPage = () => {
       <div className="w-full mt-8 lg:mt-10 2xl:mt-16 md:ml-3 lg:ml-48 xl:ml-60 2xl:ml-96">
         {!isLoading &&
           [data].map((product) => {
-            const { id, name, thumbnail, releasedate } = product;
+            const { id, name, thumbnail } = product;
             return (
               <div key={id} className="text-white">
                 <h1 className="text-2xl font-bold sm:ml-2">{name}</h1>
@@ -83,9 +56,9 @@ const ProductPage = () => {
                         </span>
                       </button>
                       {showSizes && (
-                        <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium">
+                        <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium sizes">
                           <p className="col-span-3 text-center mt-1">
-                            ALL ${lowestAsk}
+                            ALL ${data.lowestAsk}
                           </p>
                           {data.asksBySize.map((ask) => {
                             const { size, asks } = ask;
@@ -110,12 +83,14 @@ const ProductPage = () => {
                           </Link>
                         </div>
                         <div className="rounded border border-solid p-1.5 m-3 w-1/2">
-                          <Link to={`/buy/${id}`}>Buy For {lowestAsk}$</Link>
+                          <Link to={`/buy/${id}`}>
+                            Buy For {data.lowestAsk}$
+                          </Link>
                         </div>
                       </div>
                       <p className="text-center 2xl:mt-4">
                         <Link to={`/sell/${id}`} className="text-green-500">
-                          Sell for {highestBid}$ or Ask for More
+                          Sell for {data.highestBid}$ or Ask for More
                         </Link>
                       </p>
                     </div>
@@ -125,14 +100,10 @@ const ProductPage = () => {
                     />
                   </div>
                 </div>
+                <RelatedProducts productName={data.name} />
               </div>
             );
           })}
-
-        <RelatedProducts
-          productName={productName}
-          relatedProducts={relatedProducts}
-        />
       </div>
       <LastSales
         lastsales={lastSales}

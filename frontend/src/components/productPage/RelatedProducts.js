@@ -1,43 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useGetRelatedProducts } from "../../api/product/relatedProducts";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
-import { CSSTransition } from "react-transition-group";
 
 const RelatedProducts = (props) => {
-  const [relatedProductsFormatted, setRelatedProductsFormatted] = useState([]);
   const originalProductName = props.productName;
   const splittedString = originalProductName.split(" ");
   const filterOne = splittedString[0];
   const filterTwo = splittedString[1];
   const combinedFilter = filterOne.concat(" ", filterTwo);
 
-  const relatedProducts = props.relatedProducts;
-  useEffect(() => {
-    const formatRelatedProducts = async () => {
-      console.log(originalProductName);
-      if (relatedProducts.length > 0 && relatedProducts) {
-        const result = await Promise.all(
-          relatedProducts
-            .filter(
-              (product) =>
-                product.name.includes(combinedFilter) &&
-                product.name !== originalProductName
-            )
-            .map(async (relatedProduct) => {
-              const { id, name, thumbnail } = relatedProduct;
-              const data = await getLowestAskAndHighestBid(relatedProduct);
-
-              let lowestAsk = data[0];
-              return { id, name, thumbnail, lowestAsk };
-            })
-        );
-
-        setRelatedProductsFormatted(result);
-      }
-    };
-    formatRelatedProducts();
-  }, [originalProductName]);
+  const { isLoading, data } = useGetRelatedProducts(
+    originalProductName,
+    combinedFilter
+  );
 
   return (
     <>
@@ -49,8 +25,8 @@ const RelatedProducts = (props) => {
         slidesToScroll={3}
         infinite={true}
       >
-        {relatedProductsFormatted.length > 0 &&
-          relatedProductsFormatted.map((relatedProduct) => {
+        {!isLoading &&
+          data.map((relatedProduct) => {
             const { id, name, thumbnail, lowestAsk } = relatedProduct;
 
             return (

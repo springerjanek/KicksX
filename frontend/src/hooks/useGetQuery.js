@@ -1,11 +1,10 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { notify } from "./notify";
 
 const BASE_URL = "http://localhost:3001";
 
 export const useGetQuery = (path, key) => {
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: [key],
     refetchOnWindowFocus: false,
     queryFn: async () => {
