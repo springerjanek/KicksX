@@ -12,7 +12,7 @@ const ProductPage = () => {
   const [showSizes, setShowSizes] = useState(false);
 
   const { id } = useParams();
-  const { isLoading, data } = useGetProduct(`/${id}`);
+  const { isLoading, data } = useGetProduct(`/${id}`, id);
   const lastSales = !isLoading ? data.lastsales : [];
 
   const showSizesHandler = () => {

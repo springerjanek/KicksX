@@ -19,6 +19,10 @@ body {
   background-attachment: fixed;
 }
 
+.bg-og {
+  background-color: #131312;
+}
+
 .sizes {
   animation: fadeIn 0.3s;
 }

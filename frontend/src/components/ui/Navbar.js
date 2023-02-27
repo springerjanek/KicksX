@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useGetQuery } from "../../hooks/useGetQuery";
 import {
   MagnifyingGlassIcon,
   UserCircleIcon,
@@ -12,6 +13,8 @@ const Navbar = () => {
   const [products, setProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState(false);
   const [showMobileInput, setShowMobileInput] = useState(false);
+
+  const { isLoading, data } = useGetQuery("/", "navbar");
 
   const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
@@ -26,39 +29,29 @@ const Navbar = () => {
     setInput(event.target.value);
   };
 
-  function search() {
+  const search = () => {
     const matches = [];
     const rest = [];
-    products.forEach((product) => {
-      const formattedProductTitle = product.name.toLowerCase();
-      formattedProductTitle.includes(input.toLowerCase())
-        ? matches.push(product)
-        : rest.push(product);
-    });
-    matches.push(...rest);
-    setProducts(matches);
-  }
+    if (!isLoading) {
+      data.forEach((product) => {
+        const formattedProductTitle = product.name.toLowerCase();
+        formattedProductTitle.includes(input.toLowerCase())
+          ? matches.push(product)
+          : rest.push(product);
+      });
+      matches.push(...rest);
+      setProducts(matches);
+    }
+  };
 
   useEffect(() => {
     search();
     if (input.length === 0) {
       setDisplayProducts(false);
-      console.log("input is empty");
     } else {
       setDisplayProducts(true);
     }
   }, [input]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch("http://localhost:3001");
-      const json = await data.json();
-      console.log(json);
-      setProducts(json);
-    };
-
-    fetchData().catch(console.error);
-  }, []);
 
   useEffect(() => {
     setInput("");
@@ -69,11 +62,15 @@ const Navbar = () => {
     setInput("");
   };
 
+  console.log(displayProducts, input);
+
   return (
     <>
       <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
         <div className="sm:m-auto md:m-0">
-          <h2 className="mt-2 md:ml-0">PerkeX</h2>
+          <Link to={"/"}>
+            <h2 className=" mt-2 md:ml-0">KicksX</h2>
+          </Link>
         </div>
 
         <input
@@ -100,7 +97,10 @@ const Navbar = () => {
             />
           )}
         </div>
-        <h3 className="mt-2 sm:hidden md:block">Sell</h3>
+        <Link to={"/sell"}>
+          <h3 className="mt-2 sm:hidden md:block">Sell</h3>
+        </Link>
+
         {isLoggedCondition ? (
           <Link to={"/dashboard/profile"}>
             <h3 className="mt-2 sm:hidden md:block">Dashboard</h3>
@@ -122,18 +122,48 @@ const Navbar = () => {
           </>
         )}
       </div>
-      <div className="mt-5">
-        {displayProducts &&
-          products.map((product) => {
-            const { id, name } = product;
 
-            return (
-              <div key={id} className="text-white">
-                <Link to={`/product/${id}`}>{name}</Link>
-              </div>
-            );
-          })}
-      </div>
+      {displayProducts && (
+        <>
+          <div className="mt-10 fixed z-10 w-full h-full	 overflow-y-scroll search-products ">
+            {products.map((product) => {
+              const { id, name, thumbnail } = product;
+              const splittedName = name.split(" ");
+              const first =
+                splittedName[0] === "NIKE"
+                  ? splittedName[0] +
+                    " " +
+                    splittedName[1] +
+                    " " +
+                    splittedName[2]
+                  : splittedName[0] + " " + splittedName[1];
+              const second =
+                splittedName[3] && splittedName[3] !== "GS"
+                  ? splittedName[3] + " " + splittedName[4]
+                  : splittedName[2];
+              const third = splittedName[3] === "GS" && " " + splittedName[3];
+              const fourth = splittedName[5] && " " + splittedName[5];
+
+              return (
+                <div key={id} className="text-white flex bg-og p-1">
+                  <Link
+                    to={`/product/${id}`}
+                    className="flex gap-5 items-center ml-[400px]"
+                  >
+                    <img src={thumbnail} className="w-40 h-28" />
+
+                    {first}
+                    <br></br>
+                    {second}
+                    {third}
+                    {fourth}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </>
   );
 };

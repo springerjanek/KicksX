@@ -10,6 +10,7 @@ import BuyPage from "./components/BuyPage";
 import Dashboard from "./components/dashboard/Dashboard";
 import Settings from "./components/dashboard/Settings";
 import EditShipping from "./components/dashboard/EditShipping";
+import NavbarSell from "./components/NavbarSell";
 import Selling from "./components/dashboard/Selling";
 import Buying from "./components/dashboard/Buying";
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="*" element={<Navigate replace to={"/"} />} />
             <Route path="/" element={<Main />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/sell" element={<NavbarSell />} />
             <Route path="/sell/:id" element={<SellPage />} />
             <Route path="/buy/:id" element={<BuyPage />} />
             {isLoggedCondition && (

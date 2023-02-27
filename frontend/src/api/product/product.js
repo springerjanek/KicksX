@@ -4,9 +4,9 @@ import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid
 
 const BASE_URL = "http://localhost:3001";
 
-export const useGetProduct = (path) => {
+export const useGetProduct = (path, key) => {
   const { isLoading, data } = useQuery({
-    queryKey: ["product"],
+    queryKey: [key],
     refetchOnWindowFocus: false,
     queryFn: async () => {
       const response = await axios.get(`${BASE_URL + path}`);

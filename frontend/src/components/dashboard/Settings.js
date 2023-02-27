@@ -1,10 +1,10 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { notify } from "../../hooks/notify";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import DashboardNavbar from "./DashboardNavbar";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 const Settings = () => {
   const [userData, setUserData] = useState([]);
@@ -120,12 +120,13 @@ const Settings = () => {
     <>
       {!loading ? (
         <>
-          <div className="text-center">
-            <h1 className="text-2xl">GENERAL SETTINGS</h1>
-            <div className="flex justify-center gap-">
-              <h2>SHIPPING INFO</h2>
-
-              <button onClick={shippingHandler}>EDIT</button>
+          <div className="text-center text-xl">
+            <h1 className="text-2xl font-bold mt-5">GENERAL SETTINGS</h1>
+            <div className="flex justify-center items-center gap-2">
+              <h2 className=" mt-5 mb-2">SHIPPING INFO</h2>
+              <button onClick={shippingHandler}>
+                <PencilSquareIcon className="w-6 h-6 mt-3" />
+              </button>
             </div>
             {userShipping.street.length > 0 &&
               (console.log(userShipping),
@@ -141,9 +142,12 @@ const Settings = () => {
                   </div>
                 </>
               ))}
-            <div className="flex justify-center mt-16 mb-1">
+
+            <div className="flex justify-center mt-16 mb-1 gap-2">
               <h2>PAYOUT DETAILS</h2>
-              <button onClick={payoutHandler}>EDIT</button>
+              <button onClick={payoutHandler}>
+                <PencilSquareIcon className="w-6 h-6" />
+              </button>
             </div>
             {userPayout.type.length > 0 && (
               <>
@@ -192,7 +196,12 @@ const Settings = () => {
                           />
                         </div>
                       </div>
-                      <button>BACK</button>
+                      <button
+                        className="mr-2"
+                        onClick={() => setEditPayout(false)}
+                      >
+                        BACK
+                      </button>
                       <button onClick={editPayoutHandler}>SAVE</button>
                     </>
                   ) : (
@@ -215,9 +224,11 @@ const Settings = () => {
                 </div>
               </>
             )}
-            <div className="flex justify-center mt-16 mb-1">
+            <div className="flex justify-center mt-16 mb-1 gap-2">
               <h2>PAYMENT DETAILS</h2>
-              <button onClick={paymentHandler}>EDIT</button>
+              <button onClick={paymentHandler}>
+                <PencilSquareIcon className="w-6 h-6" />
+              </button>
             </div>
             {userPayment.type.length > 0 && (
               <>
@@ -266,7 +277,12 @@ const Settings = () => {
                           />
                         </div>
                       </div>
-                      <button>BACK</button>
+                      <button
+                        onClick={() => setEditPayment(false)}
+                        className="mr-2"
+                      >
+                        BACK
+                      </button>
                       <button onClick={editPaymentHandler}>SAVE</button>
                     </>
                   ) : (
