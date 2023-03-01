@@ -23,7 +23,7 @@ body {
   background-color: #131312;
 }
 
-.sizes {
+.fadeIn {
   animation: fadeIn 0.3s;
 }
 
@@ -37,6 +37,14 @@ body {
   -webkit-transform: translateX(100%);
   animation: slide 0.5s forwards;
   -webkit-animation: slide 0.5s forwards;
+}
+
+.dash-nav {
+  display: grid;
+  grid-template-columns: 30px 10px;
+  grid-template-rows: 30px 30px 30px;
+  margin-left: 20px;
+  margin-top: 5px;
 }
 
 @keyframes fadeIn {

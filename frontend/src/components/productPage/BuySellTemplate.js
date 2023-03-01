@@ -14,14 +14,16 @@ const BuySellTemplate = (props) => {
   const location = useLocation();
   const isFromPlaceBid = location.state?.bid;
 
-  const { isLoading, data } = useGetProduct(`/${id}`);
+  const { isLoading, data } = useGetProduct(`/${id}`, id);
+
+  console.log("DATA:", data);
 
   useEffect(() => {
     if (!isLoading) {
       setHighestBid(data.highestBid);
       setLowestAsk(data.lowestAsk);
     }
-  }, [isLoading, data]);
+  }, [isLoading]);
 
   const changeLowestAskAndBid = async () => {
     if (data) {
@@ -77,7 +79,7 @@ const BuySellTemplate = (props) => {
             !showModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
           }`}
         >
-          {data && (
+          {!isLoading && (
             <div key={data.id}>
               <h1>{data.name}</h1>
               <div className="flex gap-2 justify-center mb-2 lg:mb-10">

@@ -25,13 +25,16 @@ const CompleteBuy = (props) => {
 
   const navigate = useNavigate();
 
-  const { data, isLoading } = useGetQuery(`/?name=${name}`);
+  const { data, isLoading } = useGetQuery(`/?name=${name}`, "buy");
+
+  console.log("xD:", thumbnail);
 
   useEffect(() => {
     if (!isLoading) {
+      console.log(data);
       setThumbnail(data[0].thumbnail);
     }
-  }, [isLoading, data]);
+  }, [isLoading]);
 
   const buyPayload = {
     uid: uid,

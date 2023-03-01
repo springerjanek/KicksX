@@ -89,6 +89,8 @@ const Settings = () => {
     }
   }, [uid]);
 
+  console.log(userPayout);
+
   const shippingHandler = () => {
     navigate("/dashboard/settings/shipping");
   };
@@ -149,162 +151,154 @@ const Settings = () => {
                 <PencilSquareIcon className="w-6 h-6" />
               </button>
             </div>
-            {userPayout.type.length > 0 && (
-              <>
-                <div className="block">
-                  {editPayout ? (
-                    <>
-                      <div className="flex justify-center gap-2">
-                        <div
-                          className={`border border-2	rounded ${
-                            userPayout.type === "PAYPAL" && "bg-white"
-                          }`}
-                        >
-                          <img
-                            src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
-                            className="w-26 h-16"
-                            onClick={() =>
-                              setUserInfo((prev) =>
-                                prev.map((info) => {
-                                  return {
-                                    ...info,
-                                    payout: { type: "PAYPAL" },
-                                  };
-                                })
-                              )
-                            }
-                          />
-                        </div>
-                        <div
-                          className={`border border-2	rounded ${
-                            userPayout.type === "CC" && "bg-white"
-                          }`}
-                        >
-                          <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                            className="w-26 h-10 mt-2 mr-1 "
-                            onClick={() =>
-                              setUserInfo((prev) =>
-                                prev.map((info) => {
-                                  return {
-                                    ...info,
-                                    payout: { type: "CC" },
-                                  };
-                                })
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                      <button
-                        className="mr-2"
-                        onClick={() => setEditPayout(false)}
-                      >
-                        BACK
-                      </button>
-                      <button onClick={editPayoutHandler}>SAVE</button>
-                    </>
-                  ) : (
-                    <>
-                      {userPayout.type === "PAYPAL" ? (
-                        <>
-                          <img
-                            src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
-                            className="w-24 h-14 ml-auto mr-auto"
-                          />
-                        </>
-                      ) : (
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                          className="w-24 ml-auto mr-auto"
-                        />
-                      )}
-                    </>
+
+            <div className="block">
+              {editPayout ? (
+                <>
+                  <div className="flex justify-center gap-2">
+                    <div
+                      className={`border border-2	rounded ${
+                        userPayout.type === "PAYPAL" && "bg-white"
+                      }`}
+                    >
+                      <img
+                        src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
+                        className="w-26 h-16"
+                        onClick={() =>
+                          setUserInfo((prev) =>
+                            prev.map((info) => {
+                              return {
+                                ...info,
+                                payout: { type: "PAYPAL" },
+                              };
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                    <div
+                      className={`border border-2	rounded ${
+                        userPayout.type === "CC" && "bg-white"
+                      }`}
+                    >
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                        className="w-26 h-10 mt-2 mr-1 "
+                        onClick={() =>
+                          setUserInfo((prev) =>
+                            prev.map((info) => {
+                              return {
+                                ...info,
+                                payout: { type: "CC" },
+                              };
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                  <button className="mr-2" onClick={() => setEditPayout(false)}>
+                    BACK
+                  </button>
+                  <button onClick={editPayoutHandler}>SAVE</button>
+                </>
+              ) : (
+                <>
+                  {userPayout.type === "PAYPAL" && (
+                    <img
+                      src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
+                      className="w-24 h-14 ml-auto mr-auto"
+                    />
                   )}
-                </div>
-              </>
-            )}
+                  {userPayout.type === "CC" && (
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                      className="w-24 ml-auto mr-auto"
+                    />
+                  )}
+                  {userPayout.type === "" && <p>Set your payout!</p>}
+                </>
+              )}
+            </div>
+
             <div className="flex justify-center mt-16 mb-1 gap-2">
               <h2>PAYMENT DETAILS</h2>
               <button onClick={paymentHandler}>
                 <PencilSquareIcon className="w-6 h-6" />
               </button>
             </div>
-            {userPayment.type.length > 0 && (
-              <>
-                <div className="block">
-                  {editPayment ? (
-                    <>
-                      <div className="flex justify-center gap-2">
-                        <div
-                          className={`border border-2	rounded ${
-                            userPayment.type === "PAYPAL" && "bg-white"
-                          }`}
-                        >
-                          <img
-                            src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
-                            className="w-26 h-16"
-                            onClick={() =>
-                              setUserInfo((prev) =>
-                                prev.map((info) => {
-                                  return {
-                                    ...info,
-                                    payment: { type: "PAYPAL" },
-                                  };
-                                })
-                              )
-                            }
-                          />
-                        </div>
-                        <div
-                          className={`border border-2	rounded ${
-                            userPayment.type === "CC" && "bg-white"
-                          }`}
-                        >
-                          <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                            className="w-26 h-10 mt-2 mr-1 "
-                            onClick={() =>
-                              setUserInfo((prev) =>
-                                prev.map((info) => {
-                                  return {
-                                    ...info,
-                                    payment: { type: "CC" },
-                                  };
-                                })
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setEditPayment(false)}
-                        className="mr-2"
-                      >
-                        BACK
-                      </button>
-                      <button onClick={editPaymentHandler}>SAVE</button>
-                    </>
-                  ) : (
-                    <>
-                      {userPayment.type === "PAYPAL" ? (
-                        <>
-                          <img
-                            src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
-                            className="w-24 h-14 ml-auto mr-auto"
-                          />
-                        </>
-                      ) : (
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                          className="w-24 ml-auto mr-auto"
-                        />
-                      )}
-                    </>
+
+            <div className="block">
+              {editPayment ? (
+                <>
+                  <div className="flex justify-center gap-2">
+                    <div
+                      className={`border border-2	rounded ${
+                        userPayment.type === "PAYPAL" && "bg-white"
+                      }`}
+                    >
+                      <img
+                        src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
+                        className="w-26 h-16"
+                        onClick={() =>
+                          setUserInfo((prev) =>
+                            prev.map((info) => {
+                              return {
+                                ...info,
+                                payment: { type: "PAYPAL" },
+                              };
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                    <div
+                      className={`border border-2	rounded ${
+                        userPayment.type === "CC" && "bg-white"
+                      }`}
+                    >
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                        className="w-26 h-10 mt-2 mr-1 "
+                        onClick={() =>
+                          setUserInfo((prev) =>
+                            prev.map((info) => {
+                              return {
+                                ...info,
+                                payment: { type: "CC" },
+                              };
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setEditPayment(false)}
+                    className="mr-2"
+                  >
+                    BACK
+                  </button>
+                  <button onClick={editPaymentHandler}>SAVE</button>
+                </>
+              ) : (
+                <>
+                  {userPayment.type === "PAYPAL" && (
+                    <img
+                      src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
+                      className="w-24 h-14 ml-auto mr-auto"
+                    />
                   )}
-                </div>
-              </>
-            )}
+                  {userPayment.type === "CC" && (
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                      className="w-24 ml-auto mr-auto"
+                    />
+                  )}
+                  {userPayment.type === "" && <p>Set your payment!</p>}
+                </>
+              )}
+            </div>
           </div>
         </>
       ) : (

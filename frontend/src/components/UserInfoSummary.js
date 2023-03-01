@@ -82,7 +82,7 @@ const UserInfoSummary = (props) => {
   }, [shippingText, paymentText, payoutText]);
 
   const editHandler = () => {
-    navigate("/settings");
+    navigate("/dashboard/settings");
   };
 
   return (

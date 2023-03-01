@@ -93,7 +93,7 @@ const Navbar = () => {
           ) : (
             <UserCircleIcon
               className="h-5 w-5"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/dashboard/profile")}
             />
           )}
         </div>

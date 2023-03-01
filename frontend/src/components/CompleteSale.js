@@ -35,7 +35,7 @@ const CompleteSale = (props) => {
     setDisableButton(true);
   };
 
-  const { data, isLoading } = useGetQuery(`/?name=${name}`);
+  const { data, isLoading } = useGetQuery(`/?name=${name}`, "sell");
   console.log(data);
   useEffect(() => {
     if (!isLoading) {

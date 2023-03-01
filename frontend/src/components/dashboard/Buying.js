@@ -20,7 +20,7 @@ const Buying = () => {
 
   return (
     <>
-      <div className="ml-96">
+      <div className=" md:ml-56 lg:ml-96">
         <div className="flex gap-20 text-xl mt-20 mb-5">
           <button onClick={() => setShowHistory(false)}>Current Bids</button>
           <button onClick={() => setShowHistory(true)}>History</button>

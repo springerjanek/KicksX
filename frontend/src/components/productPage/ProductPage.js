@@ -56,7 +56,7 @@ const ProductPage = () => {
                         </span>
                       </button>
                       {showSizes && (
-                        <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium sizes">
+                        <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium fadeIn">
                           <p className="col-span-3 text-center mt-1">
                             ALL ${data.lowestAsk}
                           </p>
