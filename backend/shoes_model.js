@@ -3,9 +3,9 @@ const Pool = require("pg").Pool;
 const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_DB_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_DB_PORT}/${process.env.POSTGRES_DB_NAME}`;
 const pool = new Pool({
   connectionString: connectionString,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
 });
 const getAllShoes = () => {
   return new Promise(function (resolve, reject) {
