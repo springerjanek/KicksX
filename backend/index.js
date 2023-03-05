@@ -3,7 +3,7 @@ dotenv.config();
 const express = require("express");
 const app = express();
 const port = process.env.EXPRESS_PORT || 5000;
-
+console.log(port);
 const shoes_model = require("./shoes_model");
 const user_model = require("./user_model");
 

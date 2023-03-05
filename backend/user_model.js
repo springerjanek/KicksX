@@ -8,12 +8,12 @@ const db = getFirestore();
 
 const Pool = require("pg").Pool;
 
+const connectionString = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_DB_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_DB_PORT}/${process.env.POSTGRES_DB_NAME}`;
 const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB_NAME,
-  password: process.env.POSTGRES_DB_PASSWORD,
-  port: process.env.POSTGRES_DB_PORT,
+  connectionString: connectionString,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 const createUserData = (uid) => {
