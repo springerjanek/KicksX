@@ -183,7 +183,6 @@ const authSlice = createSlice({
         axios.post("http://localhost:3001/createUserData/", {
           uid: uid,
         });
-        console.log("POSTING USER TO DB");
         state.error = "";
         state.success = "Successfully signed up! You may now log in";
       }

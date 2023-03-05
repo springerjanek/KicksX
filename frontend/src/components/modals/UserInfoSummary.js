@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
@@ -25,8 +25,6 @@ const UserInfoSummary = (props) => {
         `http://localhost:3001/getUserData/${uid}`
       );
 
-      console.log("FETCHING...");
-
       setUserData(userData.data);
       setLoading(false);
     };
@@ -43,7 +41,6 @@ const UserInfoSummary = (props) => {
   const userHaveShipping = !loading && userData.shipping.street.length > 0;
   const userHavePayment = !loading && userData.payment.type.length > 0;
   const userHavePayout = !loading && userData.payout.type.length > 0;
-  const userHavePaymentAndShipping = userHavePayment && userHaveShipping;
 
   const getUserData = () => {
     if (props.type === "buying") {

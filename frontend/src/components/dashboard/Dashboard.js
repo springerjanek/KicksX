@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
 import { useGetQuery } from "../../hooks/useGetQuery";
+import { ThreeDots } from "react-loader-spinner";
 import Navbar from "./DashboardNavbar";
 
 const Dashboard = () => {
@@ -19,7 +20,7 @@ const Dashboard = () => {
     <>
       <div className="text-center mt-5 text-white">
         <h2 className="text-2xl font-medium">DASHBOARD</h2>
-        <div className="text-lg mt-5 left-0 right-0">
+        <div className="text-lg mt-5">
           {!isLoading ? (
             <p>
               Hello {data.shipping.name.length > 0 ? data.shipping.name : ""} 😎{" "}
@@ -34,7 +35,18 @@ const Dashboard = () => {
               {data.sales.length - 1} Sales
             </p>
           ) : (
-            ""
+            <div className="absolute left-1/2 ml-[-50px]">
+              <ThreeDots
+                height="80"
+                width="100"
+                radius="9"
+                color="#ffffff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{ textAlign: "center" }}
+                wrapperClassName=""
+                visible={true}
+              />
+            </div>
           )}
           <Link to={"/forgot-password"}>Reset Your Password</Link>
 

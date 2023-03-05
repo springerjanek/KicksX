@@ -148,7 +148,7 @@ const Navbar = () => {
                 <div key={id} className="text-white flex bg-og p-1">
                   <Link
                     to={`/product/${id}`}
-                    className="flex gap-5 items-center ml-[400px]"
+                    className="flex gap-5 items-center ml-8 md:ml-[140px] lg:ml-[200px] xl:ml-[350px] 2xl:ml-[400px]"
                   >
                     <img src={thumbnail} className="w-40 h-28" />
 

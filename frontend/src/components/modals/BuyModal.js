@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import Switcher from "./ui/Switcher";
-import CompleteBuy from "./CompleteBuy";
+import Switcher from "../ui/Switcher";
+import CompleteBuy from "../completeBuySell/CompleteBuy";
 import UserInfoSummary from "./UserInfoSummary";
 
 const BuyModal = (props) => {

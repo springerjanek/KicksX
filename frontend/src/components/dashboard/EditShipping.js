@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -48,10 +48,10 @@ const EditShipping = () => {
 
   return (
     <>
-      <div className="text-center mt-10 w-max ml-auto mr-auto">
+      <div className="text-center mt-10 2xl:w-1/3 ml-auto mr-auto">
         <h1 className="text-2xl">Shipping</h1>
-        <p className="text-xl">Please provide your shipping info</p>
-        <div className="text-left">
+        <p className="text-xl ">Please provide your shipping info</p>
+        <div className="text-left p-5">
           <h2 className="text-xl mt-8 mb-1">Shipping Info</h2>
           <form className="text-black" onSubmit={handleSubmit(formHandler)}>
             <label htmlFor="name" className="block text-white">
@@ -98,7 +98,7 @@ const EditShipping = () => {
                   <Select
                     onChange={(e) => field.onChange(e)}
                     styles={{
-                      control: (styles) => ({ ...styles, width: "500px" }),
+                      control: (styles) => ({ ...styles, width: "375px" }),
                     }}
                     id="country"
                     options={options}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import AskModal from "../AskModal";
-import BuyModal from "../BuyModal";
+import AskModal from "../modals/AskModal";
+import BuyModal from "../modals/BuyModal";
 import { useGetProduct } from "../../api/product/product";
 
 const BuySellTemplate = (props) => {

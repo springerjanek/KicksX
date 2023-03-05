@@ -5,9 +5,9 @@ import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { notify } from "../hooks/notify";
+import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
-import { useGetQuery } from "../hooks/useGetQuery";
+import { useGetQuery } from "../../hooks/useGetQuery";
 
 const CompleteSale = (props) => {
   const [thumbnail, setThumbnail] = useState("");

@@ -20,21 +20,21 @@ const Selling = () => {
 
   return (
     <>
-      <div className="ml-96">
+      <div className="sm:ml-5 md:ml-48 lg:ml-56 xl:ml-96">
         <div className="flex gap-20 text-xl mt-20 mb-5">
           <button onClick={() => setShowHistory(false)}>Current Asks</button>
           <button onClick={() => setShowHistory(true)}>History</button>
         </div>
-        <div className="flex gap-10 text-xl mb-2">
+        <div className="flex gap-1 md:gap-8 text-xl mb-2">
           <p>Item</p>
           {!showHistory ? (
             <>
-              <p className="ml-52">Ask Price </p>
+              <p className="ml-20 md:ml-[137px] xl:ml-56">Ask Price </p>
               <p>Highest Bid </p>
               <p>Lowest Ask</p>
             </>
           ) : (
-            <p className="ml-52">Sell Price</p>
+            <p className="ml-48 md:ml-[215px]">Sell Price</p>
           )}
         </div>
         {!showHistory ? (
@@ -63,13 +63,18 @@ const Selling = () => {
                   <div key={id} className="flex gap-4">
                     {condition && (
                       <>
-                        <img src={thumbnail} className="w-24 h-20" />
-                        <div className="flex flex-col">
-                          <p> {name}</p>
-                          <p> Size: {size}</p>
+                        <div className="flex sm:flex-col md:flex-row gap-2">
+                          <img
+                            src={thumbnail}
+                            className="w-24 h-20 sm:-mt-8 md:-mt-0"
+                          />
+                          <div className="flex flex-col sm:w-24 md:w-20 xl:w-fit">
+                            <p> {name}</p>
+                            <p> Size: {size}</p>
+                          </div>
                         </div>
-                        <p>${price}</p>
-                        <div className="flex ml-[60px] gap-x-[110px]">
+                        <p className="sm:ml-3 ml-0">${price}</p>
+                        <div className="flex ml-8 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
                           <p>${highestBid}</p>
                           <p>${lowestAsk}</p>
                         </div>

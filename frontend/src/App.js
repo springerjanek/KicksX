@@ -10,7 +10,7 @@ import BuyPage from "./components/BuyPage";
 import Dashboard from "./components/dashboard/Dashboard";
 import Settings from "./components/dashboard/Settings";
 import EditShipping from "./components/dashboard/EditShipping";
-import NavbarSell from "./components/NavbarSell";
+import NavbarSell from "./components/ui/NavbarSell";
 import Selling from "./components/dashboard/Selling";
 import Buying from "./components/dashboard/Buying";
 

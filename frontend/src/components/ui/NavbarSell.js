@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetQuery } from "../hooks/useGetQuery";
+import { useGetQuery } from "../../hooks/useGetQuery";
 import { Link } from "react-router-dom";
 
 const NavbarSell = () => {
@@ -48,7 +48,7 @@ const NavbarSell = () => {
         placeholder="Search for sneaker"
         value={input}
         onChange={handleSearch}
-        className="w-1/3 h-10 p-2 mt-1 rounded text-black text-lg "
+        className="sm:w-2/3 xl:w-1/3 h-10 p-2 mt-1 rounded text-black text-lg "
       />
       <div className="mt-5">
         {displayProducts && (
@@ -76,7 +76,7 @@ const NavbarSell = () => {
                   <div key={id} className="text-white bg-og p-1">
                     <Link
                       to={`/sell/${id}`}
-                      className="flex gap-5 items-center ml-[630px]"
+                      className="flex gap-5 items-center ml-8 md:ml-[140px] lg:ml-[200px] xl:ml-[420px] 2xl:ml-[630px]"
                     >
                       <img src={thumbnail} className="w-40 h-28" />
 

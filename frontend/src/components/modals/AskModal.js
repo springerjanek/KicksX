@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import CompleteSale from "./CompleteSale";
-import Switcher from "./ui/Switcher";
-import Fees from "./Fees";
+import CompleteSale from "../completeBuySell/CompleteSale";
+import Switcher from "../ui/Switcher";
+import Fees from "../completeBuySell/Fees";
 import UserInfoSummary from "./UserInfoSummary";
 
 const AskModal = (props) => {
