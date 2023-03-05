@@ -93,7 +93,7 @@ export const registerFunction = createAsyncThunk(
 export const forgotPassword = createAsyncThunk("auth/forgot", async (email) => {
   try {
     await auth.sendPasswordResetEmail(email, {
-      url: "http://localhost:3000/login",
+      url: "https://spectacular-mochi-986130.netlify.app/login",
     });
   } catch (err) {
     return err.message;
