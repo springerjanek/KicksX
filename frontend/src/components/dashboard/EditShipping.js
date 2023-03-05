@@ -22,7 +22,7 @@ const EditShipping = () => {
   const formHandler = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:3001/shipping", {
+      .post("https://kicksx.onrender.com/shipping", {
         uid: uid,
         name: data.name,
         surname: data.surname,

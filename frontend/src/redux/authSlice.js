@@ -180,7 +180,7 @@ const authSlice = createSlice({
         state.success = "";
       } else {
         const uid = action.payload[0];
-        axios.post("http://localhost:3001/createUserData/", {
+        axios.post("https://kicksx.onrender.com/createUserData/", {
           uid: uid,
         });
         state.error = "";

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://kicksx.onrender.com";
 
 export const useGetQuery = (path, key) => {
   const { isLoading, data } = useQuery({
