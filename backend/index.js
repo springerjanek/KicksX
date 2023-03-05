@@ -54,19 +54,6 @@ app.get("/:id", (req, res) => {
   }
 });
 
-// app.get("/get", (req, res) => {
-//   console.log("XD");
-
-//   shoes_model
-//     .getSpecificShoeByName(req.query.name)
-//     .then((response) => {
-//       res.status(200).send(response);
-//     })
-//     .catch((error) => {
-//       res.status(500).send(error);
-//     });
-// });
-
 app.post("/createUserData", (req, res) => {
   user_model
     .createUserData(req.body.uid)
@@ -146,6 +133,18 @@ app.post("/deleteBid", (req, res) => {
     });
 });
 
+app.post("/deleteAsk", (req, res) => {
+  user_model
+    .deleteUserAsk(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
 app.post("/payout", (req, res) => {
   user_model
     .setUserPayout(req.body)
@@ -159,7 +158,7 @@ app.post("/payout", (req, res) => {
 
 app.post("/payment", (req, res) => {
   user_model
-    .etUserPayment(req.body)
+    .setUserPayment(req.body)
     .then((response) => {
       res.status(200).send(response);
     })

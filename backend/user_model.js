@@ -203,19 +203,45 @@ const deleteUserBid = (payload) => {
           name: payload.name,
           price: payload.price,
           size: payload.size,
+          thumbnail: payload.thumbnail,
         }),
       });
-    pool.query(
-      `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
-    );
-    db.collection("users")
-      .doc(payload.uid)
-      .get()
-      .then((doc) => {
-        resolve(["Successfully deleted bid!", doc.data()]);
+    pool
+      .query(
+        `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
+      )
+      .then(() => {
+        resolve("Successfully deleted bid!");
       })
       .catch((error) => {
         reject("Error deleting bid: ", error);
+        console.log(error);
+      });
+  });
+};
+
+const deleteUserAsk = (payload) => {
+  return new Promise(function (resolve, reject) {
+    db.collection("users")
+      .doc(payload.uid)
+      .update({
+        asks: FieldValue.arrayRemove({
+          id: payload.id,
+          name: payload.name,
+          price: payload.price,
+          size: payload.size,
+          thumbnail: payload.thumbnail,
+        }),
+      });
+    pool
+      .query(
+        `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+      )
+      .then(() => {
+        resolve("Successfully deleted ask!");
+      })
+      .catch((error) => {
+        reject("Error deleting ask: ", error);
         console.log(error);
       });
   });
@@ -304,6 +330,7 @@ module.exports = {
   setUserPurchases,
   setUserSales,
   deleteUserBid,
+  deleteUserAsk,
   setUserShipping,
   setUserPayout,
   setUserPayment,
