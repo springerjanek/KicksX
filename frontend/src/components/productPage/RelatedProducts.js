@@ -21,8 +21,8 @@ const RelatedProducts = (props) => {
       <Slider
         className="sm:w-full lg:w-8/12 2xl:w-7/12"
         autoplay={false}
-        slidesToShow={3}
-        slidesToScroll={3}
+        slidesToShow={4}
+        slidesToScroll={4}
         infinite={true}
       >
         {!isLoading &&
@@ -32,7 +32,7 @@ const RelatedProducts = (props) => {
             return (
               <div className="ml-7 related-products" key={id}>
                 <Link to={`/product/${id}`}>
-                  <img src={thumbnail} alt="Product" className="w-80 h-36" />
+                  <img src={thumbnail} alt="Product" className="w-64 h-36" />
                   {name}
                   <br></br>
                   Lowest Ask<br></br>
