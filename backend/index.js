@@ -2,7 +2,7 @@ const dotenv = require("fix-esm").require("dotenv");
 dotenv.config();
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 const shoes_model = require("./shoes_model");
 const user_model = require("./user_model");
