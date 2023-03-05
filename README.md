@@ -39,6 +39,8 @@ npm start
 <img  align="left" alt="Firebase" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" />
 <img align="left" alt="Postgresql" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-plain.svg"/>
 
+---
+
 ![image](https://i.imgur.com/wJXoY27.png)
 
 ### FYI: this is my first time with backend and it's not optimized as it should, I just used it to make my project more useful
