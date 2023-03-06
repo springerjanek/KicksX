@@ -8,8 +8,7 @@ const db = getFirestore();
 
 const Pool = require("pg").Pool;
 
-const connectionString =
-  "postgres://admin:RvO1PAdKAF6iaDsgH4oygTJluCGLd8uC@dpg-cg2epfe4dada1e13stkg-a.frankfurt-postgres.render.com/mydb_vv4s";
+const connectionString = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_DB_PASSWORD}@${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB_NAME}`;
 const pool = new Pool({
   connectionString: connectionString,
   // ssl: {
