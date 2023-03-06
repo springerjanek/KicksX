@@ -13,7 +13,6 @@ const Selling = () => {
   const { isLoading, data } = useGetAsks(`/getUserData/${uid}`);
   useEffect(() => {
     if (!isLoading) {
-      console.log(data);
     }
   }, [isLoading]);
   const { mutate: deleteAsk } = useDeleteAsk();
@@ -96,7 +95,6 @@ const Selling = () => {
           <>
             {!isLoading && data[1].sales.length > 1 ? (
               data[1].sales.map((sale) => {
-                console.log(sale);
                 const { id, name, price, size, thumbnail } = sale;
                 const condition = id.length > 0;
                 return (

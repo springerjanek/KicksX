@@ -46,7 +46,6 @@ export const useDeleteBid = () => {
     },
 
     onSuccess: (data) => {
-      console.log(data);
       queryClient.setQueryData(["userBids"], (oldData) => [
         data[1],
         oldData[1],

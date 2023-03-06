@@ -12,7 +12,6 @@ export const useGetAsks = (path) => {
 
     queryFn: async () => {
       const res = await axios.get(`${BASE_URL + path}`);
-      console.log(res.data);
       const result = await Promise.all(
         res.data.asks.map(async (ask) => {
           if (ask.price !== null) {
@@ -29,7 +28,6 @@ export const useGetAsks = (path) => {
       return [result, res.data];
     },
   });
-  console.log(data);
   return { isLoading, data };
 };
 
@@ -47,7 +45,6 @@ export const useDeleteAsk = () => {
     },
 
     onSuccess: (data) => {
-      console.log(data);
       queryClient.setQueryData(["userAsks"], (oldData) => [
         data[1],
         oldData[1],

@@ -22,7 +22,6 @@ const ResetPasswordPage = () => {
   const dispatch = useDispatch();
 
   const { error, success } = useSelector((state) => state.auth);
-  console.log(success);
 
   const errorCondition = error.length > 0;
   const successCondition = success.length > 0;

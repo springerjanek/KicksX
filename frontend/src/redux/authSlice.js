@@ -93,7 +93,7 @@ export const registerFunction = createAsyncThunk(
 export const forgotPassword = createAsyncThunk("auth/forgot", async (email) => {
   try {
     await auth.sendPasswordResetEmail(email, {
-      url: "https://spectacular-mochi-986130.netlify.app/login",
+      url: "https://famous-tiramisu-a4a400.netlify.app/login",
     });
   } catch (err) {
     return err.message;
@@ -173,7 +173,6 @@ const authSlice = createSlice({
       }
     });
     builder.addCase(registerFunction.fulfilled, (state, action) => {
-      console.log(action.payload);
       if (action.payload.length > 30) {
         const formatedError = action.payload.slice(10);
         state.error = formatedError;

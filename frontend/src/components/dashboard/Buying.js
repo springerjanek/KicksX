@@ -13,7 +13,6 @@ const Buying = () => {
   const { isLoading, data } = useGetBids(`/getUserData/${uid}`);
   useEffect(() => {
     if (!isLoading) {
-      console.log(data);
     }
   }, [isLoading]);
   const { mutate: deleteBid } = useDeleteBid();

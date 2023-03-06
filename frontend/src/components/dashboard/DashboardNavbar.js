@@ -10,7 +10,6 @@ import {
 
 const DashboardNavbar = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  console.log(openMobileMenu);
 
   return (
     <div>

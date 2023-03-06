@@ -13,8 +13,6 @@ const NavbarSell = () => {
     setInput(event.target.value);
   };
 
-  console.log(data);
-
   const search = () => {
     const matches = [];
     const rest = [];

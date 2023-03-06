@@ -16,8 +16,6 @@ const BuySellTemplate = (props) => {
 
   const { isLoading, data } = useGetProduct(`/${id}`, id);
 
-  console.log("DATA:", data);
-
   useEffect(() => {
     if (!isLoading) {
       setHighestBid(data.highestBid);

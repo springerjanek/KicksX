@@ -5,7 +5,6 @@ const FinalChecks = (props) => {
   const [secondCheckboxChecked, setSecondCheckboxChecked] = useState(false);
 
   useEffect(() => {
-    console.log("test");
     if (firstCheckboxChecked && secondCheckboxChecked) {
       props.enableButton();
     } else {

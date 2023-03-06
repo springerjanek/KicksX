@@ -28,19 +28,16 @@ const AskModal = (props) => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(lowestAsk);
   useEffect(() => {
     if (askPrice < lowestAsk && lowestAsk !== 0) {
       setSmartText("You are about to be the lowest Ask");
       setDisableButton(false);
     }
     if (askPrice >= lowestAsk && lowestAsk !== 0) {
-      console.log("SIEMA");
       setSmartText("You are not the lowest ask");
       setDisableButton(false);
     }
     if (askPrice === highestBid) {
-      console.log("SIEMA");
       setSmartText("You are about to sell at the highest bid price");
       setDisableButton(false);
     }

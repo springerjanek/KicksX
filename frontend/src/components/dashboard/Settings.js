@@ -89,8 +89,6 @@ const Settings = () => {
     }
   }, [uid]);
 
-  console.log(userPayout);
-
   const shippingHandler = () => {
     navigate("/dashboard/settings/shipping");
   };
@@ -130,20 +128,18 @@ const Settings = () => {
                 <PencilSquareIcon className="w-6 h-6 mt-3" />
               </button>
             </div>
-            {userShipping.street.length > 0 &&
-              (console.log(userShipping),
-              (
-                <>
-                  <div className="block">
-                    <p>Name: {userShipping.name}</p>
-                    <p>Street: {userShipping.street}</p>
-                    <p>Street Number: {userShipping.street_number}</p>
-                    <p>Zip Code: {userShipping.zip}</p>
-                    <p>Country: {userShipping.country}</p>
-                    <p>Phone: {userShipping.phone}</p>
-                  </div>
-                </>
-              ))}
+            {userShipping.street.length > 0 && (
+              <>
+                <div className="block">
+                  <p>Name: {userShipping.name}</p>
+                  <p>Street: {userShipping.street}</p>
+                  <p>Street Number: {userShipping.street_number}</p>
+                  <p>Zip Code: {userShipping.zip}</p>
+                  <p>Country: {userShipping.country}</p>
+                  <p>Phone: {userShipping.phone}</p>
+                </div>
+              </>
+            )}
 
             <div className="flex justify-center mt-16 mb-1 gap-2">
               <h2>PAYOUT DETAILS</h2>

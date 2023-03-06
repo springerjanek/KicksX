@@ -20,7 +20,6 @@ const EditShipping = () => {
   const navigate = useNavigate();
 
   const formHandler = (data) => {
-    console.log(data);
     axios
       .post("https://kicksx.onrender.com/shipping", {
         uid: uid,
@@ -93,17 +92,14 @@ const EditShipping = () => {
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
-                console.log(field),
-                (
-                  <Select
-                    onChange={(e) => field.onChange(e)}
-                    styles={{
-                      control: (styles) => ({ ...styles, width: "375px" }),
-                    }}
-                    id="country"
-                    options={options}
-                  />
-                )
+                <Select
+                  onChange={(e) => field.onChange(e)}
+                  styles={{
+                    control: (styles) => ({ ...styles, width: "375px" }),
+                  }}
+                  id="country"
+                  options={options}
+                />
               )}
             />
             {errors?.country?.type === "required" &&

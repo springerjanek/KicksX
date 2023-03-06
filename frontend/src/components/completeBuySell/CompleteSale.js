@@ -36,10 +36,9 @@ const CompleteSale = (props) => {
   };
 
   const { data, isLoading } = useGetQuery(`/?name=${name}`, "sell");
-  console.log(data);
+
   useEffect(() => {
     if (!isLoading) {
-      console.log(data);
       setThumbnail(data[0].thumbnail);
     }
   }, [isLoading]);

@@ -62,8 +62,6 @@ const Navbar = () => {
     setInput("");
   };
 
-  console.log(displayProducts, input);
-
   return (
     <>
       <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
