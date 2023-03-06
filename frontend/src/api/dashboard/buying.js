@@ -3,7 +3,7 @@ import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid
 import { notify } from "../../hooks/notify";
 import axios from "axios";
 
-const BASE_URL = "https://kicksx.onrender.com";
+const BASE_URL = "https://kicksxbackend.onrender.com";
 
 export const useGetBids = (path) => {
   const { isLoading, error, data } = useQuery({
@@ -39,7 +39,7 @@ export const useDeleteBid = () => {
       const data = queryClient.getQueryData("userBids");
       const updatedBids = data[0].filter((x) => x.id !== payload.id);
       const response = await axios.post(
-        "https://kicksx.onrender.com/deleteBid",
+        "https://kicksxbackend.onrender.com/deleteBid",
         payload
       );
       return [response.data, updatedBids];

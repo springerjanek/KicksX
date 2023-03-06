@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
 
-const BASE_URL = "https://kicksx.onrender.com/";
+const BASE_URL = "https://kicksxbackend.onrender.com/";
 
 export const useGetRelatedProducts = (originalProductName, combinedFilter) => {
   const { isLoading, error, data } = useQuery({
