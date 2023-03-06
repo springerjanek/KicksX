@@ -12,6 +12,8 @@
 
 - /frontend/src/firebase.js <- INPUT YOUR FIREBASE APP CONFIG INFO
 
+- CHANGE REQUESTS URL'S TO YOUR LOCALHOST:PORT URL
+
 ```bash
 cd frontend
 npm install
