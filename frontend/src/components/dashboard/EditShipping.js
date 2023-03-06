@@ -21,7 +21,7 @@ const EditShipping = () => {
 
   const formHandler = (data) => {
     axios
-      .post("https://kicksx.onrender.com/shipping", {
+      .post("https://kicksxbackend.onrender.com/shipping", {
         uid: uid,
         name: data.name,
         surname: data.surname,

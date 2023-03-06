@@ -64,7 +64,7 @@ const CompleteSale = (props) => {
 
   const confirmSaleHandler = () => {
     axios
-      .post("https://kicksx.onrender.com/sell", salePayload)
+      .post("https://kicksxbackend.onrender.com/sell", salePayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/selling");
@@ -72,7 +72,7 @@ const CompleteSale = (props) => {
 
   const confirmAskHandler = () => {
     axios
-      .post("https://kicksx.onrender.com/ask", askPayload)
+      .post("https://kicksxbackend.onrender.com/ask", askPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/selling");

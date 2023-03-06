@@ -22,7 +22,7 @@ const UserInfoSummary = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const userData = await axios.get(
-        `https://kicksx.onrender.com/getUserData/${uid}`
+        `https://kicksxbackend.onrender.com/getUserData/${uid}`
       );
 
       setUserData(userData.data);

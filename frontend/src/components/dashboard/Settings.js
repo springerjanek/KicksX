@@ -74,7 +74,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `https://kicksx.onrender.com/getUserData/${uid}`
+        `https://kicksxbackend.onrender.com/getUserData/${uid}`
       );
       const userData = response.data;
       setUserData(userData);
@@ -102,7 +102,7 @@ const Settings = () => {
   };
 
   const editPayoutHandler = () => {
-    axios.post("https://kicksx.onrender.com/payout", {
+    axios.post("https://kicksxbackend.onrender.com/payout", {
       uid: uid,
       payout: userPayout.type,
     });
@@ -110,7 +110,7 @@ const Settings = () => {
   };
 
   const editPaymentHandler = () => {
-    axios.post("https://kicksx.onrender.com/payment", {
+    axios.post("https://kicksxbackend.onrender.com/payment", {
       uid: uid,
       payment: userPayment.type,
     });

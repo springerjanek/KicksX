@@ -54,7 +54,7 @@ const CompleteBuy = (props) => {
 
   const completeBuyHandler = () => {
     axios
-      .post("https://kicksx.onrender.com/buy", buyPayload)
+      .post("https://kicksxbackend.onrender.com/buy", buyPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");
@@ -62,7 +62,7 @@ const CompleteBuy = (props) => {
 
   const completeBidHandler = () => {
     axios
-      .post("https://kicksx.onrender.com/bid", bidPayload)
+      .post("https://kicksxbackend.onrender.com/bid", bidPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");

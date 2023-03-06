@@ -7,7 +7,7 @@ export const getLowestAskAndHighestBid = async (product) => {
   let bidsPrices = [];
   if (typeof product === "string") {
     const response = await axios.get(
-      `https://kicksx.onrender.com/?name=${product}`
+      `https://kicksxbackend.onrender.com/?name=${product}`
     );
     const productData = response.data[0];
 
