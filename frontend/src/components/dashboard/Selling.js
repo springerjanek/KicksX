@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useGetAsks, useDeleteAsk } from "../../api/dashboard/selling";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import DashboardNavbar from "./DashboardNavbar";
+import { ThreeDots } from "react-loader-spinner";
 
 const Selling = () => {
   const [showHistory, setShowHistory] = useState(false);
@@ -16,6 +17,8 @@ const Selling = () => {
     }
   }, [isLoading]);
   const { mutate: deleteAsk } = useDeleteAsk();
+
+  console.log(data);
 
   return (
     <>
@@ -36,9 +39,22 @@ const Selling = () => {
             <p className="ml-48 md:ml-[215px]">Sell Price</p>
           )}
         </div>
+        {isLoading && (
+          <ThreeDots
+            height="80"
+            width="100"
+            radius="9"
+            color="#ffffff"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{ textAlign: "center" }}
+            wrapperClassName=""
+            visible={true}
+          />
+        )}
         {!showHistory ? (
           <>
-            {!isLoading && data[0].length > 1 ? (
+            {!isLoading &&
+              data[0].length > 1 &&
               data[0].map((ask) => {
                 const {
                   id,
@@ -86,14 +102,13 @@ const Selling = () => {
                     )}
                   </div>
                 );
-              })
-            ) : (
-              <h1>--</h1>
-            )}
+              })}
+            {!isLoading && data[0].length === 1 && <p>--</p>}
           </>
         ) : (
           <>
-            {!isLoading && data[1].sales.length > 1 ? (
+            {!isLoading &&
+              data[1].sales.length &&
               data[1].sales.map((sale) => {
                 const { id, name, price, size, thumbnail } = sale;
                 const condition = id.length > 0;
@@ -112,10 +127,8 @@ const Selling = () => {
                     )}
                   </div>
                 );
-              })
-            ) : (
-              <h1>--</h1>
-            )}
+              })}
+            {!isLoading && data[1].length === 1 && <p>--</p>}
           </>
         )}
       </div>

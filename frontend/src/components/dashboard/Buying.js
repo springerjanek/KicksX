@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useGetBids, useDeleteBid } from "../../api/dashboard/buying";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import DashboardNavbar from "./DashboardNavbar";
+import { ThreeDots } from "react-loader-spinner";
 
 const Buying = () => {
   const [showHistory, setShowHistory] = useState(false);
@@ -36,9 +37,22 @@ const Buying = () => {
             <p className="ml-48 md:ml-[215px]">Purchase Price</p>
           )}
         </div>
+        {isLoading && (
+          <ThreeDots
+            height="80"
+            width="100"
+            radius="9"
+            color="#ffffff"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{ textAlign: "center" }}
+            wrapperClassName=""
+            visible={true}
+          />
+        )}
         {!showHistory ? (
           <>
-            {!isLoading && data[0].length > 1 ? (
+            {!isLoading &&
+              data[0].length > 1 &&
               data[0].map((bid) => {
                 const {
                   id,
@@ -85,14 +99,13 @@ const Buying = () => {
                     )}
                   </div>
                 );
-              })
-            ) : (
-              <h1>--</h1>
-            )}
+              })}
+            {!isLoading && data[0].length === 1 && <p>--</p>}
           </>
         ) : (
           <>
-            {!isLoading && data[1].purchases.length > 1 ? (
+            {!isLoading &&
+              data[1].purchases.length &&
               data[1].purchases.map((purchase) => {
                 const { id, name, price, size, thumbnail } = purchase;
                 const condition = id.length > 0;
@@ -111,10 +124,8 @@ const Buying = () => {
                     )}
                   </div>
                 );
-              })
-            ) : (
-              <h1>--</h1>
-            )}
+              })}
+            {!isLoading && data[1].length === 1 && <p>--</p>}
           </>
         )}
       </div>

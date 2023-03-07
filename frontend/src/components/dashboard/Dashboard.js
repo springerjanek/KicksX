@@ -19,6 +19,9 @@ const Dashboard = () => {
   return (
     <>
       <div className="text-center mt-5 text-white">
+        <Link to={"/"} className="absolute sm:right-5 md:right-auto md:left-6">
+          <h2 className="text-2xl font-medium">KicksX</h2>
+        </Link>
         <h2 className="text-2xl font-medium">DASHBOARD</h2>
         <div className="text-lg mt-5">
           {!isLoading ? (
