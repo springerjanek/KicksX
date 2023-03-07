@@ -3,6 +3,7 @@
 ### Shoe market platform
 
 ### LIVE SITE: https://famous-tiramisu-a4a400.netlify.app/
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f7fb3008-4307-487a-b979-a8961b4e537b/deploy-status)](https://app.netlify.com/sites/famous-tiramisu-a4a400/deploys)
 
 ---
 
