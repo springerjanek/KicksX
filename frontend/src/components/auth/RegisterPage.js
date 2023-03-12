@@ -79,7 +79,6 @@ const RegisterPage = () => {
       buttonTwoOnClick={signUpWithGithubHandler}
       linkText="Already signed up? Click here"
       linkRedirect={"/login"}
-      linkMargin="md:ml-10 2xl:ml-24"
     />
   );
 };

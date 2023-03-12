@@ -5,8 +5,8 @@ import { FiGithub } from "react-icons/fi";
 const WhiteFormContainer = (props) => {
   return (
     <>
-      <div className="absolute left-80 sm:left-96 lg:left-1/2 top-40 2xl:top-1/4  2xl:w-1/4">
-        <div className="relative rounded -left-1/2 p-5 bg-white h-102 p-10 w-96 md:w-full">
+      <div className="sm:mt-10 md:mt-36 p-8 flex items-center justify-center">
+        <div className="relative rounded p-5 bg-white h-102 p-10 sm:w-full md:w-2/3 lg:w-1/2 2xl:w-1/4">
           <h2 className="text-blue-600 text-2xl font-bold mb-5">
             {props.heading}
           </h2>
@@ -59,24 +59,27 @@ const WhiteFormContainer = (props) => {
           )}
           {props.linkText && (
             <>
-              <br></br>
-              <Link
-                className={`text-gray-600  whitespace-nowrap ${props.linkMargin}`}
-                to={props.linkRedirect}
-              >
-                {props.linkText}
-              </Link>
+              <div className="text-center">
+                <br></br>
+                <Link
+                  className={"text-gray-600  whitespace-nowrap"}
+                  to={props.linkRedirect}
+                >
+                  {props.linkText}
+                </Link>
+              </div>
             </>
           )}
           {props.linkTextTwo && (
             <>
-              <br></br>
-              <Link
-                className="text-gray-600 whitespace-nowrap md:ml-10 2xl:ml-20"
-                to={props.linkTwoRedirect}
-              >
-                {props.linkTextTwo}
-              </Link>
+              <div className="text-center">
+                <Link
+                  className="text-gray-600 whitespace-nowrap"
+                  to={props.linkTwoRedirect}
+                >
+                  {props.linkTextTwo}
+                </Link>
+              </div>
             </>
           )}
         </div>

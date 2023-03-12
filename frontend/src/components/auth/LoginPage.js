@@ -84,7 +84,6 @@ const LoginPage = () => {
       buttonTwoOnClick={logInithGithubHandler}
       linkText="New User? Click here"
       linkRedirect={"/register"}
-      linkMargin="md:ml-20 2xl:ml-32"
       linkTextTwo="Forgot Your Password? Click here"
       linkTwoRedirect={"/forgot-password"}
     />

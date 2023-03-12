@@ -62,10 +62,18 @@ const Navbar = () => {
     setInput("");
   };
 
+  const handleMobileDashboard = () => {
+    if (isLoggedCondition) {
+      navigate("/dashboard/profile");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
-        <div className="sm:m-auto md:m-0">
+        <div className="sm:m-auto sm:ml-10 md:m-0">
           <Link to={"/"}>
             <h2 className=" mt-2 md:ml-0">KicksX</h2>
           </Link>
@@ -91,7 +99,7 @@ const Navbar = () => {
           ) : (
             <UserCircleIcon
               className="h-5 w-5"
-              onClick={() => navigate("/dashboard/profile")}
+              onClick={handleMobileDashboard}
             />
           )}
         </div>

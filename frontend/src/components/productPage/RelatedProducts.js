@@ -30,9 +30,13 @@ const RelatedProducts = (props) => {
             const { id, name, thumbnail, lowestAsk } = relatedProduct;
 
             return (
-              <div className="ml-7 related-products" key={id}>
+              <div className="ml-1 related-products" key={id}>
                 <Link to={`/product/${id}`}>
-                  <img src={thumbnail} alt="Product" className="w-64 h-36" />
+                  <img
+                    src={thumbnail}
+                    alt="Product"
+                    className="sm:w-20 sm:h-20 md:w-64 md:h-36"
+                  />
                   {name}
                   <br></br>
                   Lowest Ask<br></br>
