@@ -113,18 +113,12 @@ const Navbar = () => {
           </Link>
         ) : (
           <>
-            <button
-              onClick={() => navigate("/login")}
-              className="sm:hidden md:block"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => navigate("/register")}
-              className="sm:hidden md:block"
-            >
-              Sign Up
-            </button>
+            <Link to={"/login"}>
+              <h3 className="mt-2 sm:hidden md:block">Log In</h3>
+            </Link>
+            <Link to={"/register"}>
+              <h3 className="mt-2 sm:hidden md:block">Sign Up</h3>
+            </Link>
           </>
         )}
       </div>
