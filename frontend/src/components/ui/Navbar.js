@@ -135,7 +135,7 @@ const Navbar = () => {
                     to={`/product/${id}`}
                     className="flex gap-5 items-center ml-8 md:ml-[140px] lg:ml-[200px] xl:ml-[350px] 2xl:ml-[400px]"
                   >
-                    <img src={thumbnail} className="w-40 h-28" />
+                    <img src={thumbnail} alt="Shoe" className="w-40 h-28" />
                     <p className="w-[120px]"> {name}</p>
                   </Link>
                 </div>

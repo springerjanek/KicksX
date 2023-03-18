@@ -29,7 +29,6 @@ const Settings = () => {
     },
   ]);
   const [editPayout, setEditPayout] = useState(false);
-  const [selectPayout, setSelectPayout] = useState("");
   const [editPayment, setEditPayment] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -74,7 +73,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `https://kicksxbackend.onrender.com/getUserData/${uid}`
+        `http://localhost:3001/getUserData/${uid}`
       );
       const userData = response.data;
       setUserData(userData);
@@ -170,6 +169,7 @@ const Settings = () => {
                             })
                           )
                         }
+                        alt="Paypal"
                       />
                     </div>
                     <div
@@ -190,6 +190,7 @@ const Settings = () => {
                             })
                           )
                         }
+                        alt="Credit Card"
                       />
                     </div>
                   </div>
@@ -204,12 +205,14 @@ const Settings = () => {
                     <img
                       src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                       className="w-24 h-14 ml-auto mr-auto"
+                      alt="Paypal"
                     />
                   )}
                   {userPayout.type === "CC" && (
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                       className="w-24 ml-auto mr-auto"
+                      alt="Credit Card"
                     />
                   )}
                   {userPayout.type === "" && <p>Set your payout!</p>}
@@ -246,6 +249,7 @@ const Settings = () => {
                             })
                           )
                         }
+                        alt="Paypal"
                       />
                     </div>
                     <div
@@ -266,6 +270,7 @@ const Settings = () => {
                             })
                           )
                         }
+                        alt="Credit Card"
                       />
                     </div>
                   </div>
@@ -283,12 +288,14 @@ const Settings = () => {
                     <img
                       src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                       className="w-24 h-14 ml-auto mr-auto"
+                      alt="Paypal"
                     />
                   )}
                   {userPayment.type === "CC" && (
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                       className="w-24 ml-auto mr-auto"
+                      alt="Credit Card"
                     />
                   )}
                   {userPayment.type === "" && <p>Set your payment!</p>}
