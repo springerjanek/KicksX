@@ -38,7 +38,7 @@ const NavbarSell = () => {
   }, [input]);
 
   return (
-    <div className="text-center mt-10 w-full">
+    <div className="text-center mt-6 w-full">
       <h1>Choose a product</h1>
       <p>Find the product you're looking for</p>
       <input
@@ -51,7 +51,7 @@ const NavbarSell = () => {
       <div className="mt-5">
         {displayProducts && (
           <>
-            <div className="mt-10 fixed z-10 w-full search-products h-full overflow-y-scroll  ">
+            <div className="mt-10 fixed z-10 w-full h-full search-products overflow-y-scroll  ">
               {products.map((product) => {
                 const { id, name, thumbnail } = product;
 
