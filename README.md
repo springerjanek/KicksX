@@ -50,4 +50,7 @@ npm start
 
 ![image](https://i.imgur.com/wJXoY27.png)
 
+### TODO:
+- MOVE TO TS
+
 ### FYI: this is my first time with backend and it's not optimized as it should, I just used it to make my project more useful ans usable
