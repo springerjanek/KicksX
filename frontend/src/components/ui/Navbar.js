@@ -81,12 +81,17 @@ const Navbar = () => {
 
         <input
           type="text"
-          placeholder="Search for sneaker"
+          placeholder={`${
+            isLoading
+              ? "Please wait a minute for backend to load ;)"
+              : "Search for sneaker"
+          }`}
           value={input}
           onChange={handleSearch}
           className={`w-1/2 h-10 p-2 rounded text-black text-lg  ${
             showMobileInput ? "sm:block absolute left-9 w-[320px]" : "sm:hidden"
           }  md:block`}
+          disabled={isLoading ? true : false}
         />
 
         <div className="flex mt-2 mr-2 gap-2 md:hidden">
@@ -122,7 +127,6 @@ const Navbar = () => {
           </>
         )}
       </div>
-
       {displayProducts && (
         <>
           <div className="mt-10 fixed z-10 w-full h-full	 overflow-y-scroll search-products ">
@@ -144,6 +148,7 @@ const Navbar = () => {
           </div>
         </>
       )}
+      test
     </>
   );
 };

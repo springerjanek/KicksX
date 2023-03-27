@@ -43,10 +43,15 @@ const NavbarSell = () => {
       <p>Find the product you're looking for</p>
       <input
         type="text"
-        placeholder="Search for sneaker"
+        placeholder={`${
+          isLoading
+            ? "Please wait a minute for backend to load ;)"
+            : "Search for sneaker"
+        }`}
         value={input}
         onChange={handleSearch}
         className="sm:w-2/3 xl:w-1/3 h-10 p-2 mt-1 rounded text-black text-lg "
+        disabled={isLoading ? true : false}
       />
       <div className="mt-5">
         {displayProducts && (
