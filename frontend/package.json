@@ -8,6 +8,10 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.5",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
     "assert": "^2.0.0",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
@@ -34,6 +38,8 @@
     "redux-persist-expire": "^1.1.1",
     "slick-carousel": "^1.8.1",
     "tls": "0.0.1",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^4.8.4",
     "url": "^0.11.0",
     "web-vitals": "^2.1.4"
   },
@@ -64,6 +70,8 @@
   "devDependencies": {
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.17",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1"
   }
 }

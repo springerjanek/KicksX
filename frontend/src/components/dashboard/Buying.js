@@ -18,6 +18,8 @@ const Buying = () => {
   }, [isLoading]);
   const { mutate: deleteBid } = useDeleteBid();
 
+  console.log("ESSA", data);
+
   return (
     <>
       <div className="sm:ml-5 md:ml-48 lg:ml-56 xl:ml-96">
@@ -52,8 +54,8 @@ const Buying = () => {
         {!showHistory ? (
           <>
             {!isLoading &&
-              data[0].length > 1 &&
-              data[0].map((bid) => {
+              data.userBids.length > 1 &&
+              data.userBids.map((bid) => {
                 const {
                   id,
                   name,
@@ -100,13 +102,13 @@ const Buying = () => {
                   </div>
                 );
               })}
-            {!isLoading && data[0].length === 1 && <p>--</p>}
+            {!isLoading && data.userBids.length === 1 && <p>--</p>}
           </>
         ) : (
           <>
             {!isLoading &&
-              data[1].purchases.length &&
-              data[1].purchases.map((purchase) => {
+              data.userData.purchases.length &&
+              data.userData.purchases.map((purchase) => {
                 const { id, name, price, size, thumbnail } = purchase;
                 const condition = id.length > 0;
                 return (
@@ -125,7 +127,7 @@ const Buying = () => {
                   </div>
                 );
               })}
-            {!isLoading && data[1].length === 1 && <p>--</p>}
+            {!isLoading && data.userData.length === 1 && <p>--</p>}
           </>
         )}
       </div>
