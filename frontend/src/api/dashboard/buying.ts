@@ -25,7 +25,6 @@ export const useGetBids = (path: string) => {
           return bid;
         })
       );
-      console.log(result);
       return { userBids: result, userData: res.data };
     },
   });
@@ -48,20 +47,11 @@ export const useDeleteBid = () => {
       return { message: response.data, updatedBids: updatedBids };
     },
 
-    // data.updatedBids,
-    // oldData?.userBids
-
     onSuccess: (data) => {
-      queryClient.setQueryData<QueryBidsData>(
-        ["userBids"],
-        (oldData) => (
-          console.log(oldData),
-          {
-            userBids: data.updatedBids,
-            userData: oldData!.userData,
-          }
-        )
-      );
+      queryClient.setQueryData<QueryBidsData>(["userBids"], (oldData) => ({
+        userBids: data.updatedBids,
+        userData: oldData!.userData,
+      }));
       notify(data.message, "success");
     },
   });
