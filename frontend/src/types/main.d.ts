@@ -60,6 +60,17 @@ interface UserData {
   };
 }
 
+interface editShippingForm {
+  name: string;
+  surname: string;
+  address: string;
+  streetNumber: string;
+  city: string;
+  zipcode: string;
+  country: { label: string };
+  phone: string;
+}
+
 interface UserBidA {
   id: string;
   name: string;
@@ -122,9 +133,26 @@ interface DeleteBid {
   uid: string;
   id: string;
   name: string;
-  price: string;
+  price: number;
   size: string;
   thumbnail: string;
 }
 
 interface DeleteAsk extends DeleteBid {}
+
+interface reduxAuth {
+  auth: {
+    user: {
+      isLoggedInPersisted: string;
+      id: string;
+      isPayoutSet: boolean;
+      isShippingSet: boolean;
+      isPaymentSet: boolean;
+    };
+    isLoggedInTemporary: string;
+    error: string;
+    success: string;
+  };
+}
+
+declare module "redux-persist/lib/storage";

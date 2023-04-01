@@ -2,12 +2,13 @@ import React, { useState, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import axios from "axios";
 import DashboardNavbar from "./DashboardNavbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { useGetQuery } from "hooks/useGetQuery";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Settings = () => {
-  const [userData, setUserData] = useState([]);
   const [userInfo, setUserInfo] = useState([
     {
       shipping: {
@@ -17,7 +18,7 @@ const Settings = () => {
         street_number: "",
         city: "",
         zip: "",
-        country: {},
+        country: "",
         phone: "",
       },
       payout: {
@@ -30,11 +31,10 @@ const Settings = () => {
   ]);
   const [editPayout, setEditPayout] = useState(false);
   const [editPayment, setEditPayment] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
 
   const uid = user.id;
 
@@ -42,7 +42,9 @@ const Settings = () => {
   const userPayout = userInfo[0]?.payout;
   const userPayment = userInfo[0]?.payment;
 
-  const checkForUserInfo = (userData) => {
+  // move this to react query
+
+  const checkForUserInfo = (userData: UserData) => {
     if (userData.shipping.street.length > 0) {
       setUserInfo((prev) =>
         prev.map((info) => {
@@ -67,26 +69,18 @@ const Settings = () => {
         })
       );
     }
-    setLoading(false);
   };
 
+  const { isLoading, data } = useGetQuery(
+    `/getUserData/${uid}`,
+    "settingsData"
+  );
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:3001/getUserData/${uid}`
-      );
-      const userData = response.data;
-      setUserData(userData);
-      if (userData) {
-        checkForUserInfo(userData);
-      }
-    };
-    if (userData !== []) {
-      fetchData().catch((e) => console.error(e));
-    } else {
-      setUserData([]);
+    if (!isLoading) {
+      checkForUserInfo(data);
     }
-  }, [uid]);
+  }, [isLoading]);
 
   const shippingHandler = () => {
     navigate("/dashboard/settings/shipping");
@@ -117,7 +111,13 @@ const Settings = () => {
   };
   return (
     <>
-      {!loading ? (
+      <Link
+        to={"/"}
+        className="mt-5 absolute sm:right-5 md:right-auto md:left-6"
+      >
+        <h2 className="text-2xl font-medium">KicksX</h2>
+      </Link>
+      {!isLoading ? (
         <>
           <div className="text-center text-xl">
             <h1 className="text-2xl font-bold mt-5">GENERAL SETTINGS</h1>
@@ -313,7 +313,6 @@ const Settings = () => {
             color="#ffffff"
             ariaLabel="three-dots-loading"
             wrapperStyle={{ textAlign: "center" }}
-            wrapperClassName=""
             visible={true}
           />
         </div>

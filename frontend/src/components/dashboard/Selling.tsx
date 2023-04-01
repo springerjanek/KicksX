@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetAsks, useDeleteAsk } from "../../api/dashboard/selling";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import DashboardNavbar from "./DashboardNavbar";
 import { ThreeDots } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 const Selling = () => {
   const [showHistory, setShowHistory] = useState(false);
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
   const uid = user.id;
 
   const { isLoading, data } = useGetAsks(`/getUserData/${uid}`);
@@ -18,10 +19,14 @@ const Selling = () => {
   }, [isLoading]);
   const { mutate: deleteAsk } = useDeleteAsk();
 
-  console.log(data);
-
   return (
     <>
+      <Link
+        to={"/"}
+        className="mt-5 absolute sm:right-5 md:right-auto md:left-6"
+      >
+        <h2 className="text-2xl font-medium">KicksX</h2>
+      </Link>
       <div className="sm:ml-5 md:ml-48 lg:ml-56 xl:ml-96">
         <div className="flex gap-20 text-xl mt-20 mb-5">
           <button onClick={() => setShowHistory(false)}>Current Asks</button>
@@ -47,22 +52,20 @@ const Selling = () => {
             color="#ffffff"
             ariaLabel="three-dots-loading"
             wrapperStyle={{ textAlign: "center" }}
-            wrapperClassName=""
             visible={true}
           />
         )}
         {!showHistory ? (
           <>
             {!isLoading &&
-              data[0].length > 1 &&
-              data[0].map((ask) => {
+              data!.userAsks.length > 1 &&
+              data!.userAsks.map((ask) => {
                 const {
                   id,
                   name,
                   price,
                   size,
-                  highestBid,
-                  lowestAsk,
+
                   thumbnail,
                 } = ask;
                 const deletePayload = {
@@ -90,8 +93,8 @@ const Selling = () => {
                         </div>
                         <p className="sm:ml-3 ml-0">${price}</p>
                         <div className="flex ml-8 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
-                          <p>${highestBid}</p>
-                          <p>${lowestAsk}</p>
+                          <p>${"highestBid" in ask && ask.highestBid}</p>
+                          <p>${"lowestAsk" in ask && ask.lowestAsk}</p>
                         </div>
 
                         <MinusCircleIcon
@@ -103,13 +106,13 @@ const Selling = () => {
                   </div>
                 );
               })}
-            {!isLoading && data[0].length === 1 && <p>--</p>}
+            {!isLoading && data!.userAsks.length === 1 && <p>--</p>}
           </>
         ) : (
           <>
             {!isLoading &&
-              data[1].sales.length &&
-              data[1].sales.map((sale) => {
+              data!.userData.sales.length &&
+              data!.userData.sales.map((sale) => {
                 const { id, name, price, size, thumbnail } = sale;
                 const condition = id.length > 0;
                 return (
@@ -128,7 +131,7 @@ const Selling = () => {
                   </div>
                 );
               })}
-            {!isLoading && data[1].length === 1 && <p>--</p>}
+            {!isLoading && data!.userData.sales.length === 1 && <p>--</p>}
           </>
         )}
       </div>

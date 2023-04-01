@@ -8,7 +8,7 @@ import { notify } from "../../hooks/notify";
 import { useForm, Controller } from "react-hook-form";
 
 const EditShipping = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
   const uid = user.id;
   const options = useMemo(() => countryList().getData(), []);
   const {
@@ -16,10 +16,10 @@ const EditShipping = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm<editShippingForm>();
   const navigate = useNavigate();
 
-  const formHandler = (data) => {
+  const formHandler = (data: editShippingForm) => {
     axios
       .post("https://kicksxbackend.onrender.com/shipping", {
         uid: uid,

@@ -8,7 +8,7 @@ import Navbar from "./DashboardNavbar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
   const uid = user.id;
 
   const { isLoading, data } = useGetQuery(
@@ -46,7 +46,6 @@ const Dashboard = () => {
                 color="#ffffff"
                 ariaLabel="three-dots-loading"
                 wrapperStyle={{ textAlign: "center" }}
-                wrapperClassName=""
                 visible={true}
               />
             </div>
