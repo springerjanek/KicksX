@@ -7,6 +7,8 @@
 
 ---
 
+https://user-images.githubusercontent.com/54078220/229284671-5d64cdd8-9c0d-451a-9193-5817d6c7c5a4.mp4
+
 ## Setup
 
 - /backend/.env <- INPUT YOUR POSTGRES DB INFO AND CREATE TABLE "shoes" AS IN `data.sql`
@@ -47,8 +49,6 @@ npm start
 <br />
 
 ---
-
-![image](https://i.imgur.com/wJXoY27.png)
 
 ### TODO:
 - MOVE TO TS
