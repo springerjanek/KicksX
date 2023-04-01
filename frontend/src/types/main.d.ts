@@ -9,6 +9,8 @@ interface Product {
   sizes: string[];
 }
 
+interface Products extends Array<Product> {}
+
 interface UserData {
   asks: {
     id: string;
@@ -87,6 +89,35 @@ interface QueryBidsData {
   userData: UserData;
 }
 
+interface UserAskA {
+  id: string;
+  name: string;
+  price: number;
+  size: string;
+  thumbnail: string;
+}
+
+interface UserAsksA extends Array<UserAskA> {}
+
+interface UserAskB {
+  lowestAsk: number;
+  highestBid: number;
+  id: string;
+  name: string;
+  price: number;
+  size: string;
+  thumbnail: string;
+}
+
+interface UserAsksB extends Array<UserAskB> {}
+
+type UserAsks = UserAsksA | UserAsksB;
+
+interface QueryAsksData {
+  userAsks: UserAsks;
+  userData: UserData;
+}
+
 interface DeleteBid {
   uid: string;
   id: string;
@@ -95,3 +126,5 @@ interface DeleteBid {
   size: string;
   thumbnail: string;
 }
+
+interface DeleteAsk extends DeleteBid {}

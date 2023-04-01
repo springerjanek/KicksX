@@ -1,26 +1,31 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
+import { getLowestAskAndHighestBid } from "hooks/getLowestAskAndHighestBid";
 
 const BASE_URL = "https://kicksxbackend.onrender.com";
 
-export const useGetProduct = (path, key) => {
+export const useGetProduct = (path: string, key: string) => {
   const { isLoading, data } = useQuery({
     queryKey: [key],
     refetchOnWindowFocus: false,
     queryFn: async () => {
       const response = await axios.get(`${BASE_URL + path}`);
-      const data = response.data[0];
+      const data: Product = response.data[0];
 
-      const setdefault = (obj, key, fallback) => {
+      const setdefault = (
+        obj: { [key: string]: Array<number> },
+        key: string,
+        fallback: []
+      ) => {
         if (!(key in obj)) {
           obj[key] = fallback;
         }
+        console.log(obj, key);
         return obj[key];
       };
 
-      const ask_by_size = {};
-      const bid_by_size = {};
+      const ask_by_size: { [key: string]: Array<number> } = {};
+      const bid_by_size: { [key: string]: Array<number> } = {};
       for (const ask of data.asks) {
         setdefault(ask_by_size, ask.size, []).push(ask.price);
       }

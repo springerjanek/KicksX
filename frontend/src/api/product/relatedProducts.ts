@@ -1,16 +1,19 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
+import { getLowestAskAndHighestBid } from "hooks/getLowestAskAndHighestBid";
 
 const BASE_URL = "https://kicksxbackend.onrender.com/";
 
-export const useGetRelatedProducts = (originalProductName, combinedFilter) => {
+export const useGetRelatedProducts = (
+  originalProductName: string,
+  combinedFilter: string
+) => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["relatedProducts"],
     refetchOnWindowFocus: false,
     queryFn: async () => {
       const response = await axios.get(BASE_URL);
-      const data = response.data;
+      const data: Products = response.data;
 
       const result = await Promise.all(
         data
