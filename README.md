@@ -5,9 +5,9 @@
 ### LIVE SITE: https://famous-tiramisu-a4a400.netlify.app/
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f7fb3008-4307-487a-b979-a8961b4e537b/deploy-status)](https://app.netlify.com/sites/famous-tiramisu-a4a400/deploys)
 
----
+https://user-images.githubusercontent.com/54078220/229284822-0ed5a884-1b6e-48ce-81b2-09026e0fc1d8.mp4
 
-https://user-images.githubusercontent.com/54078220/229284671-5d64cdd8-9c0d-451a-9193-5817d6c7c5a4.mp4
+---
 
 ## Setup
 
@@ -21,6 +21,8 @@ https://user-images.githubusercontent.com/54078220/229284671-5d64cdd8-9c0d-451a-
 
 ```bash
 cd frontend
+
+
 npm install
 cd ..
 cd backend
