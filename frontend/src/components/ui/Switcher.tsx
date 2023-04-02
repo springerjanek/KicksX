@@ -1,6 +1,11 @@
 import React from "react";
 
-const Switcher = (props) => {
+const Switcher = (props: {
+  onChange: () => void;
+  checked: boolean;
+  leftText: string;
+  rightText: string;
+}) => {
   return (
     <div className="switcher flex justify-center w-11/12 sm:ml-3 md:ml-5">
       <label className="inline-flex items-center p-2 rounded-md cursor-pointer dark:text-gray-800">

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const FinalChecks = (props) => {
+const FinalChecks = (props: {
+  type: string;
+  enableButton: () => void;
+  disableButton: () => void;
+}) => {
   const [firstCheckboxChecked, setFirstCheckboxChecked] = useState(false);
   const [secondCheckboxChecked, setSecondCheckboxChecked] = useState(false);
 

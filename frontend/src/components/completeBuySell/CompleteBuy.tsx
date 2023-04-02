@@ -9,7 +9,14 @@ import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
 import { useGetQuery } from "../../hooks/useGetQuery";
 
-const CompleteBuy = (props) => {
+const CompleteBuy = (props: {
+  price: number | string;
+  bidPrice: number | string;
+  isSwitchedToPlaceBid: boolean;
+  userSummary: { shipping: string; payment: string };
+  productData: string[];
+  closeCompleteBuy: () => void;
+}) => {
   const [thumbnail, setThumbnail] = useState("");
   const price = props.price;
   const isSwitchedToPlaceBid = props.isSwitchedToPlaceBid;
@@ -19,7 +26,7 @@ const CompleteBuy = (props) => {
   const name = props.productData[0];
   const size = props.productData[1];
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
 
   const uid = user.id;
 
@@ -54,7 +61,7 @@ const CompleteBuy = (props) => {
 
   const completeBuyHandler = () => {
     axios
-      .post("https://kicksxbackend.onrender.com/buy", buyPayload)
+      .post("http://localhost:3001/buy", buyPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");
@@ -62,7 +69,7 @@ const CompleteBuy = (props) => {
 
   const completeBidHandler = () => {
     axios
-      .post("https://kicksxbackend.onrender.com/bid", bidPayload)
+      .post("http://localhost:3001/bid", bidPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");

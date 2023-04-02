@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { useGetQuery } from "hooks/useGetQuery";
 
-const UserInfoSummary = (props) => {
-  const [userData, setUserData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const UserInfoSummary = (props: {
+  type: string;
+  disableButton: () => void;
+  enableButton: () => void;
+  getUserSummary: (
+    payout?: string,
+    shipping?: string,
+    payment?: string
+  ) => void;
+}) => {
   const [shippingText, setShippingText] = useState("Set Your Shipping!");
   const [paymentText, setPaymentText] = useState("Set Your Payment!");
   const [payoutText, setPayoutText] = useState("Set Your Payout!");
   const navigate = useNavigate();
 
-  const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
+  const { user, isLoggedInTemporary } = useSelector(
+    (state: reduxAuth) => state.auth
+  );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
   const uid = user.id;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userData = await axios.get(
-        `https://kicksxbackend.onrender.com/getUserData/${uid}`
-      );
-
-      setUserData(userData.data);
-      setLoading(false);
-    };
-    if (isLoggedCondition === true && userData !== []) {
-      fetchData().catch((e) => console.error(e));
-    } else {
-      setUserData([]);
-    }
-  }, [uid]);
+  const { isLoading, data } = useGetQuery(
+    `/getUserData/${uid}`,
+    "dashboardData"
+  );
 
   const modalForBuying = isLoggedCondition && props.type === "buying";
   const modalForSelling = isLoggedCondition && props.type === "selling";
 
-  const userHaveShipping = !loading && userData.shipping.street.length > 0;
-  const userHavePayment = !loading && userData.payment.type.length > 0;
-  const userHavePayout = !loading && userData.payout.type.length > 0;
+  const userHaveShipping = !isLoading && data.shipping.street.length > 0;
+  const userHavePayment = !isLoading && data.payment.type.length > 0;
+  const userHavePayout = !isLoading && data.payout.type.length > 0;
 
   const getUserData = () => {
     if (props.type === "buying") {
@@ -53,10 +51,10 @@ const UserInfoSummary = (props) => {
 
   useEffect(() => {
     if (userHaveShipping) {
-      setShippingText(userData.shipping.street);
+      setShippingText(data.shipping.street);
     }
     if (userHavePayment) {
-      setPaymentText(userData.payment.type);
+      setPaymentText(data.payment.type);
     }
     if (userHavePayment && userHaveShipping) {
       props.enableButton();
