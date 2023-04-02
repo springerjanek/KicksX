@@ -21,8 +21,6 @@ https://user-images.githubusercontent.com/54078220/229284822-0ed5a884-1b6e-48ce-
 
 ```bash
 cd frontend
-
-
 npm install
 cd ..
 cd backend
