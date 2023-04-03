@@ -6,21 +6,19 @@ import Switcher from "../ui/Switcher";
 import Fees from "../completeBuySell/Fees";
 import UserInfoSummary from "./UserInfoSummary";
 
-const AskModal = (props) => {
+const AskModal = (props: {
+  product: string;
+  productData: [string, number | string, number | string];
+  turnOffModal: () => void;
+}) => {
   const productData = props.productData;
   const size = productData[0];
 
   const highestBid = productData[1];
   const lowestAsk = productData[2];
 
-  let defaultAskPrice = 1;
-  if (highestBid !== "--") {
-    defaultAskPrice = highestBid;
-  }
-  const [askPrice, setAskPrice] = useState(defaultAskPrice);
-  const [smartText, setSmartText] = useState(
-    "You are about to sell at the highest bid price"
-  );
+  const [askPrice, setAskPrice] = useState(lowestAsk);
+  const [smartText, setSmartText] = useState("Please enter your ask!");
   const [switchToSellNow, setSwitchToSellNow] = useState(false);
   const [userSummary, setUserSummary] = useState("");
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -28,50 +26,85 @@ const AskModal = (props) => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const askPriceIsNumber = typeof askPrice === "number" && askPrice > 0;
+  const lowestAskIsNumber = typeof lowestAsk === "number";
+  const highestBidIsNumber = typeof highestBid === "number";
+  console.log(lowestAsk);
+
   useEffect(() => {
-    if (askPrice < lowestAsk && lowestAsk !== 0) {
-      setSmartText("You are about to be the lowest Ask");
-      setDisableButton(false);
-    }
-    if (askPrice >= lowestAsk && lowestAsk !== 0) {
-      setSmartText("You are not the lowest ask");
-      setDisableButton(false);
-    }
-    if (askPrice === highestBid) {
-      setSmartText("You are about to sell at the highest bid price");
-      setDisableButton(false);
-    }
-    if (lowestAsk === 0 && askPrice >= 1) {
-      setSmartText("You are about to be the lowest Ask");
-      setDisableButton(false);
-    }
-    if (askPrice < highestBid) {
+    if (!askPriceIsNumber) {
       setDisableButton(true);
+    } else {
+      setDisableButton(false);
     }
+    if (lowestAskIsNumber) {
+      if (askPriceIsNumber && askPrice >= lowestAsk) {
+        setSmartText("You are not the lowest ask");
+      }
+      if (askPriceIsNumber && askPrice < lowestAsk) {
+        setSmartText("You are the lowest ask");
+      }
+    }
+
+    if (!switchToSellNow && askPrice === "") {
+      setSmartText("Please enter your ask");
+    }
+
+    if (lowestAsk === "" && askPriceIsNumber) {
+      console.log("Siema");
+      setSmartText("You are the lowest ask");
+    }
+
     if (askPrice === 0) {
       setSmartText("Minimum ask is 1$");
       setDisableButton(true);
     }
-    if (switchToSellNow && highestBid === "--") {
+    if (!highestBidIsNumber && switchToSellNow) {
       setSmartText("NO BIDS AVAILABLE");
       setDisableButton(true);
     }
+    if (!switchToSellNow && askPrice === highestBid) {
+      setAskPrice("");
+      setSmartText("Please enter your ask!");
+    }
+    if (typeof highestBid === "number" && switchToSellNow) {
+      setAskPrice(highestBid);
+    }
+    if (askPrice <= highestBid) {
+      setDisableButton(true);
+    }
     let timeout = setTimeout(() => {
-      if (askPrice < highestBid) {
-        setSwitchToSellNow(true);
-        setAskPrice(highestBid);
+      if (typeof askPrice === "number" && typeof highestBid === "number") {
+        if (askPrice <= highestBid) {
+          setSmartText("You're about to sell at the highest bid price");
+          setSwitchToSellNow(true);
+          setAskPrice(highestBid);
+          setDisableButton(false);
+        }
       }
-    }, [4000]);
+    }, 1500);
     return () => {
       clearTimeout(timeout);
     };
   }, [askPrice, switchToSellNow]);
 
-  const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
+  const { user, isLoggedInTemporary } = useSelector(
+    (state: reduxAuth) => state.auth
+  );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
+  console.log("ASK PRICE", askPrice);
+
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== "") {
+      setAskPrice(parseInt(e.target.value.replace(/\D/g, "")));
+    } else {
+      setAskPrice(0);
+    }
+  };
 
   const switchHandler = () => {
     setSwitchToSellNow(!switchToSellNow);
@@ -96,12 +129,12 @@ const AskModal = (props) => {
   };
 
   const enableButtonHandler = () => {
-    if (askPrice > 0) {
+    if (typeof askPrice === "number" && askPrice > 0) {
       setDisableButton(false);
     }
   };
 
-  const getUserSummary = (payout) => {
+  const getUserSummary = (payout: string) => {
     setUserSummary(payout);
   };
   return (
@@ -125,10 +158,9 @@ const AskModal = (props) => {
             <input
               type="text"
               value={askPrice}
-              onChange={(e) =>
-                setAskPrice(Math.floor(e.target.value.replace(/\D/g, "")))
-              }
-              className="mt-10 outline outline-offset-2 outline-1 w-11/12 py-1"
+              placeholder="Enter Ask"
+              onChange={inputHandler}
+              className="mt-10 outline outline-offset-2 outline-1 w-11/12 py-1 pl-1"
               disabled={switchToSellNow && true}
             />
             <p className="mt-2">{smartText}</p>

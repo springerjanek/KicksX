@@ -5,7 +5,12 @@ import Switcher from "../ui/Switcher";
 import CompleteBuy from "../completeBuySell/CompleteBuy";
 import UserInfoSummary from "./UserInfoSummary";
 
-const BuyModal = (props) => {
+const BuyModal = (props: {
+  product: string;
+  productData: [string, number | string, number | string];
+  isFromPlaceBid: boolean;
+  turnOffModal: () => void;
+}) => {
   const productData = props.productData;
   const highestBid = productData[1];
   const [bidPrice, setBidPrice] = useState(highestBid);
@@ -21,29 +26,36 @@ const BuyModal = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (bidPrice < highestBid) {
-      setSmartText("You are not the highest bid");
-      setDisableButton(false);
+    if (typeof bidPrice === "number" && typeof highestBid === "number") {
+      if (bidPrice < highestBid) {
+        setSmartText("You are not the highest bid");
+        setDisableButton(false);
+      }
+      if (bidPrice > highestBid) {
+        setSmartText("You are about to be the highest bidder");
+        setDisableButton(false);
+      }
+      if (bidPrice === highestBid) {
+        setSmartText(
+          "You are about to match the highest Bid. Their Bid will be accepted before yours"
+        );
+        setDisableButton(false);
+      }
+      if (bidPrice === 0 && switchToPlaceBid) {
+        setSmartText("Minimum bid is 1$");
+        setDisableButton(true);
+      }
     }
-    if (bidPrice > highestBid) {
-      setSmartText("You are about to be the highest bidder");
-      setDisableButton(false);
-    }
-    if (bidPrice === highestBid) {
-      setSmartText(
-        "You are about to match the highest Bid. Their Bid will be accepted before yours"
-      );
-      setDisableButton(false);
-    }
-    if (bidPrice === 0 && switchToPlaceBid) {
-      setSmartText("Minimum bid is 1$");
-      setDisableButton(true);
-    }
+
     if (bidPrice >= lowestAsk) {
       setSwitchToPlaceBid(false);
       setBidPrice(0);
     }
-    if (!switchToPlaceBid && lowestAsk.length == 2) {
+    if (
+      !switchToPlaceBid &&
+      typeof lowestAsk === "string" &&
+      lowestAsk.length == 2
+    ) {
       setDisableButton(true);
     }
   }, [bidPrice, switchToPlaceBid]);
@@ -55,7 +67,9 @@ const BuyModal = (props) => {
   }, [props.isFromPlaceBid]);
   console.log(switchToPlaceBid);
 
-  const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
+  const { user, isLoggedInTemporary } = useSelector(
+    (state: reduxAuth) => state.auth
+  );
   const uid = user.id;
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
@@ -92,8 +106,11 @@ const BuyModal = (props) => {
     }
   };
 
-  const getUserSummary = (shipping, payment) => {
-    setUserSummary({ shipping: shipping, payment: payment });
+  const getUserSummary = (payout_or_shipping: string, payment?: string) => {
+    if (payment !== undefined) {
+      const shipping = payout_or_shipping;
+      setUserSummary({ shipping: shipping, payment: payment });
+    }
   };
 
   return (
@@ -118,7 +135,7 @@ const BuyModal = (props) => {
               <>
                 <h1 className="text-2xl mt-2">${lowestAsk}</h1>
                 <p>
-                  {lowestAsk.length == 2
+                  {typeof lowestAsk === "string" && lowestAsk.length == 2
                     ? "No asks available"
                     : "You are about to purchase this product at the lowest Ask price"}
                 </p>
@@ -138,7 +155,9 @@ const BuyModal = (props) => {
                   type="text"
                   value={bidPrice}
                   onChange={(e) =>
-                    setBidPrice(Math.floor(e.target.value.replace(/\D/g, "")))
+                    setBidPrice(
+                      Math.floor(parseInt(e.target.value.replace(/\D/g, "")))
+                    )
                   }
                   className="mt-10 outline outline-offset-2 outline-1 w-11/12 py-1"
                   disabled={!switchToPlaceBid && true}
@@ -156,9 +175,10 @@ const BuyModal = (props) => {
                 type="buying"
                 disableButton={disableButtonHandler}
                 enableButton={enableButtonHandler}
-                getUserSummary={(shipping, payment) =>
-                  getUserSummary(shipping, payment)
-                }
+                getUserSummary={(
+                  payout_or_shipping: string,
+                  payment?: string
+                ) => getUserSummary(payout_or_shipping, payment)}
               />
             )}
           </div>

@@ -9,11 +9,18 @@ import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
 import { useGetQuery } from "../../hooks/useGetQuery";
 
-const CompleteSale = (props) => {
+const CompleteSale = (props: {
+  price: number | string;
+  askPrice: number | string;
+  userSummary: string;
+  productData: string[];
+  isSwitchedToSellNow: boolean;
+  closeCompleteSale: () => void;
+}) => {
   const [thumbnail, setThumbnail] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: reduxAuth) => state.auth);
 
   const uid = user.id;
 
