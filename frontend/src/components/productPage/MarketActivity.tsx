@@ -4,7 +4,15 @@ import {
   ArrowLongDownIcon,
 } from "@heroicons/react/24/outline";
 
-const MarketActivity = (props) => {
+const MarketActivity = (props: {
+  lastSales: {
+    id: string;
+    size: string;
+    price: number;
+    date: string;
+  }[];
+  showSales: () => void;
+}) => {
   const lastsales = props.lastSales;
 
   const lastSale = lastsales[lastsales.length - 1];

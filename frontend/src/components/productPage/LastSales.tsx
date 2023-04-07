@@ -1,7 +1,16 @@
 import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const LastSales = (props) => {
+const LastSales = (props: {
+  lastsales: {
+    id: string;
+    size: string;
+    price: number;
+    date: string;
+  }[];
+  showSales: boolean;
+  closeSales: () => void;
+}) => {
   return (
     <>
       {props.showSales && (

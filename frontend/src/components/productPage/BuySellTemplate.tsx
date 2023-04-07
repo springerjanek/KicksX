@@ -4,60 +4,76 @@ import AskModal from "../modals/AskModal";
 import BuyModal from "../modals/BuyModal";
 import { useGetProduct } from "../../api/product/product";
 
-const BuySellTemplate = (props) => {
+const BuySellTemplate = (props: { template: string }) => {
   const [showModal, setShowModal] = useState(false);
-  const [productDataToModal, setProductDataToModal] = useState([]);
-  const [highestBid, setHighestBid] = useState("--");
-  const [lowestAsk, setLowestAsk] = useState("--");
+  const [productDataToModal, setProductDataToModal] = useState<
+    [string, number | string, number | string] | undefined
+  >();
+  const [highestBid, setHighestBid] = useState<string | number>("--");
+  const [lowestAsk, setLowestAsk] = useState<string | number>("--");
 
   const { id } = useParams();
   const location = useLocation();
-  const isFromPlaceBid = location.state?.bid;
+  const locationState = location.state as LocationState;
+  const isFromPlaceBid = locationState.bid;
 
-  const { isLoading, data } = useGetProduct(`/${id}`, id);
+  const { isLoading, data } = useGetProduct(`/${id}`, id!);
 
   useEffect(() => {
     if (!isLoading) {
-      setHighestBid(data.highestBid);
-      setLowestAsk(data.lowestAsk);
+      setHighestBid(data!.highestBid);
+      setLowestAsk(data!.lowestAsk);
     }
   }, [isLoading]);
 
   const changeLowestAskAndBid = async () => {
     if (data) {
-      setLowestAsk(data.lowestAsk);
-      setHighestBid(data.highestBid);
+      setLowestAsk(data!.lowestAsk);
+      setHighestBid(data!.highestBid);
     }
   };
 
-  const askModalHandler = (size, highestBid, asks) => {
+  const askModalHandler = (
+    size: string,
+    highestBid: string | number,
+    asks: {
+      size: string;
+      asks: number[];
+    }[]
+  ) => {
     setShowModal(true);
     setHighestBid(highestBid);
-    const asksOfDesiredSize = asks.find((x) => x.size === size);
-    const lowestAsk = Math.min(...asksOfDesiredSize.asks);
-    if (lowestAsk === 0) {
-      setLowestAsk("--");
-    } else if (lowestAsk === Infinity) {
-      setLowestAsk("--");
-    } else {
+    const asksOfDesiredSize = asks.find((x) => x.size === size)!;
+    const asksAreEmpty = asksOfDesiredSize.asks.length === 0;
+    if (!asksAreEmpty) {
+      const lowestAsk = Math.min(...asksOfDesiredSize.asks);
+      setProductDataToModal([size, highestBid, lowestAsk]);
       setLowestAsk(lowestAsk);
+    } else {
+      setProductDataToModal([size, highestBid, ""]);
+      setLowestAsk("--");
     }
-
-    setProductDataToModal([size, highestBid, lowestAsk]);
   };
 
-  const buyModalHandler = (size, lowestAsk, bids) => {
+  const buyModalHandler = (
+    size: string,
+    lowestAsk: string | number,
+    bids: {
+      size: string;
+      bids: number[];
+    }[]
+  ) => {
     setShowModal(true);
     setLowestAsk(lowestAsk);
-    const bidsOfDesiredSize = bids.find((x) => x.size === size);
-    const highestBid = Math.max(bidsOfDesiredSize.bids);
-    if (highestBid === 0) {
-      setHighestBid("--");
+    const bidsOfDesiredSize = bids.find((x) => x.size === size)!;
+    const bidsAreEmpty = bidsOfDesiredSize.bids.length === 0;
+    if (!bidsAreEmpty) {
+      const highestBid = Math.max(...bidsOfDesiredSize.bids);
+      setProductDataToModal([size, highestBid, lowestAsk]);
     } else {
-      setHighestBid(highestBid);
+      setProductDataToModal([size, "", lowestAsk]);
+      setHighestBid("--");
     }
-
-    setProductDataToModal([size, highestBid, lowestAsk]);
   };
 
   const turnOffModal = () => {
@@ -78,14 +94,14 @@ const BuySellTemplate = (props) => {
           }`}
         >
           {!isLoading && (
-            <div key={data.id}>
-              <h1>{data.name}</h1>
+            <div key={data!.id}>
+              <h1>{data!.name}</h1>
               <div className="flex gap-2 justify-center mb-2 lg:mb-10">
                 <p className="">Highest Bid: ${highestBid}</p>
                 <p>Lowest Ask: ${lowestAsk}</p>
               </div>
               <img
-                src={data.thumbnail}
+                src={data!.thumbnail}
                 alt="Product"
                 className="m-auto sm:h-48 lg:h-full"
               />
@@ -101,9 +117,9 @@ const BuySellTemplate = (props) => {
               </p>
               <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-2 mr-5">
                 {props.template === "sell" && !isLoading
-                  ? data.bidsBySize.map((bid) => {
+                  ? data!.bidsBySize.map((bid) => {
                       const { size, bids } = bid;
-                      let highestBid = "--";
+                      let highestBid: string | number = "--";
 
                       if (bids.length > 0) {
                         highestBid = Math.max(...bids);
@@ -113,7 +129,7 @@ const BuySellTemplate = (props) => {
                         <div
                           key={size}
                           onClick={() =>
-                            askModalHandler(size, highestBid, data.asksBySize)
+                            askModalHandler(size, highestBid, data!.asksBySize)
                           }
                           className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
                         >
@@ -125,9 +141,9 @@ const BuySellTemplate = (props) => {
                   : ""}
 
                 {props.template === "buy" && !isLoading
-                  ? data.asksBySize.map((ask) => {
+                  ? data!.asksBySize.map((ask) => {
                       const { size, asks } = ask;
-                      let lowestAsk = "--";
+                      let lowestAsk: string | number = "--";
                       if (asks.length > 0) {
                         lowestAsk = Math.min(...asks);
                       }
@@ -135,7 +151,7 @@ const BuySellTemplate = (props) => {
                         <div
                           key={size}
                           onClick={() =>
-                            buyModalHandler(size, lowestAsk, data.bidsBySize)
+                            buyModalHandler(size, lowestAsk, data!.bidsBySize)
                           }
                           className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
                         >
@@ -152,15 +168,15 @@ const BuySellTemplate = (props) => {
             <>
               {props.template === "sell" && (
                 <AskModal
-                  product={data.name}
-                  productData={productDataToModal}
+                  product={data!.name}
+                  productData={productDataToModal!}
                   turnOffModal={turnOffModal}
                 />
               )}
               {props.template === "buy" && (
                 <BuyModal
-                  product={data.name}
-                  productData={productDataToModal}
+                  product={data!.name}
+                  productData={productDataToModal!}
                   isFromPlaceBid={isFromPlaceBid}
                   turnOffModal={turnOffModal}
                 />
