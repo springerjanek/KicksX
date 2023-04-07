@@ -8,11 +8,10 @@ const UserInfoSummary = (props: {
   type: string;
   disableButton: () => void;
   enableButton: () => void;
-  getUserSummary: (
-    payout?: string,
-    shipping?: string,
-    payment?: string
-  ) => void;
+  getUserSummary: {
+    (payout: string): void;
+    (shipping: string, payment: string): void;
+  };
 }) => {
   const [shippingText, setShippingText] = useState("Set Your Shipping!");
   const [paymentText, setPaymentText] = useState("Set Your Payment!");

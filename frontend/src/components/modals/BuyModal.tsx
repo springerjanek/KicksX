@@ -54,7 +54,7 @@ const BuyModal = (props: {
     if (
       !switchToPlaceBid &&
       typeof lowestAsk === "string" &&
-      lowestAsk.length == 2
+      lowestAsk.length === 2
     ) {
       setDisableButton(true);
     }
@@ -70,7 +70,7 @@ const BuyModal = (props: {
   const { user, isLoggedInTemporary } = useSelector(
     (state: reduxAuth) => state.auth
   );
-  const uid = user.id;
+
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
@@ -78,6 +78,14 @@ const BuyModal = (props: {
 
   const size = productData[0];
   const lowestAsk = productData[2];
+
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== "") {
+      setBidPrice(parseInt(e.target.value.replace(/\D/g, "")));
+    } else {
+      setBidPrice(0);
+    }
+  };
 
   const switchHandler = () => {
     setSwitchToPlaceBid(!switchToPlaceBid);
@@ -135,7 +143,7 @@ const BuyModal = (props: {
               <>
                 <h1 className="text-2xl mt-2">${lowestAsk}</h1>
                 <p>
-                  {typeof lowestAsk === "string" && lowestAsk.length == 2
+                  {typeof lowestAsk === "string" && lowestAsk.length === 2
                     ? "No asks available"
                     : "You are about to purchase this product at the lowest Ask price"}
                 </p>
@@ -154,11 +162,7 @@ const BuyModal = (props: {
                 <input
                   type="text"
                   value={bidPrice}
-                  onChange={(e) =>
-                    setBidPrice(
-                      Math.floor(parseInt(e.target.value.replace(/\D/g, "")))
-                    )
-                  }
+                  onChange={inputHandler}
                   className="mt-10 outline outline-offset-2 outline-1 w-11/12 py-1"
                   disabled={!switchToPlaceBid && true}
                 />

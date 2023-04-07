@@ -75,13 +75,11 @@ const AskModal = (props: {
       setDisableButton(true);
     }
     let timeout = setTimeout(() => {
-      if (typeof askPrice === "number" && typeof highestBid === "number") {
-        if (askPrice <= highestBid) {
-          setSmartText("You're about to sell at the highest bid price");
-          setSwitchToSellNow(true);
-          setAskPrice(highestBid);
-          setDisableButton(false);
-        }
+      if (highestBidIsNumber && askPriceIsNumber && askPrice <= highestBid) {
+        setSmartText("You're about to sell at the highest bid price");
+        setSwitchToSellNow(true);
+        setAskPrice(highestBid);
+        setDisableButton(false);
       }
     }, 1500);
     return () => {
@@ -96,7 +94,6 @@ const AskModal = (props: {
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
-  console.log("ASK PRICE", askPrice);
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== "") {
