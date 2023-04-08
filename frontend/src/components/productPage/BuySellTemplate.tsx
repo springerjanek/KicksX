@@ -15,7 +15,8 @@ const BuySellTemplate = (props: { template: string }) => {
   const { id } = useParams();
   const location = useLocation();
   const locationState = location.state as LocationState;
-  const isFromPlaceBid = locationState.bid;
+
+  const isFromPlaceBid = locationState && locationState.bid;
 
   const { isLoading, data } = useGetProduct(`/${id}`, id!);
 

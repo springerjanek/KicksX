@@ -3,7 +3,7 @@ import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid
 import { notify } from "../../hooks/notify";
 import axios from "axios";
 
-const BASE_URL = "https://kicksxbackend.onrender.com";
+const BASE_URL = "http://localhost:3001";
 
 export const useGetAsks = (path: string) => {
   const { isLoading, error, data } = useQuery({

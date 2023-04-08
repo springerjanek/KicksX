@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import DashboardNavbar from "./DashboardNavbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useGetQuery } from "hooks/useGetQuery";
+import { useGetUserData } from "hooks/useGetUserData";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -34,7 +34,7 @@ const Settings = () => {
 
   const navigate = useNavigate();
 
-  const { user } = useSelector((state: reduxAuth) => state.auth);
+  const { user } = useSelector((state: ReduxAuth) => state.auth);
 
   const uid = user.id;
 
@@ -71,14 +71,14 @@ const Settings = () => {
     }
   };
 
-  const { isLoading, data } = useGetQuery(
+  const { isLoading, data } = useGetUserData(
     `/getUserData/${uid}`,
     "settingsData"
   );
 
   useEffect(() => {
     if (!isLoading) {
-      checkForUserInfo(data);
+      checkForUserInfo(data!);
     }
   }, [isLoading]);
 

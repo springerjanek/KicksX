@@ -11,9 +11,9 @@ import WhiteFormContainer from "./WhiteFormContainer";
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()<any>;
 
-  const { error, success } = useSelector((state) => state.auth);
+  const { error, success } = useSelector((state: ReduxAuth) => state.auth);
 
   const errorCondition = error.length > 0;
   const successCondition = success.length > 0;
@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
     }
   }, [errorCondition, successCondition]);
 
-  const forgotHandler = (event) => {
+  const forgotHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (email) {
       dispatch(forgotPassword(email));
@@ -48,7 +48,9 @@ const ForgotPasswordPage = () => {
         inputType="email"
         inputName="email"
         inputValue={email}
-        onInputChange={(e) => setEmail(e.target.value)}
+        onInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setEmail(e.target.value)
+        }
         buttonText="RESET PASSWORD"
       />
     </>

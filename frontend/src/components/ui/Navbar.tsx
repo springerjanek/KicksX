@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useGetQuery } from "../../hooks/useGetQuery";
+import { useGetProducts } from "hooks/useGetProducts";
 import {
   MagnifyingGlassIcon,
   UserCircleIcon,
@@ -10,13 +10,15 @@ import {
 
 const Navbar = () => {
   const [input, setInput] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Products | undefined>([]);
   const [displayProducts, setDisplayProducts] = useState(false);
   const [showMobileInput, setShowMobileInput] = useState(false);
 
-  const { isLoading, data } = useGetQuery("/", "navbar");
+  const { isLoading, data } = useGetProducts();
 
-  const { user, isLoggedInTemporary } = useSelector((state) => state.auth);
+  const { user, isLoggedInTemporary } = useSelector(
+    (state: ReduxAuth) => state.auth
+  );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =
@@ -25,15 +27,16 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
   const search = () => {
-    const matches = [];
-    const rest = [];
-    if (!isLoading) {
-      data.forEach((product) => {
+    const matches: Product[] = [];
+    const rest: Product[] = [];
+
+    if (!isLoading && typeof data !== "string") {
+      data!.forEach((product) => {
         const formattedProductTitle = product.name.toLowerCase();
         formattedProductTitle.includes(input.toLowerCase())
           ? matches.push(product)
@@ -130,7 +133,7 @@ const Navbar = () => {
       {displayProducts && (
         <>
           <div className="mt-10 fixed z-10 w-full h-full	 overflow-y-scroll search-products ">
-            {products.map((product) => {
+            {products!.map((product) => {
               const { id, name, thumbnail } = product;
 
               return (
@@ -148,7 +151,6 @@ const Navbar = () => {
           </div>
         </>
       )}
-      test
     </>
   );
 };

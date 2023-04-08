@@ -88,7 +88,7 @@ const AskModal = (props: {
   }, [askPrice, switchToSellNow]);
 
   const { user, isLoggedInTemporary } = useSelector(
-    (state: reduxAuth) => state.auth
+    (state: ReduxAuth) => state.auth
   );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;

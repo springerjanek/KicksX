@@ -15,13 +15,13 @@ const ResetPasswordPage = () => {
 
   const payload = {
     password: password,
-    code: useQuery().get("oobCode"),
+    code: useQuery().get("oobCode") ?? "",
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()<any>;
 
-  const { error, success } = useSelector((state) => state.auth);
+  const { error, success } = useSelector((state: ReduxAuth) => state.auth);
 
   const errorCondition = error.length > 0;
   const successCondition = success.length > 0;
@@ -38,9 +38,10 @@ const ResetPasswordPage = () => {
     }
   }, [errorCondition, successCondition]);
 
-  const resetHandler = (event) => {
+  const resetHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (password.length >= 6 && payload.code !== null) {
+
+    if (password.length >= 6 && payload.code !== "") {
       dispatch(resetPassword(payload));
     } else {
       notify(
@@ -57,6 +58,7 @@ const ResetPasswordPage = () => {
         onSubmit={resetHandler}
         smallText="PASSWORD"
         inputType="password"
+        inputName="password"
         inputValue={password}
         onInputChange={(e) => setPassword(e.target.value)}
         buttonText="RESET PASSWORD"

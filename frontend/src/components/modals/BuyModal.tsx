@@ -47,6 +47,11 @@ const BuyModal = (props: {
       }
     }
 
+    if (highestBid === "" && typeof bidPrice === "number") {
+      setSmartText("You are about to be the highest bidder");
+      setDisableButton(false);
+    }
+
     if (bidPrice >= lowestAsk) {
       setSwitchToPlaceBid(false);
       setBidPrice(0);
@@ -68,7 +73,7 @@ const BuyModal = (props: {
   console.log(switchToPlaceBid);
 
   const { user, isLoggedInTemporary } = useSelector(
-    (state: reduxAuth) => state.auth
+    (state: ReduxAuth) => state.auth
   );
 
   const isLoggedInPersisted = user.isLoggedInPersisted;

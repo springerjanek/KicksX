@@ -2,16 +2,16 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
-import { useGetQuery } from "../../hooks/useGetQuery";
+import { useGetUserData } from "hooks/useGetUserData";
 import { ThreeDots } from "react-loader-spinner";
 import Navbar from "./DashboardNavbar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: reduxAuth) => state.auth);
+  const { user } = useSelector((state: ReduxAuth) => state.auth);
   const uid = user.id;
 
-  const { isLoading, data } = useGetQuery(
+  const { isLoading, data } = useGetUserData(
     `/getUserData/${uid}`,
     "dashboardData"
   );
@@ -26,16 +26,16 @@ const Dashboard = () => {
         <div className="text-lg mt-5">
           {!isLoading ? (
             <p>
-              Hello {data.shipping.name.length > 0 ? data.shipping.name : ""} 😎{" "}
-              <br></br>
+              Hello {data!.shipping.name.length > 0 ? data!.shipping.name : ""}{" "}
+              😎 <br></br>
               <button
                 onClick={() => dispatch(logout())}
                 className="small-button w-24 m-3 mr-4"
               >
                 Logout
               </button>
-              <br></br> {data.purchases.length - 1} Purchases{" "}
-              {data.sales.length - 1} Sales
+              <br></br> {data!.purchases.length - 1} Purchases{" "}
+              {data!.sales.length - 1} Sales
             </p>
           ) : (
             <div className="absolute left-1/2 ml-[-50px]">

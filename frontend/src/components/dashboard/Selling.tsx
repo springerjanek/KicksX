@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Selling = () => {
   const [showHistory, setShowHistory] = useState(false);
 
-  const { user } = useSelector((state: reduxAuth) => state.auth);
+  const { user } = useSelector((state: ReduxAuth) => state.auth);
   const uid = user.id;
 
   const { isLoading, data } = useGetAsks(`/getUserData/${uid}`);

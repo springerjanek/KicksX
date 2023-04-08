@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
-  loginFunction,
+  registerFunction,
   signUpWithGithub,
   resetErorr,
   resetSuccess,
 } from "../../redux/authSlice";
-import WhiteFormContainer from "./WhiteFormContainer";
-import { notify } from "../../hooks/notify";
 
-const LoginPage = () => {
+import { useNavigate } from "react-router-dom";
+import { notify } from "../../hooks/notify";
+import WhiteFormContainer from "./WhiteFormContainer";
+
+const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()<any>;
 
-  const payload = {
-    username: username,
-    password: password,
-    remember: remember,
-  };
+  const payload = { username: username, password: password };
 
   const { user, error, success, isLoggedInTemporary } = useSelector(
-    (state) => state.auth
+    (state: ReduxAuth) => state.auth
   );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedCondition =
@@ -47,10 +43,11 @@ const LoginPage = () => {
     }
   }, [isLoggedCondition, errorCondition, successCondition]);
 
-  const loginHandler = (event) => {
+  const registerHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (username && password.length >= 6) {
-      dispatch(loginFunction(payload));
+      dispatch(registerFunction(payload));
+      setUsername("");
       setPassword("");
     } else {
       notify(
@@ -60,14 +57,14 @@ const LoginPage = () => {
     }
   };
 
-  const logInithGithubHandler = () => {
+  const signUpWithGithubHandler = () => {
     dispatch(signUpWithGithub());
   };
 
   return (
     <WhiteFormContainer
-      heading="LOG IN"
-      onSubmit={loginHandler}
+      heading="SIGN UP"
+      onSubmit={registerHandler}
       smallText="E-MAIL"
       inputType="email"
       inputName="email"
@@ -77,17 +74,13 @@ const LoginPage = () => {
       inputTypeTwo="password"
       inputValueTwo={password}
       onInputChangeTwo={(e) => setPassword(e.target.value)}
-      rememberMe={true}
-      rememberOnChange={() => setRemember(!remember)}
-      buttonText="LOG IN"
-      buttonTextTwo="LOG IN WITH GITHUB"
-      buttonTwoOnClick={logInithGithubHandler}
-      linkText="New User? Click here"
-      linkRedirect={"/register"}
-      linkTextTwo="Forgot Your Password? Click here"
-      linkTwoRedirect={"/forgot-password"}
+      buttonText="SIGN UP"
+      buttonTextTwo="SIGN UP WITH GITHUB"
+      buttonTwoOnClick={signUpWithGithubHandler}
+      linkText="Already signed up? Click here"
+      linkRedirect={"/login"}
     />
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

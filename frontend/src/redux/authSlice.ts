@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { auth, github } from "../firebase.js";
-import { FirebaseError } from "firebase-admin";
+import { auth, github } from "../firebase";
 import storage from "redux-persist/lib/storage";
 import axios from "axios";
 

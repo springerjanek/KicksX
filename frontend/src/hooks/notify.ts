@@ -4,7 +4,7 @@ export const notify = (
   msg: string,
   type: "info" | "success" | "warning" | "error" | "default"
 ) => {
-  toast(msg, {
+  return toast(msg, {
     type: type,
     position: "top-right",
     autoClose: 4000,
@@ -15,5 +15,4 @@ export const notify = (
     progress: undefined,
     pauseOnFocusLoss: false,
   });
-  toast.clearWaitingQueue();
 };

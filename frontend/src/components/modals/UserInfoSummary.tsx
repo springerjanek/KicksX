@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { useGetQuery } from "hooks/useGetQuery";
+import { useGetUserData } from "hooks/useGetUserData";
 
 const UserInfoSummary = (props: {
   type: string;
@@ -19,7 +19,7 @@ const UserInfoSummary = (props: {
   const navigate = useNavigate();
 
   const { user, isLoggedInTemporary } = useSelector(
-    (state: reduxAuth) => state.auth
+    (state: ReduxAuth) => state.auth
   );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
@@ -27,7 +27,7 @@ const UserInfoSummary = (props: {
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
   const uid = user.id;
 
-  const { isLoading, data } = useGetQuery(
+  const { isLoading, data } = useGetUserData(
     `/getUserData/${uid}`,
     "dashboardData"
   );
@@ -35,9 +35,9 @@ const UserInfoSummary = (props: {
   const modalForBuying = isLoggedCondition && props.type === "buying";
   const modalForSelling = isLoggedCondition && props.type === "selling";
 
-  const userHaveShipping = !isLoading && data.shipping.street.length > 0;
-  const userHavePayment = !isLoading && data.payment.type.length > 0;
-  const userHavePayout = !isLoading && data.payout.type.length > 0;
+  const userHaveShipping = !isLoading && data!.shipping.street.length > 0;
+  const userHavePayment = !isLoading && data!.payment.type.length > 0;
+  const userHavePayout = !isLoading && data!.payout.type.length > 0;
 
   const getUserData = () => {
     if (props.type === "buying") {
@@ -50,10 +50,10 @@ const UserInfoSummary = (props: {
 
   useEffect(() => {
     if (userHaveShipping) {
-      setShippingText(data.shipping.street);
+      setShippingText(data!.shipping.street);
     }
     if (userHavePayment) {
-      setPaymentText(data.payment.type);
+      setPaymentText(data!.payment.type);
     }
     if (userHavePayment && userHaveShipping) {
       props.enableButton();

@@ -2,7 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiGithub } from "react-icons/fi";
 
-const WhiteFormContainer = (props) => {
+const WhiteFormContainer = (props: {
+  heading: string;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  smallText: string;
+  inputType: string;
+  inputName: string;
+  inputValue: string;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  smallTextTwo?: string;
+  inputTypeTwo?: string;
+  inputValueTwo?: string;
+  onInputChangeTwo?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  rememberMe?: boolean;
+  rememberOnChange?: () => void;
+  buttonText: string;
+  buttonTextTwo?: string;
+  buttonTwoOnClick?: () => void;
+  linkText?: string;
+  linkRedirect?: string;
+  linkTextTwo?: string;
+  linkTwoRedirect?: string;
+}) => {
   return (
     <>
       <div className="sm:mt-10 md:mt-36 p-8 flex items-center justify-center">
@@ -63,7 +84,7 @@ const WhiteFormContainer = (props) => {
                 <br></br>
                 <Link
                   className={"text-gray-600  whitespace-nowrap"}
-                  to={props.linkRedirect}
+                  to={props.linkRedirect!}
                 >
                   {props.linkText}
                 </Link>
@@ -75,7 +96,7 @@ const WhiteFormContainer = (props) => {
               <div className="text-center">
                 <Link
                   className="text-gray-600 whitespace-nowrap"
-                  to={props.linkTwoRedirect}
+                  to={props.linkTwoRedirect!}
                 >
                   {props.linkTextTwo}
                 </Link>

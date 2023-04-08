@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useGetQuery } from "../../hooks/useGetQuery";
+import { useGetProducts } from "hooks/useGetProducts";
 import { Link } from "react-router-dom";
 
 const NavbarSell = () => {
   const [input, setInput] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Products | undefined>([]);
   const [displayProducts, setDisplayProducts] = useState(false);
 
-  const { isLoading, data } = useGetQuery("/", "navbarSell");
+  const { isLoading, data } = useGetProducts();
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
   const search = () => {
-    const matches = [];
-    const rest = [];
-    if (!isLoading) {
-      data.forEach((product) => {
+    const matches: Product[] = [];
+    const rest: Product[] = [];
+
+    if (!isLoading && typeof data !== "string") {
+      data!.forEach((product) => {
         const formattedProductTitle = product.name.toLowerCase();
         formattedProductTitle.includes(input.toLowerCase())
           ? matches.push(product)
@@ -57,7 +58,7 @@ const NavbarSell = () => {
         {displayProducts && (
           <>
             <div className="mt-10 fixed z-10 w-full h-full search-products overflow-y-scroll  ">
-              {products.map((product) => {
+              {products!.map((product) => {
                 const { id, name, thumbnail } = product;
 
                 return (

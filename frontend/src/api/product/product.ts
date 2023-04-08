@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { getLowestAskAndHighestBid } from "hooks/getLowestAskAndHighestBid";
 
-const BASE_URL = "https://kicksxbackend.onrender.com";
+const BASE_URL = "http://localhost:3001";
 
 export const useGetProduct = (path: string, key: string) => {
   const { isLoading, data } = useQuery({
@@ -20,7 +20,6 @@ export const useGetProduct = (path: string, key: string) => {
         if (!(key in obj)) {
           obj[key] = fallback;
         }
-        console.log(obj, key);
         return obj[key];
       };
 

@@ -7,7 +7,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
-import { useGetQuery } from "../../hooks/useGetQuery";
+import { useGetProductByName } from "hooks/useGetProductByName";
 
 const CompleteSale = (props: {
   price: number | string;
@@ -20,7 +20,7 @@ const CompleteSale = (props: {
   const [thumbnail, setThumbnail] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
-  const { user } = useSelector((state: reduxAuth) => state.auth);
+  const { user } = useSelector((state: ReduxAuth) => state.auth);
 
   const uid = user.id;
 
@@ -42,11 +42,11 @@ const CompleteSale = (props: {
     setDisableButton(true);
   };
 
-  const { data, isLoading } = useGetQuery(`/?name=${name}`, "sell");
+  const { data, isLoading } = useGetProductByName(`/?name=${name}`, "sell");
 
   useEffect(() => {
     if (!isLoading) {
-      setThumbnail(data[0].thumbnail);
+      setThumbnail(data!.thumbnail);
     }
   }, [isLoading]);
 

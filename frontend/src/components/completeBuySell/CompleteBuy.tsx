@@ -7,7 +7,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
-import { useGetQuery } from "../../hooks/useGetQuery";
+import { useGetProductByName } from "hooks/useGetProductByName";
 
 const CompleteBuy = (props: {
   price: number | string;
@@ -26,17 +26,17 @@ const CompleteBuy = (props: {
   const name = props.productData[0];
   const size = props.productData[1];
 
-  const { user } = useSelector((state: reduxAuth) => state.auth);
+  const { user } = useSelector((state: ReduxAuth) => state.auth);
 
   const uid = user.id;
 
   const navigate = useNavigate();
 
-  const { data, isLoading } = useGetQuery(`/?name=${name}`, "buy");
+  const { data, isLoading } = useGetProductByName(`/?name=${name}`, "buy");
 
   useEffect(() => {
     if (!isLoading) {
-      setThumbnail(data[0].thumbnail);
+      setThumbnail(data!.thumbnail);
     }
   }, [isLoading]);
 
