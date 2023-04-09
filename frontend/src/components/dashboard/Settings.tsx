@@ -1,34 +1,16 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import DashboardNavbar from "./DashboardNavbar";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useGetUserData } from "hooks/useGetUserData";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useGetSettingsData } from "api/dashboard/settings/settings";
+import { useSelectPayout } from "api/dashboard/settings/payout";
+import { useSelectPayment } from "api/dashboard/settings/payment";
+import DashboardNavbar from "./DashboardNavbar";
+import axios from "axios";
 
 const Settings = () => {
-  const [userInfo, setUserInfo] = useState([
-    {
-      shipping: {
-        name: "",
-        surname: "",
-        street: "",
-        street_number: "",
-        city: "",
-        zip: "",
-        country: "",
-        phone: "",
-      },
-      payout: {
-        type: "",
-      },
-      payment: {
-        type: "",
-      },
-    },
-  ]);
   const [editPayout, setEditPayout] = useState(false);
   const [editPayment, setEditPayment] = useState(false);
 
@@ -38,49 +20,14 @@ const Settings = () => {
 
   const uid = user.id;
 
-  const userShipping = userInfo[0].shipping;
-  const userPayout = userInfo[0]?.payout;
-  const userPayment = userInfo[0]?.payment;
+  const { isLoading, data } = useGetSettingsData(`/getUserData/${uid}`);
 
-  // move this to react query
+  const { mutate: selectPayout } = useSelectPayout();
+  const { mutate: selectPayment } = useSelectPayment();
 
-  const checkForUserInfo = (userData: UserData) => {
-    if (userData.shipping.street.length > 0) {
-      setUserInfo((prev) =>
-        prev.map((info) => {
-          return {
-            ...info,
-            shipping: userData.shipping,
-          };
-        })
-      );
-    }
-    if (userData.payout.type.length > 0) {
-      setUserInfo((prev) =>
-        prev.map((info) => {
-          return { ...info, payout: userData.payout };
-        })
-      );
-    }
-    if (userData.payment.type.length > 0) {
-      setUserInfo((prev) =>
-        prev.map((info) => {
-          return { ...info, payment: userData.payment };
-        })
-      );
-    }
-  };
-
-  const { isLoading, data } = useGetUserData(
-    `/getUserData/${uid}`,
-    "settingsData"
-  );
-
-  useEffect(() => {
-    if (!isLoading) {
-      checkForUserInfo(data!);
-    }
-  }, [isLoading]);
+  const userShipping = data?.shipping;
+  const userPayout = data?.payout;
+  const userPayment = data?.payment;
 
   const shippingHandler = () => {
     navigate("/dashboard/settings/shipping");
@@ -94,19 +41,13 @@ const Settings = () => {
     setEditPayment(true);
   };
 
-  const editPayoutHandler = () => {
-    axios.post("https://kicksxbackend.onrender.com/payout", {
-      uid: uid,
-      payout: userPayout.type,
-    });
+  const selectPayoutHandler = (uid: string, payout: { type: string }) => {
+    selectPayout({ uid: uid, payout: payout });
     setEditPayout(false);
   };
 
-  const editPaymentHandler = () => {
-    axios.post("https://kicksxbackend.onrender.com/payment", {
-      uid: uid,
-      payment: userPayment.type,
-    });
+  const selectPaymentHandler = (uid: string, payment: { type: string }) => {
+    selectPayment({ uid: uid, payment: payment });
     setEditPayment(false);
   };
   return (
@@ -127,15 +68,16 @@ const Settings = () => {
                 <PencilSquareIcon className="w-6 h-6 mt-3" />
               </button>
             </div>
-            {userShipping.street.length > 0 && (
+            {userShipping!.street.length > 0 && (
               <>
                 <div className="block">
-                  <p>Name: {userShipping.name}</p>
-                  <p>Street: {userShipping.street}</p>
-                  <p>Street Number: {userShipping.street_number}</p>
-                  <p>Zip Code: {userShipping.zip}</p>
-                  <p>Country: {userShipping.country}</p>
-                  <p>Phone: {userShipping.phone}</p>
+                  <p>Name: {userShipping!.name}</p>
+                  <p>Street: {userShipping!.street}</p>
+                  <p>Street Number: {userShipping!.street_number}</p>
+                  <p>City: {userShipping!.city}</p>
+                  <p>Zip Code: {userShipping!.zip}</p>
+                  <p>Country: {userShipping!.country}</p>
+                  <p>Phone: {userShipping!.phone}</p>
                 </div>
               </>
             )}
@@ -153,43 +95,27 @@ const Settings = () => {
                   <div className="flex justify-center gap-2">
                     <div
                       className={`border border-2	rounded ${
-                        userPayout.type === "PAYPAL" && "bg-white"
+                        userPayout!.type === "PAYPAL" && "bg-white"
                       }`}
                     >
                       <img
                         src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                         className="w-26 h-16"
                         onClick={() =>
-                          setUserInfo((prev) =>
-                            prev.map((info) => {
-                              return {
-                                ...info,
-                                payout: { type: "PAYPAL" },
-                              };
-                            })
-                          )
+                          selectPayoutHandler(uid, { type: "PAYPAL" })
                         }
                         alt="Paypal"
                       />
                     </div>
                     <div
                       className={`border border-2	rounded ${
-                        userPayout.type === "CC" && "bg-white"
+                        userPayout!.type === "CC" && "bg-white"
                       }`}
                     >
                       <img
                         src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                         className="w-26 h-10 mt-2 mr-1 "
-                        onClick={() =>
-                          setUserInfo((prev) =>
-                            prev.map((info) => {
-                              return {
-                                ...info,
-                                payout: { type: "CC" },
-                              };
-                            })
-                          )
-                        }
+                        onClick={() => selectPayoutHandler(uid, { type: "CC" })}
                         alt="Credit Card"
                       />
                     </div>
@@ -197,25 +123,24 @@ const Settings = () => {
                   <button className="mr-2" onClick={() => setEditPayout(false)}>
                     BACK
                   </button>
-                  <button onClick={editPayoutHandler}>SAVE</button>
                 </>
               ) : (
                 <>
-                  {userPayout.type === "PAYPAL" && (
+                  {userPayout!.type === "PAYPAL" && (
                     <img
                       src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                       className="w-24 h-14 ml-auto mr-auto"
                       alt="Paypal"
                     />
                   )}
-                  {userPayout.type === "CC" && (
+                  {userPayout!.type === "CC" && (
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                       className="w-24 ml-auto mr-auto"
                       alt="Credit Card"
                     />
                   )}
-                  {userPayout.type === "" && <p>Set your payout!</p>}
+                  {userPayout!.type === "" && <p>Set your payout!</p>}
                 </>
               )}
             </div>
@@ -233,42 +158,28 @@ const Settings = () => {
                   <div className="flex justify-center gap-2">
                     <div
                       className={`border border-2	rounded ${
-                        userPayment.type === "PAYPAL" && "bg-white"
+                        userPayment!.type === "PAYPAL" && "bg-white"
                       }`}
                     >
                       <img
                         src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                         className="w-26 h-16"
                         onClick={() =>
-                          setUserInfo((prev) =>
-                            prev.map((info) => {
-                              return {
-                                ...info,
-                                payment: { type: "PAYPAL" },
-                              };
-                            })
-                          )
+                          selectPaymentHandler(uid, { type: "PAYPAL" })
                         }
                         alt="Paypal"
                       />
                     </div>
                     <div
                       className={`border border-2	rounded ${
-                        userPayment.type === "CC" && "bg-white"
+                        userPayment!.type === "CC" && "bg-white"
                       }`}
                     >
                       <img
                         src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                         className="w-26 h-10 mt-2 mr-1 "
                         onClick={() =>
-                          setUserInfo((prev) =>
-                            prev.map((info) => {
-                              return {
-                                ...info,
-                                payment: { type: "CC" },
-                              };
-                            })
-                          )
+                          selectPaymentHandler(uid, { type: "CC" })
                         }
                         alt="Credit Card"
                       />
@@ -280,25 +191,24 @@ const Settings = () => {
                   >
                     BACK
                   </button>
-                  <button onClick={editPaymentHandler}>SAVE</button>
                 </>
               ) : (
                 <>
-                  {userPayment.type === "PAYPAL" && (
+                  {userPayment!.type === "PAYPAL" && (
                     <img
                       src="https://logos-world.net/wp-content/uploads/2020/07/PayPal-Logo.png"
                       className="w-24 h-14 ml-auto mr-auto"
                       alt="Paypal"
                     />
                   )}
-                  {userPayment.type === "CC" && (
+                  {userPayment!.type === "CC" && (
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
                       className="w-24 ml-auto mr-auto"
                       alt="Credit Card"
                     />
                   )}
-                  {userPayment.type === "" && <p>Set your payment!</p>}
+                  {userPayment!.type === "" && <p>Set your payment!</p>}
                 </>
               )}
             </div>

@@ -60,6 +60,25 @@ interface UserData {
   };
 }
 
+interface SettingsData {
+  shipping: {
+    name: string;
+    surname: string;
+    street: string;
+    street_number: string;
+    city: string;
+    zip: string;
+    country: string;
+    phone: string;
+  };
+  payout: {
+    type: string;
+  };
+  payment: {
+    type: string;
+  };
+}
+
 interface EditShippingForm {
   name: string;
   surname: string;
