@@ -50,4 +50,7 @@ npm start
 
 ---
 
+TODO:
+- Restyle modals
+
 ### FYI: this is my first time with backend and it's not optimized as it should, I just used it to make my project more useful ans usable
