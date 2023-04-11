@@ -14,7 +14,6 @@ const ProductPage = () => {
   const { id } = useParams();
   const { isLoading, data } = useGetProduct(`/${id}`, id!);
   const lastSales = !isLoading ? data!.lastsales : [];
-  console.log(lastSales);
 
   const showSizesHandler = () => {
     if (showSizes) {

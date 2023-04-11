@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGetProducts } from "hooks/useGetProducts";
+import { search } from "api/navbar/search";
 import {
   MagnifyingGlassIcon,
   UserCircleIcon,
@@ -10,7 +11,9 @@ import {
 
 const Navbar = () => {
   const [input, setInput] = useState("");
-  const [products, setProducts] = useState<Products | undefined>([]);
+  const [searchedProducts, setSearchedProducts] = useState<
+    Products | undefined
+  >([]);
   const [displayProducts, setDisplayProducts] = useState(false);
   const [showMobileInput, setShowMobileInput] = useState(false);
 
@@ -31,24 +34,11 @@ const Navbar = () => {
     setInput(event.target.value);
   };
 
-  const search = () => {
-    const matches: Product[] = [];
-    const rest: Product[] = [];
-
-    if (!isLoading && typeof data !== "string") {
-      data!.forEach((product) => {
-        const formattedProductTitle = product.name.toLowerCase();
-        formattedProductTitle.includes(input.toLowerCase())
-          ? matches.push(product)
-          : rest.push(product);
-      });
-      matches.push(...rest);
-      setProducts(matches);
-    }
-  };
-
   useEffect(() => {
-    search();
+    if (!isLoading) {
+      const matchingProducts = search(data!, input);
+      setSearchedProducts(matchingProducts);
+    }
     if (input.length === 0) {
       setDisplayProducts(false);
     } else {
@@ -133,7 +123,7 @@ const Navbar = () => {
       {displayProducts && (
         <>
           <div className="mt-10 fixed z-10 w-full h-full	 overflow-y-scroll search-products ">
-            {products!.map((product) => {
+            {searchedProducts!.map((product) => {
               const { id, name, thumbnail } = product;
 
               return (

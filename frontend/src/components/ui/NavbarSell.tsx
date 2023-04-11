@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useGetProducts } from "hooks/useGetProducts";
+import { search } from "api/navbar/search";
 import { Link } from "react-router-dom";
 
 const NavbarSell = () => {
   const [input, setInput] = useState("");
-  const [products, setProducts] = useState<Products | undefined>([]);
+  const [searchedProducts, setSearchedProducts] = useState<
+    Products | undefined
+  >([]);
   const [displayProducts, setDisplayProducts] = useState(false);
 
   const { isLoading, data } = useGetProducts();
@@ -13,24 +16,11 @@ const NavbarSell = () => {
     setInput(event.target.value);
   };
 
-  const search = () => {
-    const matches: Product[] = [];
-    const rest: Product[] = [];
-
-    if (!isLoading && typeof data !== "string") {
-      data!.forEach((product) => {
-        const formattedProductTitle = product.name.toLowerCase();
-        formattedProductTitle.includes(input.toLowerCase())
-          ? matches.push(product)
-          : rest.push(product);
-      });
-      matches.push(...rest);
-      setProducts(matches);
-    }
-  };
-
   useEffect(() => {
-    search();
+    if (!isLoading) {
+      const matchingProducts = search(data!, input);
+      setSearchedProducts(matchingProducts);
+    }
     if (input.length === 0) {
       setDisplayProducts(false);
     } else {
@@ -58,7 +48,7 @@ const NavbarSell = () => {
         {displayProducts && (
           <>
             <div className="mt-10 fixed z-10 w-full h-full search-products overflow-y-scroll  ">
-              {products!.map((product) => {
+              {searchedProducts!.map((product) => {
                 const { id, name, thumbnail } = product;
 
                 return (
