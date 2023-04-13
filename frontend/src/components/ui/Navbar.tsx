@@ -67,7 +67,7 @@ const Navbar = () => {
     <>
       <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
         <div className="sm:m-auto sm:ml-10 md:m-0">
-          <Link to={"/"}>
+          <Link to={"/"} role="navigation">
             <h2 className=" mt-2 md:ml-0">KicksX</h2>
           </Link>
         </div>
