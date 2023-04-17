@@ -29,13 +29,15 @@ const Buying = () => {
           <button onClick={() => setShowHistory(false)}>Current Bids</button>
           <button onClick={() => setShowHistory(true)}>History</button>
         </div>
-        <div className="flex gap-1 md:gap-8 text-xl mb-2">
+        <div className="flex gap-4 md:gap-[18px] xl:gap-[16px] text-xl mb-2">
           <p>Item</p>
           {!showHistory ? (
             <>
-              <p className="ml-20 md:ml-[137px] xl:ml-56">Bid Price </p>
-              <p>Highest Bid </p>
-              <p>Lowest Ask</p>
+              <p className="sm:w-16 md:w-20 xl:w-24 ml-20 md:ml-[180px] xl:ml-[268px]">
+                Bid Price
+              </p>
+              <p className="sm:w-24 md:w-32">Highest Bid </p>
+              <p className="sm:w-24 md:w-32">Lowest Ask</p>
             </>
           ) : (
             <p className="ml-48 md:ml-[215px]">Purchase Price</p>
@@ -80,24 +82,27 @@ const Buying = () => {
                     {condition && (
                       <>
                         <div className="flex sm:flex-col md:flex-row gap-2">
-                          <img
-                            src={thumbnail}
-                            className="w-24 h-20 sm:-mt-8 md:-mt-0"
-                          />
-                          <div className="flex flex-col sm:w-24 md:w-20 xl:w-fit">
+                          <img src={thumbnail} className="w-24 h-20 md:-mt-0" />
+                          <div className="flex flex-col sm:w-[120px] xl:w-fit">
                             <p> {name}</p>
                             <p> Size: {size}</p>
                           </div>
                         </div>
-                        <p className="sm:ml-3 ml-0">${price}</p>
-                        <div className="flex ml-8 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
-                          <p>${"highestBid" in bid && bid.highestBid}</p>
-                          <p>${"lowestAsk" in bid && bid.lowestAsk}</p>
+                        <div className="xl:absolute left-[712px] flex">
+                          <p className="w-10">${price}</p>
+                          <div className="flex ml-10 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
+                            <p className="w-10">
+                              ${"highestBid" in bid && bid.highestBid}
+                            </p>
+                            <p className="w-10">
+                              ${"lowestAsk" in bid && bid.lowestAsk}
+                            </p>
+                          </div>
+                          <MinusCircleIcon
+                            onClick={() => deleteBid(deletePayload)}
+                            className="xl:absolute left-80 h-5 w-5 cursor-pointer mt-1"
+                          />
                         </div>
-                        <MinusCircleIcon
-                          onClick={() => deleteBid(deletePayload)}
-                          className="h-5 w-5 cursor-pointer mt-1"
-                        />
                       </>
                     )}
                   </div>

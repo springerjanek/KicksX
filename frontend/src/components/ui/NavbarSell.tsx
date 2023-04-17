@@ -44,29 +44,27 @@ const NavbarSell = () => {
         className="sm:w-2/3 xl:w-1/3 h-10 p-2 mt-1 rounded text-black text-lg "
         disabled={isLoading ? true : false}
       />
-      <div className="mt-5">
-        {displayProducts && (
-          <>
-            <div className="mt-10 fixed z-10 w-full h-full search-products overflow-y-scroll  ">
-              {searchedProducts!.map((product) => {
-                const { id, name, thumbnail } = product;
+      {displayProducts && (
+        <>
+          <div className="mt-5 fixed z-10 w-full h-full search-products overflow-y-scroll  ">
+            {searchedProducts!.map((product) => {
+              const { id, name, thumbnail } = product;
 
-                return (
-                  <div key={id} className="text-white bg-og p-1">
-                    <Link
-                      to={`/sell/${id}`}
-                      className="flex gap-5 items-center ml-8 md:ml-[140px] lg:ml-[200px] xl:ml-[420px] 2xl:ml-[630px]"
-                    >
-                      <img src={thumbnail} alt="Shoe" className="w-40 h-28" />
-                      <p className="w-[120px]"> {name}</p>
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        )}
-      </div>
+              return (
+                <div key={id} className="text-white bg-og p-1">
+                  <Link
+                    to={`/sell/${id}`}
+                    className="flex gap-5 items-center ml-8 md:ml-[140px] lg:ml-[200px] xl:ml-[420px] 2xl:ml-[630px]"
+                  >
+                    <img src={thumbnail} alt="Shoe" className="w-40 h-28" />
+                    <p className="w-[120px]"> {name}</p>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };
