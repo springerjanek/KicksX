@@ -8,7 +8,8 @@
     "baseUrl": "./src",
     "paths": {
       "@hooks/*": ["./src/hooks/*"],
-      "@components/*": ["./src/components"]
+      "@components/*": ["./src/components"],
+      "@utils/*": ["./src/utils"]
     },
     "strict": true,
     "skipLibCheck": true,
