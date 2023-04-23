@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import AskModal from "../modals/AskModal";
-import BuyModal from "../modals/BuyModal";
+import { AskModal } from "../modals/AskModal";
+import { BuyModal } from "../modals/BuyModal";
 import { useGetProduct } from "../../api/product/product";
 
-const BuySellTemplate = (props: { template: string }) => {
+export const BuySellTemplate = (props: { template: string }) => {
   const [showModal, setShowModal] = useState(false);
   const [productDataToModal, setProductDataToModal] = useState<
     [string, number | string, number | string] | undefined
@@ -189,5 +189,3 @@ const BuySellTemplate = (props: { template: string }) => {
     </>
   );
 };
-
-export default BuySellTemplate;

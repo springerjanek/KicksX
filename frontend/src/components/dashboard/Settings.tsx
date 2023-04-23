@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
@@ -7,10 +7,9 @@ import { Link } from "react-router-dom";
 import { useGetSettingsData } from "api/dashboard/settings/settings";
 import { useSelectPayout } from "api/dashboard/settings/payout";
 import { useSelectPayment } from "api/dashboard/settings/payment";
-import DashboardNavbar from "./DashboardNavbar";
-import axios from "axios";
+import { DashboardNavbar } from "./DashboardNavbar";
 
-const Settings = () => {
+export const Settings = () => {
   const [editPayout, setEditPayout] = useState(false);
   const [editPayment, setEditPayment] = useState(false);
 
@@ -231,5 +230,3 @@ const Settings = () => {
     </>
   );
 };
-
-export default memo(Settings);

@@ -3,7 +3,7 @@ import { useGetRelatedProducts } from "../../api/product/relatedProducts";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
-const RelatedProducts = (props: { productName: string }) => {
+export const RelatedProducts = (props: { productName: string }) => {
   const originalProductName = props.productName;
   const splittedString = originalProductName.split(" ");
   const filterOne = splittedString[0];
@@ -50,5 +50,3 @@ const RelatedProducts = (props: { productName: string }) => {
     </>
   );
 };
-
-export default RelatedProducts;

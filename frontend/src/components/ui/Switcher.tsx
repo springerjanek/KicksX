@@ -1,6 +1,6 @@
 import React from "react";
 
-const Switcher = (props: {
+export const Switcher = (props: {
   onChange: () => void;
   checked: boolean;
   leftText: string;
@@ -26,5 +26,3 @@ const Switcher = (props: {
     </div>
   );
 };
-
-export default Switcher;

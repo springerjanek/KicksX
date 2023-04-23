@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Fees from "./Fees";
+import { Fees } from "./Fees";
 import FinalChecks from "./FinalChecks";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "redux/store";
@@ -9,7 +9,7 @@ import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
 import { useGetProductByName } from "hooks/useGetProductByName";
 
-const CompleteSale = (props: {
+export const CompleteSale = (props: {
   price: number | string;
   askPrice: number | string;
   userSummary: string;
@@ -169,5 +169,3 @@ const CompleteSale = (props: {
     </>
   );
 };
-
-export default CompleteSale;

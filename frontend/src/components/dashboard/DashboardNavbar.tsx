@@ -8,7 +8,7 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 
-const DashboardNavbar = () => {
+export const DashboardNavbar = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   return (
@@ -49,5 +49,3 @@ const DashboardNavbar = () => {
     </div>
   );
 };
-
-export default DashboardNavbar;

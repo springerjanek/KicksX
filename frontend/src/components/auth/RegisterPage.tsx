@@ -4,9 +4,9 @@ import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { registerFunction, signUpWithGithub } from "redux/authSlice.helpers";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
-import WhiteFormContainer from "./WhiteFormContainer";
+import { WhiteFormContainer } from "./WhiteFormContainer";
 
-const RegisterPage = () => {
+export const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -77,5 +77,3 @@ const RegisterPage = () => {
     />
   );
 };
-
-export default RegisterPage;

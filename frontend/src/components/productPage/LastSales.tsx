@@ -1,7 +1,7 @@
 import React from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const LastSales = (props: {
+export const LastSales = (props: {
   lastsales: {
     id: string;
     size: string;
@@ -63,5 +63,3 @@ const LastSales = (props: {
     </>
   );
 };
-
-export default LastSales;

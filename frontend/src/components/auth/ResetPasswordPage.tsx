@@ -4,9 +4,9 @@ import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
-import WhiteFormContainer from "./WhiteFormContainer";
+import { WhiteFormContainer } from "./WhiteFormContainer";
 
-const ResetPasswordPage = () => {
+export const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
 
   const useQuery = () => {
@@ -67,5 +67,3 @@ const ResetPasswordPage = () => {
     </>
   );
 };
-
-export default ResetPasswordPage;

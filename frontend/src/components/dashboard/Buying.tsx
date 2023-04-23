@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useGetBids, useDeleteBid } from "../../api/dashboard/buying";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
-import DashboardNavbar from "./DashboardNavbar";
+import { DashboardNavbar } from "./DashboardNavbar";
 import { ThreeDots } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 
-const Buying = () => {
+export const Buying = () => {
   const [showHistory, setShowHistory] = useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -141,5 +141,3 @@ const Buying = () => {
     </>
   );
 };
-
-export default Buying;

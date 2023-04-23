@@ -9,7 +9,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 
-const Navbar = () => {
+export const Navbar = () => {
   const [input, setInput] = useState("");
   const [searchedProducts, setSearchedProducts] = useState<
     Products | undefined
@@ -142,5 +142,3 @@ const Navbar = () => {
     </>
   );
 };
-
-export default Navbar;

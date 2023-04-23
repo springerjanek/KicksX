@@ -3,10 +3,10 @@ import { useAppDispatch, useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
 import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { loginFunction, signUpWithGithub } from "redux/authSlice.helpers";
-import WhiteFormContainer from "./WhiteFormContainer";
+import { WhiteFormContainer } from "./WhiteFormContainer";
 import { notify } from "../../hooks/notify";
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -89,5 +89,3 @@ const LoginPage = () => {
     />
   );
 };
-
-export default LoginPage;

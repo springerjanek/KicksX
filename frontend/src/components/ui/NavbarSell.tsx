@@ -3,7 +3,7 @@ import { useGetProducts } from "hooks/useGetProducts";
 import { search } from "api/navbar/search";
 import { Link } from "react-router-dom";
 
-const NavbarSell = () => {
+export const NavbarSell = () => {
   const [input, setInput] = useState("");
   const [searchedProducts, setSearchedProducts] = useState<
     Products | undefined
@@ -68,5 +68,3 @@ const NavbarSell = () => {
     </div>
   );
 };
-
-export default NavbarSell;

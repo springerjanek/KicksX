@@ -7,7 +7,10 @@ interface Props {
   isLoginComponent?: boolean;
 }
 
-const ProtectedRoute = ({ component: Component, isLoginComponent }: Props) => {
+export const ProtectedRoute = ({
+  component: Component,
+  isLoginComponent,
+}: Props) => {
   const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
@@ -27,5 +30,3 @@ const ProtectedRoute = ({ component: Component, isLoginComponent }: Props) => {
 
   return <Navigate to={"/"} />;
 };
-
-export default ProtectedRoute;

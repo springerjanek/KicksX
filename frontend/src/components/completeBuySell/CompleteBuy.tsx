@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Fees from "./Fees";
-import FinalChecks from "./FinalChecks";
+import { Fees } from "./Fees";
+import { FinalChecks } from "./FinalChecks";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "redux/store";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { notify } from "../../hooks/notify";
 import { useNavigate } from "react-router-dom";
 import { useGetProductByName } from "hooks/useGetProductByName";
 
-const CompleteBuy = (props: {
+export const CompleteBuy = (props: {
   price: number | string;
   bidPrice: number | string;
   isSwitchedToPlaceBid: boolean;
@@ -153,5 +153,3 @@ const CompleteBuy = (props: {
     </>
   );
 };
-
-export default CompleteBuy;

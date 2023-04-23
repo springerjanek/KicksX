@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useGetAsks, useDeleteAsk } from "../../api/dashboard/selling";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
-import DashboardNavbar from "./DashboardNavbar";
+import { DashboardNavbar } from "./DashboardNavbar";
 import { ThreeDots } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 
-const Selling = () => {
+export const Selling = () => {
   const [showHistory, setShowHistory] = useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -144,5 +144,3 @@ const Selling = () => {
     </>
   );
 };
-
-export default Selling;

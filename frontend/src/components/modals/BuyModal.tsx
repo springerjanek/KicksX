@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
-import Switcher from "../ui/Switcher";
-import CompleteBuy from "../completeBuySell/CompleteBuy";
-import UserInfoSummary from "./UserInfoSummary";
+import { Switcher } from "../ui/Switcher";
+import { CompleteBuy } from "../completeBuySell/CompleteBuy";
+import { UserInfoSummary } from "./UserInfoSummary";
 
-const BuyModal = (props: {
+export const BuyModal = (props: {
   product: string;
   productData: [string, number | string, number | string];
   isFromPlaceBid: boolean;
@@ -220,5 +220,3 @@ const BuyModal = (props: {
     </>
   );
 };
-
-export default BuyModal;

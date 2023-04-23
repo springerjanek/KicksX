@@ -1,6 +1,6 @@
 import React from "react";
 
-const Fees = (props: { type: string; price: string | number }) => {
+export const Fees = (props: { type: string; price: string | number }) => {
   const price = props.price;
   if (typeof price === "number") {
     const transactionFee = ((9.5 / 100) * price).toFixed(2);
@@ -65,5 +65,3 @@ const Fees = (props: { type: string; price: string | number }) => {
     return <></>;
   }
 };
-
-export default Fees;

@@ -1,13 +1,13 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Navbar from "../ui/Navbar";
-import RelatedProducts from "./RelatedProducts";
-import LastSales from "./LastSales";
-import MarketActivity from "./MarketActivity";
+import { Navbar } from "../ui/Navbar";
+import { RelatedProducts } from "./RelatedProducts";
+import { LastSales } from "./LastSales";
+import { MarketActivity } from "./MarketActivity";
 import { useGetProduct } from "../../api/product/product";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
-const ProductPage = () => {
+export const ProductPage = () => {
   const [showSales, setShowSales] = useState(false);
   const [showSizes, setShowSizes] = useState(false);
 
@@ -104,5 +104,3 @@ const ProductPage = () => {
     </>
   );
 };
-
-export default memo(ProductPage);

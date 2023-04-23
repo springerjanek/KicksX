@@ -4,9 +4,9 @@ import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
 import { useGetUserData } from "hooks/useGetUserData";
 import { ThreeDots } from "react-loader-spinner";
-import Navbar from "./DashboardNavbar";
+import { DashboardNavbar } from "./DashboardNavbar";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const uid = user.id;
@@ -52,11 +52,9 @@ const Dashboard = () => {
           )}
           <Link to={"/forgot-password"}>Reset Your Password</Link>
 
-          <Navbar />
+          <DashboardNavbar />
         </div>
       </div>
     </>
   );
 };
-
-export default Dashboard;

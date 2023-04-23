@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
-import CompleteSale from "../completeBuySell/CompleteSale";
-import Switcher from "../ui/Switcher";
-import Fees from "../completeBuySell/Fees";
-import UserInfoSummary from "./UserInfoSummary";
+import { CompleteSale } from "../completeBuySell/CompleteSale";
+import { Switcher } from "../ui/Switcher";
+import { Fees } from "../completeBuySell/Fees";
+import { UserInfoSummary } from "./UserInfoSummary";
 
-const AskModal = (props: {
+export const AskModal = (props: {
   product: string;
   productData: [string, number | string, number | string];
   turnOffModal: () => void;
@@ -199,5 +199,3 @@ const AskModal = (props: {
     </>
   );
 };
-
-export default AskModal;

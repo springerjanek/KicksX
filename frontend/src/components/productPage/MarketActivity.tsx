@@ -4,7 +4,7 @@ import {
   ArrowLongDownIcon,
 } from "@heroicons/react/24/outline";
 
-const MarketActivity = (props: {
+export const MarketActivity = (props: {
   lastSales: {
     id: string;
     size: string;
@@ -63,5 +63,3 @@ const MarketActivity = (props: {
     </div>
   );
 };
-
-export default MarketActivity;

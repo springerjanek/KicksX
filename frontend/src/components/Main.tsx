@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "./ui/Navbar";
+import { Navbar } from "./ui/Navbar";
 
-const Main = () => {
+export const Main = () => {
   return (
     <>
       <Navbar />
@@ -13,5 +13,3 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;

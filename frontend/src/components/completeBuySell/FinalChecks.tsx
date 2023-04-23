@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const FinalChecks = (props: {
+export const FinalChecks = (props: {
   type: string;
   enableButton: () => void;
   disableButton: () => void;
@@ -89,5 +89,3 @@ const FinalChecks = (props: {
     </>
   );
 };
-
-export default FinalChecks;

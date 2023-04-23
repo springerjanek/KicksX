@@ -4,7 +4,7 @@ import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useGetUserData } from "hooks/useGetUserData";
 
-const UserInfoSummary = (props: {
+export const UserInfoSummary = (props: {
   type: string;
   disableButton: () => void;
   enableButton: () => void;
@@ -124,5 +124,3 @@ const UserInfoSummary = (props: {
     </>
   );
 };
-
-export default UserInfoSummary;

@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "redux/store";
 import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { forgotPassword } from "redux/authSlice.helpers";
 import { notify } from "../../hooks/notify";
-import WhiteFormContainer from "./WhiteFormContainer";
+import { WhiteFormContainer } from "./WhiteFormContainer";
 
-const ForgotPasswordPage = () => {
+export const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
   const dispatch = useAppDispatch();
@@ -53,5 +53,3 @@ const ForgotPasswordPage = () => {
     </>
   );
 };
-
-export default ForgotPasswordPage;

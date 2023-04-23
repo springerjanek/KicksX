@@ -1,24 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ProtectedRoute from "ProtectedRoute";
-import Main from "components/Main";
-import ProductPage from "components/productPage/ProductPage";
-import SellPage from "components/SellPage";
-import BuyPage from "components/BuyPage";
-import Dashboard from "components/dashboard/Dashboard";
-import Settings from "components/dashboard/Settings";
-import EditShipping from "components/dashboard/EditShipping";
-import NavbarSell from "components/ui/NavbarSell";
-import Selling from "components/dashboard/Selling";
-import Buying from "components/dashboard/Buying";
+import { ProtectedRoute } from "ProtectedRoute";
+import { Main } from "components/Main";
+import { ProductPage } from "components/productPage/ProductPage";
+import { SellPage } from "components/SellPage";
+import { BuyPage } from "components/BuyPage";
+import { Dashboard } from "components/dashboard/Dashboard";
+import { Settings } from "components/dashboard/Settings";
+import { EditShipping } from "components/dashboard/EditShipping";
+import { NavbarSell } from "components/ui/NavbarSell";
+import { Selling } from "components/dashboard/Selling";
+import { Buying } from "components/dashboard/Buying";
 
-import LoginPage from "components/auth/LoginPage";
-import RegisterPage from "components/auth/RegisterPage";
-import ForgotPasswordPage from "components/auth/ForgotPasswordPage";
-import ResetPasswordPage from "components/auth/ResetPasswordPage";
+import { LoginPage } from "components/auth/LoginPage";
+import { RegisterPage } from "components/auth/RegisterPage";
+import { ForgotPasswordPage } from "components/auth/ForgotPasswordPage";
+import { ResetPasswordPage } from "components/auth/ResetPasswordPage";
 
-const Routing = () => {
+export const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -69,5 +68,3 @@ const Routing = () => {
     </BrowserRouter>
   );
 };
-
-export default Routing;

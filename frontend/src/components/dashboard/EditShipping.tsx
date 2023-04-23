@@ -7,7 +7,7 @@ import countryList from "react-select-country-list";
 import { notify } from "../../hooks/notify";
 import { useForm, Controller } from "react-hook-form";
 
-const EditShipping = () => {
+export const EditShipping = () => {
   const { user } = useAppSelector((state) => state.auth);
   const uid = user.id;
   const options = useMemo(() => countryList().getData(), []);
@@ -209,5 +209,3 @@ const EditShipping = () => {
     </>
   );
 };
-
-export default EditShipping;
