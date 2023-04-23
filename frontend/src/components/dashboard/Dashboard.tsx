@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import { logout } from "../../redux/authSlice";
 import { Link } from "react-router-dom";
 import { useGetUserData } from "hooks/useGetUserData";
@@ -7,8 +7,8 @@ import { ThreeDots } from "react-loader-spinner";
 import Navbar from "./DashboardNavbar";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const uid = user.id;
 
   const { isLoading, data } = useGetUserData(

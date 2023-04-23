@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { useGetBids, useDeleteBid } from "../../api/dashboard/buying";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import DashboardNavbar from "./DashboardNavbar";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Buying = () => {
   const [showHistory, setShowHistory] = useState(false);
 
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const uid = user.id;
 
   const { isLoading, data } = useGetBids(`/getUserData/${uid}`);

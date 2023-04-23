@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  forgotPassword,
-  resetErorr,
-  resetSuccess,
-} from "../../redux/authSlice";
+import { useAppDispatch, useAppSelector } from "redux/store";
+import { resetErorr, resetSuccess } from "../../redux/authSlice";
+import { forgotPassword } from "redux/authSlice.helpers";
 import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
-  const dispatch = useDispatch()<any>;
+  const dispatch = useAppDispatch();
 
-  const { error, success } = useSelector((state: ReduxAuth) => state.auth);
+  const { error, success } = useAppSelector((state) => state.auth);
 
   const errorCondition = error.length > 0;
   const successCondition = success.length > 0;

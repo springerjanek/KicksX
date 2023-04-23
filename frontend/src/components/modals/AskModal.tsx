@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
 import CompleteSale from "../completeBuySell/CompleteSale";
 import Switcher from "../ui/Switcher";
@@ -87,9 +87,7 @@ const AskModal = (props: {
     };
   }, [askPrice, switchToSellNow]);
 
-  const { user, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
-  );
+  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =

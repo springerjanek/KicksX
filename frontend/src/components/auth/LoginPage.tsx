@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
-import {
-  loginFunction,
-  signUpWithGithub,
-  resetErorr,
-  resetSuccess,
-} from "../../redux/authSlice";
+import { resetErorr, resetSuccess } from "../../redux/authSlice";
+import { loginFunction, signUpWithGithub } from "redux/authSlice.helpers";
 import WhiteFormContainer from "./WhiteFormContainer";
 import { notify } from "../../hooks/notify";
 
@@ -16,7 +12,7 @@ const LoginPage = () => {
   const [remember, setRemember] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()<any>;
+  const dispatch = useAppDispatch();
 
   const payload = {
     username: username,
@@ -24,8 +20,8 @@ const LoginPage = () => {
     remember: remember,
   };
 
-  const { user, error, success, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
+  const { user, error, success, isLoggedInTemporary } = useAppSelector(
+    (state) => state.auth
   );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedCondition =

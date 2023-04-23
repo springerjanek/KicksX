@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useGetUserData } from "hooks/useGetUserData";
@@ -18,9 +18,7 @@ const UserInfoSummary = (props: {
   const [payoutText, setPayoutText] = useState("Set Your Payout!");
   const navigate = useNavigate();
 
-  const { user, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
-  );
+  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =

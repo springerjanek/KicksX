@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  registerFunction,
-  signUpWithGithub,
-  resetErorr,
-  resetSuccess,
-} from "../../redux/authSlice";
-
+import { useAppDispatch, useAppSelector } from "redux/store";
+import { resetErorr, resetSuccess } from "../../redux/authSlice";
+import { registerFunction, signUpWithGithub } from "redux/authSlice.helpers";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
@@ -16,12 +11,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()<any>;
+  const dispatch = useAppDispatch();
 
   const payload = { username: username, password: password };
 
-  const { user, error, success, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
+  const { user, error, success, isLoggedInTemporary } = useAppSelector(
+    (state) => state.auth
   );
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedCondition =

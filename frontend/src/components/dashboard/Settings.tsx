@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
@@ -16,7 +16,7 @@ const Settings = () => {
 
   const navigate = useNavigate();
 
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   const uid = user.id;
 

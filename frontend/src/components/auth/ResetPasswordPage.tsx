@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { resetPassword, resetErorr, resetSuccess } from "../../redux/authSlice";
+import { useAppDispatch, useAppSelector } from "redux/store";
+import { resetErorr, resetSuccess } from "../../redux/authSlice";
+import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
 import WhiteFormContainer from "./WhiteFormContainer";
@@ -19,9 +20,9 @@ const ResetPasswordPage = () => {
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()<any>;
+  const dispatch = useAppDispatch();
 
-  const { error, success } = useSelector((state: ReduxAuth) => state.auth);
+  const { error, success } = useAppSelector((state) => state.auth);
 
   const errorCondition = error.length > 0;
   const successCondition = success.length > 0;

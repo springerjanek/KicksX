@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useAppSelector } from "redux/store";
 
 interface Props {
   component: React.FC;
@@ -8,9 +8,7 @@ interface Props {
 }
 
 const ProtectedRoute = ({ component: Component, isLoginComponent }: Props) => {
-  const { user, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
-  );
+  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =

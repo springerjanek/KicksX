@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGetProducts } from "hooks/useGetProducts";
 import { search } from "api/navbar/search";
@@ -19,9 +19,7 @@ const Navbar = () => {
 
   const { isLoading, data } = useGetProducts();
 
-  const { user, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
-  );
+  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
   const isLoggedCondition =

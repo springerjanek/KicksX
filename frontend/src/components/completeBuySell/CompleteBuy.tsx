@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Fees from "./Fees";
 import FinalChecks from "./FinalChecks";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../../hooks/notify";
@@ -26,7 +26,7 @@ const CompleteBuy = (props: {
   const name = props.productData[0];
   const size = props.productData[1];
 
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   const uid = user.id;
 
@@ -61,7 +61,7 @@ const CompleteBuy = (props: {
 
   const completeBuyHandler = () => {
     axios
-      .post("http://localhost:3001/buy", buyPayload)
+      .post("https://kicksxbackend.onrender.com/buy", buyPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");
@@ -69,7 +69,7 @@ const CompleteBuy = (props: {
 
   const completeBidHandler = () => {
     axios
-      .post("http://localhost:3001/bid", bidPayload)
+      .post("https://kicksxbackend.onrender.com/bid", bidPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");

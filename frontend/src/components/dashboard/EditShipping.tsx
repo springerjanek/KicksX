@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
@@ -8,7 +8,7 @@ import { notify } from "../../hooks/notify";
 import { useForm, Controller } from "react-hook-form";
 
 const EditShipping = () => {
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const uid = user.id;
   const options = useMemo(() => countryList().getData(), []);
   const {

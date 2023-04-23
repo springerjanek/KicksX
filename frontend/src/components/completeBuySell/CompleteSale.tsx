@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Fees from "./Fees";
 import FinalChecks from "./FinalChecks";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { notify } from "../../hooks/notify";
@@ -20,7 +20,7 @@ const CompleteSale = (props: {
   const [thumbnail, setThumbnail] = useState("");
   const [disableButton, setDisableButton] = useState(true);
 
-  const { user } = useSelector((state: ReduxAuth) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   const uid = user.id;
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
 import Switcher from "../ui/Switcher";
 import CompleteBuy from "../completeBuySell/CompleteBuy";
@@ -72,9 +72,7 @@ const BuyModal = (props: {
   }, [props.isFromPlaceBid]);
   console.log(switchToPlaceBid);
 
-  const { user, isLoggedInTemporary } = useSelector(
-    (state: ReduxAuth) => state.auth
-  );
+  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
 
   const isLoggedInPersisted = user.isLoggedInPersisted;
   const isLoggedTemporary = isLoggedInTemporary;
