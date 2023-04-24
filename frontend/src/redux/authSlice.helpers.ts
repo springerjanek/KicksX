@@ -9,14 +9,14 @@ import {
   confirmPasswordReset,
 } from "firebase/auth";
 
-type loginParams = {
-  username: string;
+export type LoginParams = {
+  email: string;
   password: string;
-  remember: boolean;
+  remember?: boolean;
 };
 
-type userPass = {
-  username: string;
+export type RegisterParams = {
+  email: string;
   password: string;
 };
 
@@ -38,13 +38,13 @@ const promptForPassword = async (email: string) => {
 
 export const loginFunction = createAsyncThunk(
   "auth/login",
-  async (params: loginParams) => {
+  async (params: LoginParams) => {
     try {
-      const username = params.username;
+      const email = params.email;
       const password = params.password;
       const rememberMe = params.remember;
 
-      const user = await signInWithEmailAndPassword(auth, username, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
       if (user) {
         const uid: string = user.user!.uid;
         return {
@@ -95,15 +95,11 @@ export const signUpWithGithub = createAsyncThunk(
 
 export const registerFunction = createAsyncThunk(
   "auth/register",
-  async (creds: userPass) => {
+  async (creds: RegisterParams) => {
     try {
-      const username = creds.username;
+      const email = creds.email;
       const password = creds.password;
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        username,
-        password
-      );
+      const user = await createUserWithEmailAndPassword(auth, email, password);
       const uid = user!.user!.uid;
       return { uid: uid };
     } catch (err) {

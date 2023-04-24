@@ -79,6 +79,18 @@ interface SettingsData {
   };
 }
 
+interface AuthForm {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
+
+interface PasswordActionsForm {
+  password?: string;
+  code?: string;
+  email?: string;
+}
+
 interface EditShippingForm {
   name: string;
   surname: string;
