@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { forgotPassword } from "redux/authSlice.helpers";
 import { notify } from "../../hooks/notify";
-import { WhiteFormContainer } from "./WhiteFormContainer";
+import { PasswordActionsForm } from "./PasswordActionsForm";
 
 export const ForgotPasswordPage = () => {
-  const [email, setEmail] = useState("");
-
   const dispatch = useAppDispatch();
 
   const { error, success } = useAppSelector((state) => state.auth);
@@ -26,30 +24,11 @@ export const ForgotPasswordPage = () => {
     }
   }, [errorCondition, successCondition]);
 
-  const forgotHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (email) {
-      dispatch(forgotPassword(email));
-      setEmail("");
-    } else {
-      notify("Please input valid email!", "warning");
-    }
+  const forgotHandler = (data: PasswordActionsForm) => {
+    dispatch(forgotPassword(data.email!));
   };
 
   return (
-    <>
-      <WhiteFormContainer
-        heading="INPUT YOUR E-MAIL"
-        onSubmit={forgotHandler}
-        smallText="E-MAIL"
-        inputType="email"
-        inputName="email"
-        inputValue={email}
-        onInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setEmail(e.target.value)
-        }
-        buttonText="RESET PASSWORD"
-      />
-    </>
+    <PasswordActionsForm formType="forgot" actionHandler={forgotHandler} />
   );
 };

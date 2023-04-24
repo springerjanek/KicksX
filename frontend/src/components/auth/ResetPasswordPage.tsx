@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
-import { WhiteFormContainer } from "./WhiteFormContainer";
+import { PasswordActionsForm } from "./PasswordActionsForm";
 
 export const ResetPasswordPage = () => {
-  const [password, setPassword] = useState("");
+  const location = useLocation();
 
-  const useQuery = () => {
-    const location = useLocation();
+  const searchForCode = () => {
     return new URLSearchParams(location.search);
-  };
-
-  const payload = {
-    password: password,
-    code: useQuery().get("oobCode") ?? "",
   };
 
   const navigate = useNavigate();
@@ -39,11 +33,10 @@ export const ResetPasswordPage = () => {
     }
   }, [errorCondition, successCondition]);
 
-  const resetHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (password.length >= 6 && payload.code !== "") {
-      dispatch(resetPassword(payload));
+  const resetHandler = (data: PasswordActionsForm) => {
+    const code = searchForCode().get("oobCode") ?? "";
+    if (data.password!.length >= 6 && code !== "") {
+      dispatch(resetPassword({ password: data.password!, code: code }));
     } else {
       notify(
         "Please input password with more than 5 letters or visit this page from the right url!",
@@ -53,17 +46,6 @@ export const ResetPasswordPage = () => {
   };
 
   return (
-    <>
-      <WhiteFormContainer
-        heading="INPUT NEW PASSWORD"
-        onSubmit={resetHandler}
-        smallText="PASSWORD"
-        inputType="password"
-        inputName="password"
-        inputValue={password}
-        onInputChange={(e) => setPassword(e.target.value)}
-        buttonText="RESET PASSWORD"
-      />
-    </>
+    <PasswordActionsForm formType="resetting" actionHandler={resetHandler} />
   );
 };
