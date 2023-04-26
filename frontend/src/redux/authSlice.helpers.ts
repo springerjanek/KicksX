@@ -99,7 +99,8 @@ export const registerFunction = createAsyncThunk(
     try {
       const email = creds.email;
       const password = creds.password;
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
       const uid = user!.user!.uid;
       return { uid: uid };
     } catch (err) {
