@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
-import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { notify } from "../../hooks/notify";
@@ -24,11 +23,9 @@ export const ResetPasswordPage = () => {
   useEffect(() => {
     if (errorCondition) {
       notify(error, "warning");
-      dispatch(resetErorr());
     }
     if (successCondition) {
       notify(success, "success");
-      dispatch(resetSuccess());
       navigate("/login");
     }
   }, [errorCondition, successCondition]);

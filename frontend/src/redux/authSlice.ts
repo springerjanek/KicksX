@@ -32,12 +32,6 @@ const authSlice = createSlice({
       state.user.id = "";
       state.success = "";
     },
-    resetErorr: (state) => {
-      state.error = "";
-    },
-    resetSuccess: (state) => {
-      state.success = "";
-    },
   },
   extraReducers(builder) {
     builder.addCase(loginFunction.fulfilled, (state, action) => {
@@ -46,6 +40,7 @@ const authSlice = createSlice({
           const rememberMe = action.payload.rememberMe;
 
           if (rememberMe === true) {
+            console.log("SIEMA");
             const uid = action.payload.uid;
             state.user.id = uid;
             state.user.isLoggedInPersisted = "true";
@@ -92,14 +87,21 @@ const authSlice = createSlice({
       }
     });
     builder.addCase(registerFunction.fulfilled, (state, action) => {
-      if (typeof action.payload !== "string") {
+      if (
+        typeof action.payload !== "string" &&
+        action.payload?.uid !== undefined
+      ) {
+        console.log("SIGN UP");
         const uid = action.payload?.uid;
-        axios.post("https://kicksxbackend.onrender.com/createUserData/", {
+        axios.post("http://localhost:3001/createUserData/", {
           uid: uid,
         });
-        state.error = "";
-        state.success = "Successfully signed up! You may now log in";
-      } else {
+        console.log(uid);
+        state.user.id = uid;
+        state.user.isLoggedInPersisted = "true";
+        state.success = "Successfully signed up and logged in!";
+      }
+      if (typeof action.payload === "string") {
         const formatedError = action.payload.slice(10);
         state.error = formatedError;
         state.success = "";
@@ -128,6 +130,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetErorr, resetSuccess } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

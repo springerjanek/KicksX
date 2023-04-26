@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
-import { resetErorr, resetSuccess } from "../../redux/authSlice";
 import { forgotPassword } from "redux/authSlice.helpers";
 import { notify } from "../../hooks/notify";
 import { PasswordActionsForm } from "./PasswordActionsForm";
@@ -16,11 +15,9 @@ export const ForgotPasswordPage = () => {
   useEffect(() => {
     if (errorCondition) {
       notify(error, "warning");
-      dispatch(resetErorr());
     }
     if (successCondition) {
       notify(success, "success");
-      dispatch(resetSuccess());
     }
   }, [errorCondition, successCondition]);
 
