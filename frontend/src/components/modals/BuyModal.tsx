@@ -47,9 +47,14 @@ export const BuyModal = (props: {
       }
     }
 
-    if (highestBid === "" && typeof bidPrice === "number") {
-      setSmartText("You are about to be the highest bidder");
-      setDisableButton(false);
+    if (typeof bidPrice === "number" && typeof highestBid === "string") {
+      if (bidPrice >= 1) {
+        setSmartText("You are about to be the highest bidder");
+        setDisableButton(false);
+      } else {
+        setSmartText("Minimum bid is 1$");
+        setDisableButton(true);
+      }
     }
 
     if (bidPrice >= lowestAsk) {
@@ -70,7 +75,6 @@ export const BuyModal = (props: {
       setSwitchToPlaceBid(true);
     }
   }, [props.isFromPlaceBid]);
-  console.log(switchToPlaceBid);
 
   const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
 
@@ -83,10 +87,18 @@ export const BuyModal = (props: {
   const lowestAsk = productData[2];
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value !== "") {
-      setBidPrice(parseInt(e.target.value.replace(/\D/g, "")));
-    } else {
-      setBidPrice(0);
+    const parsedInput = parseInt(e.target.value.replace(/\D/g, ""));
+
+    const checkIfInputIsValidNumber = () => {
+      if (!Number.isNaN(parsedInput)) {
+        return true;
+      } else {
+        setBidPrice(0);
+      }
+    };
+
+    if (checkIfInputIsValidNumber()) {
+      setBidPrice(parsedInput);
     }
   };
 
@@ -109,10 +121,12 @@ export const BuyModal = (props: {
 
   const disableButtonHandler = () => {
     setDisableButton(true);
+    console.log("siema");
   };
 
   const enableButtonHandler = () => {
     if (lowestAsk !== "--") {
+      console.log("enable");
       setDisableButton(false);
     }
   };
@@ -130,9 +144,7 @@ export const BuyModal = (props: {
         <div className="text-center mr-10 text-black">
           <div className="flex bg-white rounded mb-5 px-5 py-3 justify-between">
             SIZE: {size}
-            <button onClick={props.turnOffModal} className="">
-              EDIT
-            </button>
+            <button onClick={props.turnOffModal}>EDIT</button>
           </div>
           <div className="bg-white rounded">
             <Switcher

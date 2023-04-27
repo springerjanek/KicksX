@@ -94,10 +94,18 @@ export const AskModal = (props: {
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value !== "") {
-      setAskPrice(parseInt(e.target.value.replace(/\D/g, "")));
-    } else {
-      setAskPrice(0);
+    const parsedInput = parseInt(e.target.value.replace(/\D/g, ""));
+
+    const checkIfInputIsValidNumber = () => {
+      if (!Number.isNaN(parsedInput)) {
+        return true;
+      } else {
+        setAskPrice(0);
+      }
+    };
+
+    if (checkIfInputIsValidNumber()) {
+      setAskPrice(parsedInput);
     }
   };
 

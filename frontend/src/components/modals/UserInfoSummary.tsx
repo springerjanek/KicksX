@@ -61,7 +61,7 @@ export const UserInfoSummary = (props: {
   }, [userHavePayment, userHaveShipping]);
 
   useEffect(() => {
-    if (userHavePayout) {
+    if (userHavePayout && props.type !== "buying") {
       setPayoutText("Payout Method: Active");
       props.enableButton();
     } else {
