@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiGithub } from "react-icons/fi";
 import { useForm } from "react-hook-form";
+import { AuthFormField } from "./AuthFormField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
@@ -36,23 +37,9 @@ export const AuthForm = ({
           {isLoginForm ? "LOG IN" : "SIGN UP"}
         </h2>
         <form onSubmit={handleSubmit(formHandler)}>
-          <p className="mb-1 text-gray-500">E-MAIL</p>
-          <input
-            className="block bg-gray-200 outline-none p-2 w-full text-black"
-            type="text"
-            {...register("email")}
-            autoComplete="username"
-          />
+          <AuthFormField name="E-MAIL" register={register("email")} />
           <p className="text-red-700 mt-1">{errors.email?.message}</p>
-          <p className="mt-2 mb-1 text-gray-500">PASSWORD</p>
-          <input
-            className="bg-gray-200 outline-none p-2 w-full mb-5 text-black"
-            type="password"
-            {...register("password")}
-            autoComplete="current-password"
-          />
-          <p className="text-black">{errors.password?.message}</p>
-
+          <AuthFormField name="PASSWORD" register={register("password")} />
           {isLoginForm && (
             <label className="text-gray-500">
               <input
@@ -75,7 +62,7 @@ export const AuthForm = ({
           className="block mt-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full"
           onClick={githubHandler}
         >
-          {isLoginForm ? "LOG IN WITH GITHUB" : "SIGN UP WITH GITHUB"}{" "}
+          {isLoginForm ? "LOG IN WITH GITHUB" : "SIGN UP WITH GITHUB"}
           <FiGithub className="inline ml-1" />
         </button>
         <div className="text-center">
