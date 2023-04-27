@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Fees } from "./Fees";
-import FinalChecks from "./FinalChecks";
+import { FinalChecks } from "./FinalChecks";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "redux/store";
 import axios from "axios";
