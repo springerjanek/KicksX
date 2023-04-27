@@ -6,7 +6,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useGetSettingsData } from "api/dashboard/settings/settings";
 import { SettingsPayout } from "./SettingsPayout";
-import { DashboardNavbar } from "./DashboardNavbar";
+import { DashboardNavbar } from "../DashboardNavbar";
 import { SettingsPayment } from "./SettingsPayment";
 
 export const Settings = () => {
