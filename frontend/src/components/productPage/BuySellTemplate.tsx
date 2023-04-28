@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { AskModal } from "../modals/AskModal";
 import { BuyModal } from "../modals/BuyModal";
 import { useGetProduct } from "../../api/product/product";
@@ -14,6 +14,8 @@ export const BuySellTemplate = (props: { template: string }) => {
 
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+
   const locationState = location.state as LocationState;
 
   const isFromPlaceBid = locationState && locationState.bid;
@@ -27,12 +29,15 @@ export const BuySellTemplate = (props: { template: string }) => {
     }
   }, [isLoading]);
 
-  const changeLowestAskAndBid = async () => {
-    if (data) {
-      setLowestAsk(data!.lowestAsk);
-      setHighestBid(data!.highestBid);
+  useEffect(() => {
+    if (locationState && locationState.bids !== undefined) {
+      buyModalHandler(
+        locationState.size!,
+        locationState.lowestAsk!,
+        locationState.bids
+      );
     }
-  };
+  }, [locationState]);
 
   const askModalHandler = (
     size: string,
@@ -77,8 +82,18 @@ export const BuySellTemplate = (props: { template: string }) => {
     }
   };
 
+  const changeLowestAskAndBid = async () => {
+    if (data) {
+      setLowestAsk(data!.lowestAsk);
+      setHighestBid(data!.highestBid);
+    }
+  };
+
   const turnOffModal = () => {
     setShowModal(false);
+    if (locationState && locationState.bids !== undefined) {
+      navigate(`../buy/${id}`, { replace: true });
+    }
     changeLowestAskAndBid();
   };
 
@@ -178,7 +193,9 @@ export const BuySellTemplate = (props: { template: string }) => {
                 <BuyModal
                   product={data!.name}
                   productData={productDataToModal!}
-                  isFromPlaceBid={isFromPlaceBid}
+                  isFromPlaceBid={
+                    isFromPlaceBid !== undefined ? isFromPlaceBid : false
+                  }
                   turnOffModal={turnOffModal}
                 />
               )}

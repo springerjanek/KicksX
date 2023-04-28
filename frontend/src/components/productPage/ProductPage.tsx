@@ -23,6 +23,8 @@ export const ProductPage = () => {
     }
   };
 
+  console.log(data);
+
   return (
     <>
       <Navbar />
@@ -62,9 +64,16 @@ export const ProductPage = () => {
                         }
                         return (
                           <div key={size} className="ml-5">
-                            <p>
+                            <Link
+                              to={`/buy/${id}?size=${size}`}
+                              state={{
+                                size: size,
+                                lowestAsk: lowestAsk,
+                                bids: data!.bidsBySize,
+                              }}
+                            >
                               {size} ${lowestAsk}
-                            </p>
+                            </Link>
                           </div>
                         );
                       })}
