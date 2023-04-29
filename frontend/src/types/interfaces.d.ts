@@ -167,21 +167,6 @@ interface DeleteBid {
 
 interface DeleteAsk extends DeleteBid {}
 
-interface ReduxAuth {
-  auth: {
-    user: {
-      isLoggedInPersisted: string;
-      id: string;
-      isPayoutSet: boolean;
-      isShippingSet: boolean;
-      isPaymentSet: boolean;
-    };
-    isLoggedInTemporary: string;
-    error: string;
-    success: string;
-  };
-}
-
 interface LocationState {
   bid?: boolean;
   size?: string;
