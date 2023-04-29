@@ -183,5 +183,8 @@ interface ReduxAuth {
 }
 
 interface LocationState {
-  bid: boolean;
+  bid?: boolean;
+  size?: string;
+  lowestAsk?: string | number;
+  bids?: { size: string; bids: number[] }[];
 }
