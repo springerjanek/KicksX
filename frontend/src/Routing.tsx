@@ -1,16 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "ProtectedRoute";
-import { Main } from "components/Main";
+import { Main } from "components/ui/Main";
 import { ProductPage } from "components/productPage/ProductPage";
-import { SellPage } from "components/SellPage";
-import { BuyPage } from "components/BuyPage";
 import { Dashboard } from "components/dashboard/Dashboard";
+import { Selling } from "components/dashboard/Selling";
+import { Buying } from "components/dashboard/Buying";
 import { Settings } from "components/dashboard/settings/Settings";
 import { EditShipping } from "components/dashboard/settings/EditShipping";
 import { NavbarSell } from "components/ui/NavbarSell";
-import { Selling } from "components/dashboard/Selling";
-import { Buying } from "components/dashboard/Buying";
+import { BuySellTemplate } from "components/productPage/BuySellTemplate";
 
 import { LoginPage } from "components/auth/LoginPage";
 import { RegisterPage } from "components/auth/RegisterPage";
@@ -25,9 +24,12 @@ export const Routing = () => {
         <Route path="/" element={<Main />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/sell" element={<NavbarSell />} />
-        <Route path="/sell/:id" element={<SellPage />} />
-        <Route path="/buy/:id" element={<BuyPage />} />
-        <Route path="/buy/:id?size=:size" element={<BuyPage />} />
+        <Route path="/sell/:id" element={<BuySellTemplate template="sell" />} />
+        <Route path="/buy/:id" element={<BuySellTemplate template="buy" />} />
+        <Route
+          path="/buy/:id?size=:size"
+          element={<BuySellTemplate template="buy" />}
+        />
 
         <Route
           path="/dashboard/profile"
