@@ -6,8 +6,8 @@ import { ProductPage } from "components/productPage/ProductPage";
 import { SellPage } from "components/SellPage";
 import { BuyPage } from "components/BuyPage";
 import { Dashboard } from "components/dashboard/Dashboard";
-import { Settings } from "components/dashboard/Settings";
-import { EditShipping } from "components/dashboard/EditShipping";
+import { Settings } from "components/dashboard/settings/Settings";
+import { EditShipping } from "components/dashboard/settings/EditShipping";
 import { NavbarSell } from "components/ui/NavbarSell";
 import { Selling } from "components/dashboard/Selling";
 import { Buying } from "components/dashboard/Buying";
@@ -27,11 +27,12 @@ export const Routing = () => {
         <Route path="/sell" element={<NavbarSell />} />
         <Route path="/sell/:id" element={<SellPage />} />
         <Route path="/buy/:id" element={<BuyPage />} />
+        <Route path="/buy/:id?size=:size" element={<BuyPage />} />
+
         <Route
           path="/dashboard/profile"
           element={<ProtectedRoute component={Dashboard} />}
         />
-
         <Route
           path="/dashboard/settings"
           element={<ProtectedRoute component={Settings} />}
