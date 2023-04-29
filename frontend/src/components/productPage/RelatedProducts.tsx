@@ -23,6 +23,15 @@ export const RelatedProducts = (props: { productName: string }) => {
         autoplay={false}
         slidesToShow={4}
         slidesToScroll={4}
+        responsive={[
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+            },
+          },
+        ]}
         infinite={true}
       >
         {!isLoading &&
@@ -35,7 +44,7 @@ export const RelatedProducts = (props: { productName: string }) => {
                   <img
                     src={thumbnail}
                     alt="Product"
-                    className="sm:w-20 sm:h-20 md:w-64 md:h-36"
+                    className="sm:w-26 sm:h-26 md:w-64 md:h-36"
                   />
                   {name}
                   <br></br>
@@ -46,7 +55,6 @@ export const RelatedProducts = (props: { productName: string }) => {
             );
           })}
       </Slider>
-      <div className="black-line"></div>
     </>
   );
 };
