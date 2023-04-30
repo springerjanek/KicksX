@@ -4,16 +4,9 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
 export const RelatedProducts = (props: { productName: string }) => {
-  const originalProductName = props.productName;
-  const splittedString = originalProductName.split(" ");
-  const filterOne = splittedString[0];
-  const filterTwo = splittedString[1];
-  const combinedFilter = filterOne.concat(" ", filterTwo);
+  const filter = props.productName.split(" ", 2).join(" ");
 
-  const { isLoading, data } = useGetRelatedProducts(
-    originalProductName,
-    combinedFilter
-  );
+  const { isLoading, data } = useGetRelatedProducts(props.productName, filter);
 
   return (
     <>
