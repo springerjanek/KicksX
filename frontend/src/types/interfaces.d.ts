@@ -3,13 +3,28 @@ interface Product {
   name: string;
   thumbnail: string;
   releasedate: string;
-  asks: Array<{ id: string; size: string; price: number }>;
-  bids: Array<{ id: string; size: string; price: number }>;
-  lastsales: Array<{ id: string; size: string; price: number; date: string }>;
+  asks: { id: string; size: string; price: number }[];
+  bids: { id: string; size: string; price: number }[];
+  lastsales: { id: string; size: string; price: number; date: string }[];
   sizes: string[];
 }
 
 interface Products extends Array<Product> {}
+
+interface ModifiedProductData {
+  asksBySize: {
+    size: string;
+    asks: number[];
+  }[];
+  bidsBySize: {
+    size: string;
+    bids: number[];
+  }[];
+  lowestAsk: number;
+  highestBid: number;
+}
+
+interface ProductData extends ModifiedProductData {}
 
 interface UserData {
   asks: {
