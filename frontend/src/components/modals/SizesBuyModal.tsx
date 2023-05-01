@@ -47,8 +47,8 @@ export const SizesBuyModal = ({
             }
             className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
           >
-            {size}
-            <br></br>${lowestAsk !== 0 ? lowestAsk : "--"}
+            <p> {size}</p>
+            <p>${lowestAsk !== 0 ? lowestAsk : "--"}</p>
           </div>
         );
       })}

@@ -39,10 +39,10 @@ export const RelatedProducts = (props: { productName: string }) => {
                     alt="Product"
                     className="sm:w-26 sm:h-26 md:w-64 md:h-36"
                   />
-                  {name}
-                  <br></br>
-                  Lowest Ask<br></br>
-                  {lowestAsk}$
+                  <p>{name}</p>
+
+                  <p>Lowest Ask</p>
+                  <p> {lowestAsk}$</p>
                 </Link>
               </div>
             );

@@ -46,8 +46,8 @@ export const SizesSellModal = ({
             }
             className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
           >
-            {size}
-            <br></br>${highestBid !== 0 ? highestBid : "--"}
+            <p> {size}</p>
+            <p>${highestBid !== 0 ? highestBid : "--"}</p>
           </div>
         );
       })}

@@ -65,22 +65,23 @@ export const AuthForm = ({
           {isLoginForm ? "LOG IN WITH GITHUB" : "SIGN UP WITH GITHUB"}
           <FiGithub className="inline ml-1" />
         </button>
-        <div className="text-center">
-          <br></br>
+        <div className="text-center mt-5">
           <Link
-            className={"text-gray-600  whitespace-nowrap"}
+            className="text-gray-600  whitespace-nowrap"
             to={isLoginForm ? "/register" : "/login"}
           >
-            {isLoginForm
-              ? "New User? Click here"
-              : "Already signed up? Click here"}
+            <p>
+              {isLoginForm
+                ? "New User? Click here"
+                : "Already signed up? Click here"}
+            </p>
           </Link>
-          <br></br>
+
           <Link
             className="text-gray-600 whitespace-nowrap"
             to={"/forgot-password"}
           >
-            Forgot Your Password? Click here
+            <p> Forgot Your Password? Click here</p>
           </Link>
         </div>
       </div>
