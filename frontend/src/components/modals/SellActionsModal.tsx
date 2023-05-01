@@ -6,9 +6,9 @@ import { Switcher } from "../ui/Switcher";
 import { Fees } from "../completeBuySell/Fees";
 import { UserInfoSummary } from "./UserInfoSummary";
 
-export const AskModal = (props: {
+export const SellActionsModal = (props: {
   product: string;
-  productData: [string, number | string, number | string];
+  productData: [string, number, number];
   turnOffModal: () => void;
 }) => {
   const productData = props.productData;
@@ -16,6 +16,8 @@ export const AskModal = (props: {
 
   const highestBid = productData[1];
   const lowestAsk = productData[2];
+
+  console.log("SIEMA", highestBid, lowestAsk);
 
   const [askPrice, setAskPrice] = useState(lowestAsk);
   const [smartText, setSmartText] = useState("Please enter your ask!");
@@ -27,55 +29,49 @@ export const AskModal = (props: {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const askPriceIsNumber = typeof askPrice === "number" && askPrice > 0;
-  const lowestAskIsNumber = typeof lowestAsk === "number";
-  const highestBidIsNumber = typeof highestBid === "number";
   console.log(lowestAsk);
 
   useEffect(() => {
-    if (!askPriceIsNumber) {
-      setDisableButton(true);
-    } else {
-      setDisableButton(false);
-    }
-    if (lowestAskIsNumber) {
-      if (askPriceIsNumber && askPrice >= lowestAsk) {
+    if (lowestAsk !== 0) {
+      if (askPrice >= lowestAsk) {
         setSmartText("You are not the lowest ask");
+        setDisableButton(false);
       }
-      if (askPriceIsNumber && askPrice < lowestAsk) {
+      if (askPrice < lowestAsk) {
         setSmartText("You are the lowest ask");
+        setDisableButton(false);
       }
     }
 
-    if (!switchToSellNow && askPrice === "") {
+    if (!switchToSellNow && askPrice === 0) {
       setSmartText("Please enter your ask");
     }
 
-    if (lowestAsk === "" && askPriceIsNumber) {
-      console.log("Siema");
+    if (lowestAsk === 0) {
       setSmartText("You are the lowest ask");
+      setDisableButton(false);
     }
 
     if (askPrice === 0) {
       setSmartText("Minimum ask is 1$");
       setDisableButton(true);
     }
-    if (!highestBidIsNumber && switchToSellNow) {
+    if (highestBid === 0 && switchToSellNow) {
       setSmartText("NO BIDS AVAILABLE");
       setDisableButton(true);
     }
     if (!switchToSellNow && askPrice === highestBid) {
-      setAskPrice("");
+      setAskPrice(0);
       setSmartText("Please enter your ask!");
     }
-    if (typeof highestBid === "number" && switchToSellNow) {
+    if (highestBid !== 0 && switchToSellNow) {
       setAskPrice(highestBid);
     }
     if (askPrice <= highestBid) {
       setDisableButton(true);
     }
     let timeout = setTimeout(() => {
-      if (highestBidIsNumber && askPriceIsNumber && askPrice <= highestBid) {
+      if (highestBid !== 0 && askPrice <= highestBid) {
         setSmartText("You're about to sell at the highest bid price");
         setSwitchToSellNow(true);
         setAskPrice(highestBid);
@@ -132,7 +128,7 @@ export const AskModal = (props: {
   };
 
   const enableButtonHandler = () => {
-    if (typeof askPrice === "number" && askPrice > 0) {
+    if (askPrice > 0) {
       setDisableButton(false);
     }
   };
