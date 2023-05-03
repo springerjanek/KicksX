@@ -6,8 +6,6 @@ import { useGetUserData } from "hooks/useGetUserData";
 
 export const UserInfoSummary = (props: {
   type: string;
-  disableButton: () => void;
-  enableButton: () => void;
   getUserSummary: {
     (payout: string): void;
     (shipping: string, payment: string): void;
@@ -25,17 +23,14 @@ export const UserInfoSummary = (props: {
     isLoggedInPersisted === "true" || isLoggedTemporary === "true";
   const uid = user.id;
 
-  const { isLoading, data } = useGetUserData(
-    `/getUserData/${uid}`,
-    "dashboardData"
-  );
+  const { data } = useGetUserData(`/getUserData/${uid}`, "dashboardData");
 
   const modalForBuying = isLoggedCondition && props.type === "buying";
   const modalForSelling = isLoggedCondition && props.type === "selling";
 
-  const userHaveShipping = !isLoading && data!.shipping.street.length > 0;
-  const userHavePayment = !isLoading && data!.payment.type.length > 0;
-  const userHavePayout = !isLoading && data!.payout.type.length > 0;
+  const userHaveShipping = data && data.shipping.street.length > 0;
+  const userHavePayment = data && data.payment.type.length > 0;
+  const userHavePayout = data && data.payout.type.length > 0;
 
   const getUserData = () => {
     if (props.type === "buying") {
@@ -47,25 +42,21 @@ export const UserInfoSummary = (props: {
   };
 
   useEffect(() => {
-    if (userHaveShipping) {
-      setShippingText(data!.shipping.street);
+    if (props.type === "buying") {
+      if (userHaveShipping) {
+        setShippingText(data!.shipping.street);
+      }
+      if (userHavePayment) {
+        setPaymentText(data!.payment.type);
+      }
     }
-    if (userHavePayment) {
-      setPaymentText(data!.payment.type);
-    }
-    if (userHavePayment && userHaveShipping) {
-      props.enableButton();
-    } else {
-      props.disableButton();
-    }
-  }, [userHavePayment, userHaveShipping]);
+  }, [userHavePayment, userHaveShipping, ,]);
 
   useEffect(() => {
-    if (userHavePayout && props.type !== "buying") {
-      setPayoutText("Payout Method: Active");
-      props.enableButton();
-    } else {
-      props.disableButton();
+    if (props.type === "selling") {
+      if (userHavePayout) {
+        setPayoutText("Payout Method: Active");
+      }
     }
   }, [userHavePayout]);
 
@@ -80,8 +71,8 @@ export const UserInfoSummary = (props: {
   return (
     <>
       {modalForBuying && (
-        <>
-          <div className="p-4 flex gap-2">
+        <div className="bg-white rounded mt-10 p-2 ">
+          <div className="p-3 flex gap-2">
             <BanknotesIcon className="h-5 ml-6 mt-[3px]" />
             {paymentText}
             <button
@@ -93,7 +84,7 @@ export const UserInfoSummary = (props: {
           </div>
 
           <div className="w-11/12 bg-black h-px ml-9"></div>
-          <div className="p-4 flex gap-2">
+          <div className="p-3 flex gap-2">
             <HomeIcon className="h-5 ml-6 mt-[3px] mb-4" />
             {shippingText}
             <button
@@ -103,23 +94,21 @@ export const UserInfoSummary = (props: {
               EDIT
             </button>
           </div>
-        </>
+        </div>
       )}
       {modalForSelling && (
-        <>
-          <div className="bg-white rounded mt-10 p-4 ">
-            <div className="p-4 flex gap-2">
-              <BanknotesIcon className="h-5 ml-6 mt-[3px]" />
-              {payoutText}
-              <button
-                onClick={editHandler}
-                className="ml-auto underline underline-offset-4 decoration-[2px] font-bold"
-              >
-                EDIT
-              </button>
-            </div>
+        <div className="bg-white rounded mt-10 p-4 ">
+          <div className="p-4 flex gap-2">
+            <BanknotesIcon className="h-5 ml-6 mt-[3px]" />
+            {payoutText}
+            <button
+              onClick={editHandler}
+              className="ml-auto underline underline-offset-4 decoration-[2px] font-bold"
+            >
+              EDIT
+            </button>
           </div>
-        </>
+        </div>
       )}
     </>
   );

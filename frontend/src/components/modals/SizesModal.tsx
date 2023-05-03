@@ -1,6 +1,6 @@
 import React from "react";
-import { SizesSellModal } from "./SizesSellModal";
-import { SizesBuyModal } from "./SizesBuyModal";
+import { SizesSellModal } from "./sell/SizesSellModal";
+import { SizesBuyModal } from "./buy/SizesBuyModal";
 
 export const SizesModal = ({
   type,
@@ -39,10 +39,8 @@ export const SizesModal = ({
     }[];
   }) => {
     setShowModal(true);
-    console.log("SIZESSS MODAL:", highestBid);
     if (highestBid !== undefined) {
-      console.log("SIZES MODAL:", highestBid);
-      setHighestBid(highestBid); // (HANDLE IN NEXT COMPONENT IF 0 THEN DISPLAY "--")
+      setHighestBid(highestBid);
       const asksOfDesiredSize = asks!.find((x) => x.size === size)!;
       const asksAreEmpty = asksOfDesiredSize.asks.length === 0;
       if (!asksAreEmpty) {
@@ -51,18 +49,18 @@ export const SizesModal = ({
         setLowestAsk(lowestAsk);
       } else {
         setProductDataToModal([size, highestBid, 0]);
-        console.log("SIZES MODAL TEST:", highestBid);
-        setLowestAsk(0); //(HANDLE IN NEXT COMPONENT IF 0 THEN DISPLAY "--")
+        setLowestAsk(0);
       }
     }
 
-    if (lowestAsk) {
+    if (lowestAsk !== undefined) {
       setLowestAsk(lowestAsk);
       const bidsOfDesiredSize = bids!.find((x) => x.size === size)!;
       const bidsAreEmpty = bidsOfDesiredSize.bids.length === 0;
       if (!bidsAreEmpty) {
         const highestBid = Math.max(...bidsOfDesiredSize.bids);
         setProductDataToModal([size, highestBid, lowestAsk]);
+        setHighestBid(highestBid);
       } else {
         setProductDataToModal([size, 0, lowestAsk]);
         setHighestBid(0);
@@ -78,7 +76,6 @@ export const SizesModal = ({
         {type === "sell" && (
           <SizesSellModal data={data} modalHandler={modalHandler} />
         )}
-
         {type === "buy" && (
           <SizesBuyModal data={data} modalHandler={modalHandler} />
         )}
