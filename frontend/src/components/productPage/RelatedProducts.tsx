@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 
 export const RelatedProducts = (props: { productName: string }) => {
   const filter = props.productName.split(" ", 2).join(" ");
-
-  const { isLoading, data } = useGetRelatedProducts(props.productName, filter);
+  const { data } = useGetRelatedProducts(props.productName, filter);
 
   return (
     <>
@@ -27,8 +26,8 @@ export const RelatedProducts = (props: { productName: string }) => {
         ]}
         infinite={true}
       >
-        {!isLoading &&
-          data!.map((relatedProduct) => {
+        {data &&
+          data.map((relatedProduct) => {
             const { id, name, thumbnail, lowestAsk } = relatedProduct;
 
             return (

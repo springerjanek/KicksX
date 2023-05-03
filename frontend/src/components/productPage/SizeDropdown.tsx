@@ -13,7 +13,7 @@ export const SizeDropdown = ({
       <p className="col-span-3 text-center mt-1">ALL ${data.lowestAsk}</p>
       {data.asksBySize.map((ask) => {
         const { size, asks } = ask;
-        const lowestAsk = asks.length > 0 ? Math.min(...asks) : "--";
+        const lowestAsk = asks.length > 0 ? Math.min(...asks) : 0;
 
         return (
           <div key={size} className="ml-5">
@@ -25,7 +25,7 @@ export const SizeDropdown = ({
                 bids: data!.bidsBySize,
               }}
             >
-              {size} ${lowestAsk}
+              {size} ${lowestAsk !== 0 ? lowestAsk : "--"}
             </Link>
           </div>
         );
