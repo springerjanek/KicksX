@@ -16,7 +16,11 @@ export const useSellModalActions = ({
   const [disableButton, setDisableButton] = useState(false);
   const [switchToSellNow, setSwitchToSellNow] = useState(false);
 
+  console.log(disableButton);
+
   const userHavePayout = userSummary !== "Set Your Payout!";
+
+  console.log("PAYOUT:", userHavePayout);
 
   useEffect(() => {
     if (lowestAsk !== 0) {
@@ -28,7 +32,9 @@ export const useSellModalActions = ({
       }
       if (userHavePayout) {
         setDisableButton(false);
+        console.log("ENABLE");
       } else {
+        console.log("DISABLE");
         setDisableButton(true);
       }
     }
@@ -71,7 +77,7 @@ export const useSellModalActions = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, [askPrice, switchToSellNow]);
+  }, [askPrice, switchToSellNow, userHavePayout]);
 
   return {
     askPrice,
