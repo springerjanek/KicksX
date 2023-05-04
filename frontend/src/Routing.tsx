@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "ProtectedRoute";
-import { Main } from "components/ui/Main";
+import { MainPage } from "components/ui/MainPage";
 import { ProductPage } from "components/productPage/ProductPage";
 import { Dashboard } from "components/dashboard/Dashboard";
 import { Selling } from "components/dashboard/Selling";
 import { Buying } from "components/dashboard/Buying";
 import { Settings } from "components/dashboard/settings/Settings";
-import { EditShipping } from "components/dashboard/settings/EditShipping";
-import { NavbarSell } from "components/ui/NavbarSell";
-import { BuySellTemplate } from "components/productPage/BuySellTemplate";
+import { EditShipping } from "components/dashboard/settings/shipping/EditShipping";
+import { NavbarSell } from "components/ui/Navbar/NavbarSell";
+import { SellModal } from "components/modals/sell/SellModal";
+import { BuyModal } from "components/modals/buy/BuyModal";
 
 import { LoginPage } from "components/auth/LoginPage";
 import { RegisterPage } from "components/auth/RegisterPage";
@@ -21,15 +22,12 @@ export const Routing = () => {
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<Navigate replace to={"/"} />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/sell" element={<NavbarSell />} />
-        <Route path="/sell/:id" element={<BuySellTemplate template="sell" />} />
-        <Route path="/buy/:id" element={<BuySellTemplate template="buy" />} />
-        <Route
-          path="/buy/:id?size=:size"
-          element={<BuySellTemplate template="buy" />}
-        />
+        <Route path="/sell/:id" element={<SellModal />} />
+        <Route path="/buy/:id" element={<BuyModal />} />
+        <Route path="/buy/:id?size=:size" element={<BuyModal />} />
 
         <Route
           path="/dashboard/profile"

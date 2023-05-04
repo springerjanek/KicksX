@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import {
   RegisterParams,
   registerFunction,
   signUpWithGithub,
 } from "redux/authSlice.helpers";
-import { notify } from "../../hooks/notify";
+import { notify } from "../../hooks/useNotify";
 import { AuthForm } from "./AuthForm";
 import { useNavigate } from "react-router-dom";
 
@@ -15,18 +15,13 @@ export const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const errorCondition = error.length > 0;
-  const successCondition = success.length > 0;
-
-  useEffect(() => {
-    if (errorCondition) {
-      notify(error, "warning");
-    }
-    if (successCondition) {
-      navigate("/");
-      notify(success, "success");
-    }
-  }, [errorCondition, successCondition]);
+  if (error) {
+    notify(error, "warning");
+  }
+  if (success) {
+    navigate("/");
+    notify(success, "success");
+  }
 
   const registerHandler = (data: RegisterParams) => {
     if (data.email && data.password.length < 6) {

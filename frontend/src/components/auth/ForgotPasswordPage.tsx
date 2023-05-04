@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { forgotPassword } from "redux/authSlice.helpers";
-import { notify } from "../../hooks/notify";
+import { notify } from "../../hooks/useNotify";
 import { PasswordActionsForm } from "./PasswordActionsForm";
 
 export const ForgotPasswordPage = () => {
@@ -9,17 +9,12 @@ export const ForgotPasswordPage = () => {
 
   const { error, success } = useAppSelector((state) => state.auth);
 
-  const errorCondition = error.length > 0;
-  const successCondition = success.length > 0;
-
-  useEffect(() => {
-    if (errorCondition) {
-      notify(error, "warning");
-    }
-    if (successCondition) {
-      notify(success, "success");
-    }
-  }, [errorCondition, successCondition]);
+  if (error) {
+    notify(error, "warning");
+  }
+  if (success) {
+    notify(success, "success");
+  }
 
   const forgotHandler = (data: PasswordActionsForm) => {
     dispatch(forgotPassword(data.email!));

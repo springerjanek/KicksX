@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
-import { notify } from "../../hooks/notify";
+import { notify } from "../../hooks/useNotify";
 import { PasswordActionsForm } from "./PasswordActionsForm";
 
 export const ResetPasswordPage = () => {
@@ -17,18 +17,13 @@ export const ResetPasswordPage = () => {
 
   const { error, success } = useAppSelector((state) => state.auth);
 
-  const errorCondition = error.length > 0;
-  const successCondition = success.length > 0;
-
-  useEffect(() => {
-    if (errorCondition) {
-      notify(error, "warning");
-    }
-    if (successCondition) {
-      notify(success, "success");
-      navigate("/login");
-    }
-  }, [errorCondition, successCondition]);
+  if (error) {
+    notify(error, "warning");
+  }
+  if (success) {
+    notify(success, "success");
+    navigate("/login");
+  }
 
   const resetHandler = (data: PasswordActionsForm) => {
     const code = searchForCode().get("oobCode") ?? "";

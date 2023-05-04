@@ -185,6 +185,6 @@ interface DeleteAsk extends DeleteBid {}
 interface LocationState {
   bid?: boolean;
   size?: string;
-  lowestAsk?: string | number;
+  lowestAsk?: number;
   bids?: { size: string; bids: number[] }[];
 }

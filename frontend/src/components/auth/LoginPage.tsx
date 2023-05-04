@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import {
   LoginParams,
@@ -6,27 +6,22 @@ import {
   signUpWithGithub,
 } from "redux/authSlice.helpers";
 import { AuthForm } from "./AuthForm";
-import { notify } from "../../hooks/notify";
+import { notify } from "../../hooks/useNotify";
 import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
   const { error, success } = useAppSelector((state) => state.auth);
-
   const navigate = useNavigate();
 
-  const errorCondition = error.length > 0;
-  const successCondition = success.length > 0;
-
-  useEffect(() => {
-    if (errorCondition) {
-      notify(error, "warning");
-    }
-    if (successCondition) {
-      navigate("/");
-      notify(success, "success");
-    }
-  }, [errorCondition, successCondition]);
+  if (error) {
+    console.log("TEST");
+    notify(error, "warning");
+  }
+  if (success) {
+    navigate("/");
+    notify(success, "success");
+  }
 
   const loginHandler = (data: LoginParams) => {
     if (data.email && data.password.length < 6) {
