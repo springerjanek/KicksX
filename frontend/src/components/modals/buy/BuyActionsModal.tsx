@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useBuyModalActions } from "api/modals/buyActions";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "redux/store";
-import { CompleteBuy } from "components/completeBuySell/CompleteBuy";
+import { CompleteBuy } from "components/completeBuySell/buy/CompleteBuy";
 import { UserInfoSummary } from "../UserInfoSummary";
 import { BuyActionsBox } from "./BuyActionsBox";
 
@@ -47,7 +47,6 @@ export const BuyActionsModal = ({
     switchToPlaceBid,
     setSwitchToPlaceBid,
     setBidPrice,
-    setDisableButton,
     smartText,
   } = useBuyModalActions({
     lowestAsk: lowestAsk,
@@ -70,14 +69,6 @@ export const BuyActionsModal = ({
 
   const closeCompleteBuy = () => {
     setShowCompleteBuyPage(false);
-  };
-
-  const disableButtonHandler = () => {
-    setDisableButton(true);
-  };
-
-  const enableButtonHandler = () => {
-    setDisableButton(false);
   };
 
   const getUserSummary = (payout_or_shipping: string, payment?: string) => {
@@ -128,7 +119,7 @@ export const BuyActionsModal = ({
         </div>
       ) : (
         <CompleteBuy
-          price={highestBid}
+          purchasePrice={lowestAsk}
           bidPrice={bidPrice}
           userSummary={userSummary}
           productData={[product, size]}

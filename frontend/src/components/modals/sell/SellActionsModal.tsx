@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
-import { CompleteSale } from "../../completeBuySell/CompleteSale";
+import { CompleteSale } from "../../completeBuySell/sell/CompleteSale";
 import { UserInfoSummary } from "../UserInfoSummary";
 import { useSellModalActions } from "api/modals/sellActions";
 import { SellActionsBox } from "./SellActionsBox";
@@ -36,7 +36,6 @@ export const SellActionsModal = ({
     smartText,
     setAskPrice,
     disableButton,
-    setDisableButton,
     switchToSellNow,
     setSwitchToSellNow,
   } = useSellModalActions({
@@ -106,9 +105,9 @@ export const SellActionsModal = ({
         </div>
       ) : (
         <CompleteSale
-          price={highestBid}
+          salePrice={highestBid}
           askPrice={askPrice}
-          userSummary={userSummary}
+          payout={userSummary}
           productData={[product, size]}
           isSwitchedToSellNow={switchToSellNow}
           closeCompleteSale={closeCompleteSale}
