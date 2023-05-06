@@ -62,7 +62,10 @@ export const SettingsPayout = ({
                 />
               </div>
             </div>
-            <button className="mr-2" onClick={() => setEditPayout(false)}>
+            <button
+              className="mt-3 small-button-blue p-5"
+              onClick={() => setEditPayout(false)}
+            >
               BACK
             </button>
           </>

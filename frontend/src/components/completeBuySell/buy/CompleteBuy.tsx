@@ -56,7 +56,7 @@ export const CompleteBuy = ({
 
   const completePurchaseHandler = () => {
     axios
-      .post("http://localhost:3001/buy", purchasePayload)
+      .post(`${process.env.REACT_APP_REQUEST_URL}/buy`, purchasePayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");
@@ -64,7 +64,7 @@ export const CompleteBuy = ({
 
   const completeBidHandler = () => {
     axios
-      .post("https://kicksxbackend.onrender.com/bid", bidPayload)
+      .post(`${process.env.REACT_APP_REQUEST_URL}/bid`, bidPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/buying");

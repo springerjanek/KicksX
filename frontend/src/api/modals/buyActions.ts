@@ -13,8 +13,9 @@ export const useBuyModalActions = ({
 }) => {
   const [bidPrice, setBidPrice] = useState(highestBid);
   const [smartText, setSmartText] = useState("You are not the highest Bid");
-  const [switchToPlaceBid, setSwitchToPlaceBid] = useState(false);
+  const [switchToPlaceBid, setSwitchToPlaceBid] = useState(true);
   const [disableButton, setDisableButton] = useState(false);
+  console.log(highestBid, bidPrice, switchToPlaceBid);
 
   const userHaveShippingAndPayment =
     userSummary.payment !== "Set Your Payment!" &&
@@ -53,6 +54,7 @@ export const useBuyModalActions = ({
     }
 
     if (lowestAsk !== 0 && !switchToPlaceBid) {
+      console.log("masno");
       setBidPrice(lowestAsk);
     }
     if (bidPrice >= lowestAsk && lowestAsk !== 0) {

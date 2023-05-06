@@ -31,7 +31,9 @@ export const useGetRelatedProducts = (
         );
         return result;
       } else {
-        const response = await axios.get("http://localhost:3001/");
+        const response = await axios.get(
+          `${process.env.REACT_APP_REQUEST_URL}/`
+        );
         const data: Products = response.data;
         const result = await Promise.all(
           data

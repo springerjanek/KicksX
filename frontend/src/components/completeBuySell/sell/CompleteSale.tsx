@@ -1,7 +1,4 @@
 import React from "react";
-import { Fees } from "../Fees";
-import { FinalChecks } from "../FinalChecks";
-import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "redux/store";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -59,7 +56,7 @@ export const CompleteSale = ({
 
   const confirmSaleHandler = () => {
     axios
-      .post("https://kicksxbackend.onrender.com/sell", salePayload)
+      .post(`${process.env.REACT_APP_REQUEST_URL}/sell`, salePayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/selling");
@@ -67,7 +64,7 @@ export const CompleteSale = ({
 
   const confirmAskHandler = () => {
     axios
-      .post("https://kicksxbackend.onrender.com/ask", askPayload)
+      .post(`${process.env.REACT_APP_REQUEST_URL}/ask`, askPayload)
       .then((response) => notify(response.data, "success"))
       .catch((err) => console.warn(err));
     navigate("/dashboard/selling");

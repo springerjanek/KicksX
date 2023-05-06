@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_REQUEST_URL;
 
 export const useGetSettingsData = (path: string) => {
   const { isLoading, error, data } = useQuery({

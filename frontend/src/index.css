@@ -3,6 +3,7 @@
 @tailwind utilities;
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
 
 html,
 body,
@@ -13,14 +14,15 @@ body,
 }
 
 body {
+  font-family: "DM Sans", sans-serif;
   color: white;
-  background-color: #131312;
+  background-color: #010725;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
 .bg-og {
-  background-color: #131312;
+  background-color: #010725;
 }
 
 .fadeIn {
@@ -83,15 +85,19 @@ body {
 }
 
 .button {
-  @apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg px-5 py-2.5 mb-2;
+  @apply text-white bg-light-blue focus:outline-none hover:bg-blue-800 font-medium rounded-lg text-lg px-5 py-2.5 mb-2;
 }
 
 .small-button {
-  @apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-lg py-1;
+  @apply text-light-blue bg-white focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-lg py-1;
 }
 
-.black-line {
-  @apply sm:w-full lg:w-8/12 2xl:w-7/12 mt-8 bg-black h-px mb-3;
+.small-button-blue {
+  @apply text-white bg-light-blue focus:outline-none hover:bg-blue-800 font-medium rounded-lg text-lg py-1;
+}
+
+.layer-blur {
+  background: #000a3d;
 }
 
 .slick-slider .slick-prev {
@@ -100,10 +106,10 @@ body {
 
 @media only screen and (max-width: 1024px) {
   .slick-slider .slick-next {
-    right: 15px;
+    right: 1px;
   }
 
   .slick-slider .slick-prev {
-    left: 0;
+    left: 10px;
   }
 }

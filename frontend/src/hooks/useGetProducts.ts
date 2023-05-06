@@ -6,7 +6,7 @@ export const useGetProducts = () => {
     queryKey: ["products"],
     refetchOnWindowFocus: false,
     queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/");
+      const response = await axios.get(`${process.env.REACT_APP_REQUEST_URL}/`);
       const result: Products = response.data;
       return result;
     },

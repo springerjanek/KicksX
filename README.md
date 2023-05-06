@@ -3,11 +3,10 @@
 ### Shoes market platform (https://stockx.com/ alike)
 
 ### LIVE SITE: https://famous-tiramisu-a4a400.netlify.app/
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f7fb3008-4307-487a-b979-a8961b4e537b/deploy-status)](https://app.netlify.com/sites/famous-tiramisu-a4a400/deploys)
 
-
 https://user-images.githubusercontent.com/54078220/234381823-2343fafa-14a8-44b3-b53e-733c74ff65d7.mp4
-
 
 ---
 
@@ -19,7 +18,7 @@ https://user-images.githubusercontent.com/54078220/234381823-2343fafa-14a8-44b3-
 
 - /frontend/src/firebase.js <- INPUT YOUR FIREBASE APP CONFIG INFO
 
-- CHANGE REQUESTS URL'S TO YOUR LOCALHOST:PORT URL
+- /frontend/serc.env <- INPUT YOUR BACKEND REQUEST URL
 
 ```bash
 cd frontend
@@ -54,6 +53,7 @@ npm start
 ---
 
 TODO:
+
 - tests
 - main page
 - refactor big components to smaller ones

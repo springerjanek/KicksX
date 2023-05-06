@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
-import { notify } from "../../hooks/notify";
+import { notify } from "../../hooks/useNotify";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_REQUEST_URL;
 
 export const useGetAsks = (path: string) => {
   const { isLoading, error, data } = useQuery({
@@ -38,10 +38,7 @@ export const useDeleteAsk = () => {
       const data: QueryAsksData | undefined =
         queryClient.getQueryData("userAsks");
       const updatedAsks = data!.userAsks.filter((x) => x.id !== payload.id);
-      const response = await axios.post(
-        "https://kicksxbackend.onrender.com/deleteAsk",
-        payload
-      );
+      const response = await axios.post(`${BASE_URL}/deleteAsk`, payload);
       return { message: response.data, updatedAsks: updatedAsks };
     },
 

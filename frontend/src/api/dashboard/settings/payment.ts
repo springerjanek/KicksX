@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import { notify } from "hooks/notify";
+import { notify } from "hooks/useNotify";
 
 export const useSelectPayment = () => {
   const queryClient = useQueryClient();
@@ -9,10 +9,13 @@ export const useSelectPayment = () => {
       const data: SettingsData | undefined =
         queryClient.getQueryData("settingsData");
 
-      const response = await axios.post("http://localhost:3001/payment", {
-        uid: payload.uid,
-        payment: payload.payment.type,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_REQUEST_URL}/payment`,
+        {
+          uid: payload.uid,
+          payment: payload.payment.type,
+        }
+      );
 
       return { ...data, payment: payload.payment, message: response.data };
     },

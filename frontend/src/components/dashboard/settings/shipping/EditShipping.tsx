@@ -12,7 +12,7 @@ export const EditShipping = () => {
 
   const formHandler = (data: EditShippingForm) => {
     axios
-      .post("http://localhost:3001/shipping", {
+      .post(`${process.env.REACT_APP_REQUEST_URL}/shipping`, {
         uid: uid,
         name: data.name,
         surname: data.surname,

@@ -6,7 +6,9 @@ export const getLowestAskAndHighestBid = async (product: string | Product) => {
   let asksPrices: number[] = [];
   let bidsPrices: number[] = [];
   if (typeof product === "string") {
-    const response = await axios.get(`http://localhost:3001/?name=${product}`);
+    const response = await axios.get(
+      `${process.env.REACT_APP_REQUEST_URL}/?name=${product}`
+    );
     const productData = response.data[0];
 
     for (let i = 0; i < productData.asks.length; i++) {
