@@ -38,6 +38,8 @@ export const BuyActionsModal = ({
   useEffect(() => {
     if (isFromPlaceBid) {
       setSwitchToPlaceBid(true);
+    } else {
+      setSwitchToPlaceBid(false);
     }
   }, [isFromPlaceBid]);
 

@@ -17,7 +17,7 @@ export const LastSales = (props: {
         <div
           className={`${
             props.showSales ? "slide-animation block" : "hidden"
-          } bg-stone-900 w-full xl:w-1/5 z-10 top-0 right-0 h-full fixed overflow-y-auto`}
+          } bg-light-blue layer-blur w-full xl:w-1/5 z-10 top-0 right-0 h-full fixed overflow-y-auto`}
         >
           <div className="flex justify-between mt-3">
             <h1 className="mr-10 text-2xl ml-4">All Sales</h1>

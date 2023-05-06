@@ -34,9 +34,9 @@ export const Asks = ({
                       <p> Size: {size}</p>
                     </div>
                   </div>
-                  <div className="xl:absolute left-[712px] flex">
+                  <div className="xl:absolute left-[730px] flex">
                     <p className="w-10">${price}</p>
-                    <div className="flex ml-10 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
+                    <div className="flex ml-6 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
                       <p className="w-10">
                         ${"highestBid" in ask && ask.highestBid}
                       </p>
@@ -55,7 +55,7 @@ export const Asks = ({
                           thumbnail: thumbnail,
                         })
                       }
-                      className="xl:absolute left-80 h-5 w-5 cursor-pointer mt-1"
+                      className="h-5 w-5 cursor-pointer mt-1 xl:absolute left-[380px]"
                     />
                   </div>
                 </>

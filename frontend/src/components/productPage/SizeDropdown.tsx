@@ -9,7 +9,7 @@ export const SizeDropdown = ({
   productId: string;
 }) => {
   return (
-    <div className="absolute w-full xl:h-4/6 -mt-4 bg-stone-900 grid grid-cols-3 lg:text-lg lg:font-medium fadeIn">
+    <div className="absolute w-full xl:h-4/6 bg-og -mt-4 grid grid-cols-3 lg:text-lg lg:font-medium fadeIn">
       <p className="col-span-3 text-center mt-1">ALL ${data.lowestAsk}</p>
       {data.asksBySize.map((ask) => {
         const { size, asks } = ask;

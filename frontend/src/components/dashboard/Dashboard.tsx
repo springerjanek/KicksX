@@ -19,7 +19,7 @@ export const Dashboard = () => {
   return (
     <>
       <div className="text-center mt-5 text-white">
-        <Link to={"/"} className="absolute sm:right-5 md:right-auto md:left-6">
+        <Link to={"/"} className="absolute sm:right-3 md:right-auto md:left-6">
           <h2 className="text-2xl font-medium">KicksX</h2>
         </Link>
         <h2 className="text-2xl font-medium">DASHBOARD</h2>
@@ -28,8 +28,7 @@ export const Dashboard = () => {
             <>
               <p>
                 Hello{" "}
-                {data!.shipping.name.length > 0 ? data!.shipping.name : ""}
-                😎{" "}
+                {data!.shipping.name.length > 0 ? data!.shipping.name : ""} 😎
               </p>
               <button
                 onClick={() => dispatch(logout())}

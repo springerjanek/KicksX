@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { EditShippingFormField } from "../EditShippingFormField";
+import { EditShippingFormField } from "./EditShippingFormField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
@@ -109,14 +109,14 @@ export const EditShippingForm = ({
         <div className="flex justify-between mt-4">
           <button
             onClick={backToSettingsHandler}
-            className="text-white text-center small-button p-5"
+            className="text-white text-center small-button-blue p-5"
             type="button"
           >
             BACK
           </button>
           <button
             type="submit"
-            className="text-white text-center small-button p-5"
+            className="text-white text-center small-button-blue p-5"
           >
             SUBMIT
           </button>

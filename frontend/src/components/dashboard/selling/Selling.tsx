@@ -30,11 +30,11 @@ export const Selling = () => {
         </div>
         {data ? (
           <>
-            <div className="flex gap-4 md:gap-[18px] xl:gap-[16px] text-xl mb-2">
+            <div className="flex gap-2 md:gap-[18px] xl:gap-[16px] text-xl mb-2">
               <p>Item</p>
               {!showHistory ? (
                 <>
-                  <p className="sm:w-16 md:w-20 xl:w-24 ml-20 md:ml-[180px] xl:ml-[268px]">
+                  <p className="sm:w-16 md:w-20 xl:w-24 ml-20 md:ml-[180px] xl:ml-[290px]">
                     Ask Price
                   </p>
                   <p className="sm:w-24 md:w-32">Highest Bid </p>

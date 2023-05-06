@@ -53,20 +53,20 @@ export const Navbar = () => {
           setInput={setInput}
           isLoggedCondition={isLoggedCondition}
         />
-        <Link to={"/sell"}>
+        <Link to={"/sell"} role="navigation">
           <h3 className="mt-2 sm:hidden md:block">Sell</h3>
         </Link>
 
         {isLoggedCondition ? (
-          <Link to={"/dashboard/profile"}>
+          <Link to={"/dashboard/profile"} role="navigation">
             <h3 className="mt-2 sm:hidden md:block">Dashboard</h3>
           </Link>
         ) : (
           <>
-            <Link to={"/login"}>
+            <Link to={"/login"} role="navigation">
               <h3 className="mt-2 sm:hidden md:block">Log In</h3>
             </Link>
-            <Link to={"/register"}>
+            <Link to={"/register"} role="navigation">
               <h3 className="mt-2 sm:hidden md:block">Sign Up</h3>
             </Link>
           </>
