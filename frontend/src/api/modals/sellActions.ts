@@ -16,11 +16,7 @@ export const useSellModalActions = ({
   const [disableButton, setDisableButton] = useState(false);
   const [switchToSellNow, setSwitchToSellNow] = useState(false);
 
-  console.log(disableButton);
-
   const userHavePayout = userSummary !== "Set Your Payout!";
-
-  console.log("PAYOUT:", userHavePayout);
 
   useEffect(() => {
     if (lowestAsk !== 0) {

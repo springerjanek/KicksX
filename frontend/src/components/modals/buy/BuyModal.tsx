@@ -41,9 +41,12 @@ export const BuyModal = () => {
     locationState && locationState.bids
       ? locationState.bids.find((x) => x.size === locationState.size)
       : 0;
+
   const highestBidFromLocation =
     bidsOfDesiredSizeFromLocation &&
-    Math.max(...bidsOfDesiredSizeFromLocation.bids);
+    bidsOfDesiredSizeFromLocation.bids.length > 0
+      ? Math.max(...bidsOfDesiredSizeFromLocation.bids)
+      : 0;
 
   const changeLowestAskAndBid = () => {
     if (data) {
@@ -94,8 +97,8 @@ export const BuyModal = () => {
                   product={data.name}
                   productData={[
                     locationState.size!,
-                    locationState.lowestAsk!,
                     highestBidFromLocation!,
+                    locationState.lowestAsk!,
                   ]}
                   isFromPlaceBid={
                     isFromPlaceBid !== undefined ? isFromPlaceBid : false
