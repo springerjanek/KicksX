@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "ProtectedRoute";
-import { MainPage } from "components/ui/MainPage";
+import { MainPage } from "components/ui/MainPage/MainPage";
 import { ProductPage } from "components/productPage/ProductPage";
 import { Dashboard } from "components/dashboard/Dashboard";
-import { Selling } from "components/dashboard/Selling";
-import { Buying } from "components/dashboard/Buying";
+import { Selling } from "components/dashboard/selling/Selling";
+import { Buying } from "components/dashboard/buying/Buying";
 import { Settings } from "components/dashboard/settings/Settings";
 import { EditShipping } from "components/dashboard/settings/shipping/EditShipping";
 import { NavbarSell } from "components/ui/Navbar/NavbarSell";
