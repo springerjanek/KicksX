@@ -1,35 +1,31 @@
 import React, { useState } from "react";
-import { useAppSelector } from "redux/store";
 import { useParams, useNavigate } from "react-router-dom";
-import { CompleteSale } from "../../completeBuySell/sell/CompleteSale";
-import { UserInfoSummary } from "../UserInfoSummary";
+import { CompleteSale } from "../completeSale/CompleteSale";
+import { UserInfoSummary } from "../misc/UserInfoSummary";
 import { useSellModalActions } from "api/modals/sellActions";
 import { SellActionsBox } from "./SellActionsBox";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const SellActionsModal = ({
-  product,
+  productName,
   productData,
   closeModal,
 }: {
-  product: string;
-  productData: [string, number, number];
+  productName: string;
+  productData: {
+    size: string;
+    highestBid: number;
+    lowestAsk: number;
+  };
   closeModal: () => void;
 }) => {
-  const size = productData[0];
-  const highestBid = productData[1];
-  const lowestAsk = productData[2];
-
   const [userSummary, setUserSummary] = useState("Set Your Payout!");
   const [showCompleteSalePage, setShowCompleteSalePage] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
-  const isLoggedInPersisted = user.isLoggedInPersisted;
-  const isLoggedTemporary = isLoggedInTemporary;
-  const isLoggedCondition =
-    isLoggedInPersisted === "true" || isLoggedTemporary === "true";
+  const { isLoggedCondition } = useGetUserAuth();
 
   const {
     askPrice,
@@ -39,8 +35,8 @@ export const SellActionsModal = ({
     switchToSellNow,
     setSwitchToSellNow,
   } = useSellModalActions({
-    lowestAsk: lowestAsk,
-    highestBid: highestBid,
+    lowestAsk: productData.lowestAsk,
+    highestBid: productData.highestBid,
     userSummary: userSummary,
     userIsLoggedIn: isLoggedCondition,
   });
@@ -69,7 +65,7 @@ export const SellActionsModal = ({
       {!showCompleteSalePage ? (
         <div className="text-center mr-10 text-black">
           <div className="flex bg-white rounded mb-5 px-5 py-3 justify-between">
-            SIZE: {size}
+            SIZE: {productData.size}
             <button onClick={closeModal} className="">
               EDIT
             </button>
@@ -105,10 +101,10 @@ export const SellActionsModal = ({
         </div>
       ) : (
         <CompleteSale
-          salePrice={highestBid}
+          salePrice={productData.highestBid}
           askPrice={askPrice}
           payout={userSummary}
-          productData={[product, size]}
+          productData={{ name: productName, size: productData.size }}
           isSwitchedToSellNow={switchToSellNow}
           closeCompleteSale={closeCompleteSale}
         />

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useGetProduct } from "api/product/product";
-import { SizesModal } from "../SizesModal";
+import { SizesModal } from "../sizes/SizesModal";
 import { BuyActionsModal } from "./BuyActionsModal";
 
 export const BuyModal = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [productDataToModal, setProductDataToModal] = useState<
-    [string, number, number]
-  >(["", 0, 0]);
+  const [showSizesModal, setShowSizesModal] = useState(false);
+  const [productDataToModal, setProductDataToModal] = useState({
+    size: "",
+    highestBid: 0,
+    lowestAsk: 0,
+  });
   const [highestBid, setHighestBid] = useState(0);
   const [lowestAsk, setLowestAsk] = useState(0);
 
@@ -56,7 +58,7 @@ export const BuyModal = () => {
   };
 
   const closeModal = () => {
-    setShowModal(false);
+    setShowSizesModal(false);
     if (locationState && locationState.bids !== undefined) {
       navigate(`../buy/${id}`, { replace: true });
     }
@@ -67,14 +69,14 @@ export const BuyModal = () => {
     <>
       <div
         className={`flex mt-10 text-white ${
-          showModal && "sm:flex-col lg:flex-row"
+          showSizesModal && "sm:flex-col lg:flex-row"
         }`}
       >
         {data && (
           <>
             <div
               className={`w-1/2 text-center ${
-                !showModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
+                !showSizesModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
               }`}
             >
               <h1>{data.name}</h1>
@@ -94,12 +96,12 @@ export const BuyModal = () => {
             <div className="ml-5 lg:ml-10 sm:w-full  lg:w-1/2">
               {userVisitedFromSizeDropdown ? (
                 <BuyActionsModal
-                  product={data.name}
-                  productData={[
-                    locationState.size!,
-                    highestBidFromLocation!,
-                    locationState.lowestAsk!,
-                  ]}
+                  productName={data.name}
+                  productData={{
+                    size: locationState.size!,
+                    highestBid: highestBidFromLocation!,
+                    lowestAsk: locationState.lowestAsk!,
+                  }}
                   isFromPlaceBid={
                     isFromPlaceBid !== undefined ? isFromPlaceBid : false
                   }
@@ -107,18 +109,18 @@ export const BuyModal = () => {
                 />
               ) : (
                 <>
-                  {!showModal ? (
+                  {!showSizesModal ? (
                     <SizesModal
                       type="buy"
                       data={data}
                       setHighestBid={setHighestBid}
                       setLowestAsk={setLowestAsk}
                       setProductDataToModal={setProductDataToModal}
-                      setShowModal={setShowModal}
+                      setShowSizesModal={setShowSizesModal}
                     />
                   ) : (
                     <BuyActionsModal
-                      product={data.name}
+                      productName={data.name}
                       productData={productDataToModal}
                       isFromPlaceBid={
                         isFromPlaceBid !== undefined ? isFromPlaceBid : false

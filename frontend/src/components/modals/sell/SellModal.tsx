@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetProduct } from "api/product/product";
-import { SizesModal } from "../SizesModal";
+import { SizesModal } from "../sizes/SizesModal";
 import { SellActionsModal } from "./SellActionsModal";
 
 export const SellModal = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [productDataToModal, setProductDataToModal] = useState<
-    [string, number, number]
-  >(["", 0, 0]);
+  const [showSizesModal, setShowSizesModal] = useState(false);
+  const [productDataToModal, setProductDataToModal] = useState({
+    size: "",
+    highestBid: 0,
+    lowestAsk: 0,
+  });
   const [highestBid, setHighestBid] = useState(0);
   const [lowestAsk, setLowestAsk] = useState(0);
 
@@ -30,22 +32,22 @@ export const SellModal = () => {
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeSizesModal = () => {
+    setShowSizesModal(false);
     changeLowestAskAndBid();
   };
 
   return (
     <div
       className={`flex mt-10 text-white ${
-        showModal && "sm:flex-col lg:flex-row"
+        showSizesModal && "sm:flex-col lg:flex-row"
       }`}
     >
       {data && (
         <>
           <div
             className={`w-1/2 text-center ${
-              !showModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
+              !showSizesModal ? "sm:hidden lg:block" : "sm:ml-auto sm:mr-auto"
             }`}
           >
             <h1>{data.name}</h1>
@@ -63,20 +65,20 @@ export const SellModal = () => {
           </div>
 
           <div className="ml-5 lg:ml-10 sm:w-full  lg:w-1/2">
-            {!showModal ? (
+            {!showSizesModal ? (
               <SizesModal
                 type="sell"
                 data={data}
                 setHighestBid={setHighestBid}
                 setLowestAsk={setLowestAsk}
                 setProductDataToModal={setProductDataToModal}
-                setShowModal={setShowModal}
+                setShowSizesModal={setShowSizesModal}
               />
             ) : (
               <SellActionsModal
-                product={data.name}
+                productName={data.name}
                 productData={productDataToModal}
-                closeModal={closeModal}
+                closeModal={closeSizesModal}
               />
             )}
           </div>

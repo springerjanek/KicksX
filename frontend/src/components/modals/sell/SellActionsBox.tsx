@@ -1,6 +1,6 @@
 import React from "react";
-import { Switcher } from "components/ui/Switcher";
-import { Fees } from "components/completeBuySell/Fees";
+import { ModalSwitcher } from "components/ui/Switchers/ModalSwitcher";
+import { Fees } from "components/modals/misc/Fees";
 
 export const SellActionsBox = ({
   askPrice,
@@ -33,7 +33,7 @@ export const SellActionsBox = ({
 
   return (
     <div className="bg-white rounded">
-      <Switcher
+      <ModalSwitcher
         onChange={switchHandler}
         checked={switchToSellNow && true}
         leftText={"Place Ask"}

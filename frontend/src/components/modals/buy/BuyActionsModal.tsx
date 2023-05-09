@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useBuyModalActions } from "api/modals/buyActions";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppSelector } from "redux/store";
-import { CompleteBuy } from "components/completeBuySell/buy/CompleteBuy";
-import { UserInfoSummary } from "../UserInfoSummary";
+import { CompleteBuy } from "components/modals/completeBuy/CompleteBuy";
+import { UserInfoSummary } from "../misc/UserInfoSummary";
 import { BuyActionsBox } from "./BuyActionsBox";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const BuyActionsModal = ({
-  product,
+  productName,
   productData,
   isFromPlaceBid,
   closeModal,
 }: {
-  product: string;
-  productData: [string, number, number];
+  productName: string;
+  productData: {
+    size: string;
+    highestBid: number;
+    lowestAsk: number;
+  };
   isFromPlaceBid: boolean;
   closeModal: () => void;
 }) => {
-  const size = productData[0];
-  const highestBid = productData[1];
-  const lowestAsk = productData[2];
-
   const [userSummary, setUserSummary] = useState({
     shipping: "Set Your Shipping!",
     payment: "Set Your Payment!",
@@ -29,11 +29,7 @@ export const BuyActionsModal = ({
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
-  const isLoggedInPersisted = user.isLoggedInPersisted;
-  const isLoggedTemporary = isLoggedInTemporary;
-  const isLoggedCondition =
-    isLoggedInPersisted === "true" || isLoggedTemporary === "true";
+  const { isLoggedCondition } = useGetUserAuth();
 
   useEffect(() => {
     if (isFromPlaceBid) {
@@ -51,8 +47,8 @@ export const BuyActionsModal = ({
     setBidPrice,
     smartText,
   } = useBuyModalActions({
-    lowestAsk: lowestAsk,
-    highestBid: highestBid,
+    lowestAsk: productData.lowestAsk,
+    highestBid: productData.highestBid,
     userSummary: userSummary,
     userIsLoggedIn: isLoggedCondition,
   });
@@ -85,7 +81,7 @@ export const BuyActionsModal = ({
       {!showCompleteBuyPage ? (
         <div className="text-center mr-10 text-black">
           <div className="flex bg-white rounded mb-5 px-5 py-3 justify-between">
-            SIZE: {size}
+            SIZE: {productData.size}
             <button onClick={closeModal}>EDIT</button>
           </div>
           <BuyActionsBox
@@ -121,10 +117,10 @@ export const BuyActionsModal = ({
         </div>
       ) : (
         <CompleteBuy
-          purchasePrice={lowestAsk}
+          purchasePrice={productData.lowestAsk}
           bidPrice={bidPrice}
           userSummary={userSummary}
-          productData={[product, size]}
+          productData={{ name: productName, size: productData.size }}
           isSwitchedToPlaceBid={switchToPlaceBid}
           closeCompleteBuy={closeCompleteBuy}
         />
