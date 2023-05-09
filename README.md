@@ -18,7 +18,7 @@ https://user-images.githubusercontent.com/54078220/234381823-2343fafa-14a8-44b3-
 
 - /frontend/src/firebase.js <- INPUT YOUR FIREBASE APP CONFIG INFO
 
-- /frontend/serc.env <- INPUT YOUR BACKEND REQUEST URL
+- /frontend/src/.env <- INPUT YOUR BACKEND REQUEST URL (REACT_APP_REQUEST_URL=)
 
 ```bash
 cd frontend
