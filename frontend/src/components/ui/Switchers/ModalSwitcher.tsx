@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Switcher = (props: {
+export const ModalSwitcher = (props: {
   onChange: () => void;
   checked: boolean;
   leftText: string;

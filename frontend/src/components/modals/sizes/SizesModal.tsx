@@ -1,6 +1,6 @@
 import React from "react";
-import { SizesSellModal } from "./sell/SizesSellModal";
-import { SizesBuyModal } from "./buy/SizesBuyModal";
+import { SizesSellModal } from "../sell/SizesSellModal";
+import { SizesBuyModal } from "../buy/SizesBuyModal";
 
 export const SizesModal = ({
   type,
@@ -8,16 +8,20 @@ export const SizesModal = ({
   setHighestBid,
   setLowestAsk,
   setProductDataToModal,
-  setShowModal,
+  setShowSizesModal,
 }: {
   type: string;
   data: ModifiedProductData;
   setHighestBid: React.Dispatch<React.SetStateAction<number>>;
   setLowestAsk: React.Dispatch<React.SetStateAction<number>>;
   setProductDataToModal: React.Dispatch<
-    React.SetStateAction<[string, number, number]>
+    React.SetStateAction<{
+      size: string;
+      highestBid: number;
+      lowestAsk: number;
+    }>
   >;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSizesModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const modalHandler = ({
     size,
@@ -38,17 +42,25 @@ export const SizesModal = ({
       asks: number[];
     }[];
   }) => {
-    setShowModal(true);
+    setShowSizesModal(true);
     if (highestBid !== undefined) {
       setHighestBid(highestBid);
       const asksOfDesiredSize = asks!.find((x) => x.size === size)!;
       const asksAreEmpty = asksOfDesiredSize.asks.length === 0;
       if (!asksAreEmpty) {
         const lowestAsk = Math.min(...asksOfDesiredSize.asks);
-        setProductDataToModal([size, highestBid, lowestAsk]);
+        setProductDataToModal({
+          size: size,
+          highestBid: highestBid,
+          lowestAsk: lowestAsk,
+        });
         setLowestAsk(lowestAsk);
       } else {
-        setProductDataToModal([size, highestBid, 0]);
+        setProductDataToModal({
+          size: size,
+          highestBid: highestBid,
+          lowestAsk: 0,
+        });
         setLowestAsk(0);
       }
     }
@@ -59,10 +71,18 @@ export const SizesModal = ({
       const bidsAreEmpty = bidsOfDesiredSize.bids.length === 0;
       if (!bidsAreEmpty) {
         const highestBid = Math.max(...bidsOfDesiredSize.bids);
-        setProductDataToModal([size, highestBid, lowestAsk]);
+        setProductDataToModal({
+          size: size,
+          highestBid: highestBid,
+          lowestAsk: lowestAsk,
+        });
         setHighestBid(highestBid);
       } else {
-        setProductDataToModal([size, 0, lowestAsk]);
+        setProductDataToModal({
+          size: size,
+          highestBid: 0,
+          lowestAsk: lowestAsk,
+        });
         setHighestBid(0);
       }
     }

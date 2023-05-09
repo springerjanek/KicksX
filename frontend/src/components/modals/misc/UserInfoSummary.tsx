@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "redux/store";
 import { BanknotesIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { useGetUserData } from "hooks/useGetUserData";
+import { useGetUserData } from "hooks/user/useGetUserData";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const UserInfoSummary = (props: {
   type: string;
@@ -16,12 +16,7 @@ export const UserInfoSummary = (props: {
   const [payoutText, setPayoutText] = useState("Set Your Payout!");
   const navigate = useNavigate();
 
-  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
-  const isLoggedInPersisted = user.isLoggedInPersisted;
-  const isLoggedTemporary = isLoggedInTemporary;
-  const isLoggedCondition =
-    isLoggedInPersisted === "true" || isLoggedTemporary === "true";
-  const uid = user.id;
+  const { isLoggedCondition, uid } = useGetUserAuth();
 
   const { data } = useGetUserData(`/getUserData/${uid}`, "dashboardData");
 

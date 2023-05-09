@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiGithub } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-import { AuthFormField } from "./AuthFormField";
+import { AuthFormField } from "../AuthFormField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
