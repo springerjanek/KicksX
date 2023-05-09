@@ -55,8 +55,6 @@ npm start
 TODO:
 
 - tests
-- main page
 - refactor big components to smaller ones
-- change and restyle ui
 
 ### FYI: this is my first time with backend and it's not optimized as it should, I just used it to make my project more useful ans usable
