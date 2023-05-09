@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getLowestAskAndHighestBid } from "../../hooks/getLowestAskAndHighestBid";
-import { notify } from "../../hooks/useNotify";
+import { getLowestAskAndHighestBid } from "hooks/product/useGetLowestAskAndHighestBid";
+import { notify } from "hooks/notify/useNotify";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_REQUEST_URL;

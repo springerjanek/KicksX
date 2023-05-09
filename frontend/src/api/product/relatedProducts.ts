@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "react-query";
-import { getLowestAskAndHighestBid } from "hooks/getLowestAskAndHighestBid";
+import { getLowestAskAndHighestBid } from "hooks/product/useGetLowestAskAndHighestBid";
 import axios from "axios";
 
 export const useGetRelatedProducts = (

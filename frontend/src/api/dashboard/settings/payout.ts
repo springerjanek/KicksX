@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import { notify } from "hooks/useNotify";
+import { notify } from "hooks/notify/useNotify";
 
 export const useSelectPayout = () => {
   const queryClient = useQueryClient();
