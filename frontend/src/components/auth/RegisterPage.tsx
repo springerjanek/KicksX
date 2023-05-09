@@ -5,8 +5,8 @@ import {
   registerFunction,
   signUpWithGithub,
 } from "redux/authSlice.helpers";
-import { notify } from "../../hooks/useNotify";
-import { AuthForm } from "./AuthForm";
+import { notify } from "../../hooks/notify/useNotify";
+import { AuthForm } from "./forms/AuthForm";
 import { useNavigate } from "react-router-dom";
 
 export const RegisterPage = () => {

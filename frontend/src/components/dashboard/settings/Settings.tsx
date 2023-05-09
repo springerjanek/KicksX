@@ -1,20 +1,18 @@
 import React from "react";
-import { useAppSelector } from "redux/store";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useGetSettingsData } from "api/dashboard/settings/settings";
 import { SettingsPayout } from "./SettingsPayout";
-import { DashboardNavbar } from "../DashboardNavbar";
+import { DashboardNavbar } from "../../ui/Navbar/DashboardNavbar";
 import { SettingsPayment } from "./SettingsPayment";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const Settings = () => {
   const navigate = useNavigate();
 
-  const { user } = useAppSelector((state) => state.auth);
-
-  const uid = user.id;
+  const { uid } = useGetUserAuth();
 
   const { isLoading, data } = useGetSettingsData(`/getUserData/${uid}`);
 

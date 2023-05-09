@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useAppSelector } from "redux/store";
 import { useSelectPayment } from "api/dashboard/settings/payment";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const SettingsPayment = ({
   userPayment,
@@ -10,10 +10,9 @@ export const SettingsPayment = ({
 }) => {
   const [editPayment, setEditPayment] = useState(false);
 
-  const { user } = useAppSelector((state) => state.auth);
-  const { mutate: selectPayment } = useSelectPayment();
+  const { uid } = useGetUserAuth();
 
-  const uid = user.id;
+  const { mutate: selectPayment } = useSelectPayment();
 
   const paymentHandler = () => {
     setEditPayment(true);

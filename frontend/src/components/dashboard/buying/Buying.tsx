@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { useAppSelector } from "redux/store";
 import { useGetBids } from "../../../api/dashboard/buying";
-import { DashboardNavbar } from "../DashboardNavbar";
+import { DashboardNavbar } from "../../ui/Navbar/DashboardNavbar";
 import { ThreeDots } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { Bids } from "./Bids";
 import { PurchaseHistory } from "./PurchaseHistory";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const Buying = () => {
   const [showHistory, setShowHistory] = useState(false);
 
-  const { user } = useAppSelector((state) => state.auth);
-  const uid = user.id;
+  const { uid } = useGetUserAuth();
 
   const { data } = useGetBids(`/getUserData/${uid}`);
 

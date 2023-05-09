@@ -1,8 +1,8 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { forgotPassword } from "redux/authSlice.helpers";
-import { notify } from "../../hooks/useNotify";
-import { PasswordActionsForm } from "./PasswordActionsForm";
+import { notify } from "../../hooks/notify/useNotify";
+import { PasswordActionsForm } from "./forms/PasswordActionsForm";
 
 export const ForgotPasswordPage = () => {
   const dispatch = useAppDispatch();

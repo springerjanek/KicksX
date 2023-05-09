@@ -2,8 +2,8 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "redux/store";
 import { resetPassword } from "redux/authSlice.helpers";
 import { useLocation, useNavigate } from "react-router-dom";
-import { notify } from "../../hooks/useNotify";
-import { PasswordActionsForm } from "./PasswordActionsForm";
+import { notify } from "../../hooks/notify/useNotify";
+import { PasswordActionsForm } from "./forms/PasswordActionsForm";
 
 export const ResetPasswordPage = () => {
   const location = useLocation();

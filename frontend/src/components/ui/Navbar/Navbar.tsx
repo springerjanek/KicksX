@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useAppSelector } from "redux/store";
 import { Link, useLocation } from "react-router-dom";
-import { useGetProducts } from "hooks/useGetProducts";
+import { useGetProducts } from "hooks/product/useGetProducts";
 import { search } from "api/navbar/search";
 import { NavbarProducts } from "./NavbarProducts";
 import { NavbarInput } from "./NavbarInput";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const Navbar = () => {
   const [input, setInput] = useState("");
-  const [matchingProducts, setMatchingProducts] = useState<
-    Products | undefined
-  >([]);
+  const [matchingProducts, setMatchingProducts] = useState<Products>([]);
   const [displayProducts, setDisplayProducts] = useState(false);
 
   const { isLoading, data } = useGetProducts();
 
-  const { user, isLoggedInTemporary } = useAppSelector((state) => state.auth);
-  const isLoggedInPersisted = user.isLoggedInPersisted;
-  const isLoggedTemporary = isLoggedInTemporary;
-  const isLoggedCondition =
-    isLoggedInPersisted === "true" || isLoggedTemporary === "true";
+  const { isLoggedCondition } = useGetUserAuth();
 
   const location = useLocation();
 
@@ -28,11 +22,7 @@ export const Navbar = () => {
       const matchingProducts = search(data, input);
       setMatchingProducts(matchingProducts);
     }
-    if (input.length === 0) {
-      setDisplayProducts(false);
-    } else {
-      setDisplayProducts(true);
-    }
+    setDisplayProducts(!(input.trim().length === 0));
   }, [input]);
 
   useEffect(() => {
@@ -73,7 +63,7 @@ export const Navbar = () => {
         )}
       </div>
       {displayProducts && (
-        <NavbarProducts matchingProducts={matchingProducts!} />
+        <NavbarProducts matchingProducts={matchingProducts} />
       )}
     </>
   );

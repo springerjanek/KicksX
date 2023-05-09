@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "ProtectedRoute";
 import { MainPage } from "components/ui/MainPage/MainPage";
 import { ProductPage } from "components/productPage/ProductPage";
-import { Dashboard } from "components/dashboard/Dashboard";
+import { Dashboard } from "components/dashboard/profile/Dashboard";
 import { Selling } from "components/dashboard/selling/Selling";
 import { Buying } from "components/dashboard/buying/Buying";
 import { Settings } from "components/dashboard/settings/Settings";

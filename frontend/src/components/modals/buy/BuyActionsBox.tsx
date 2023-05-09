@@ -1,5 +1,5 @@
-import { Fees } from "components/completeBuySell/Fees";
-import { Switcher } from "components/ui/Switcher";
+import { Fees } from "components/modals/misc/Fees";
+import { ModalSwitcher } from "components/ui/Switchers/ModalSwitcher";
 import React from "react";
 
 export const BuyActionsBox = ({
@@ -33,7 +33,7 @@ export const BuyActionsBox = ({
 
   return (
     <div className="bg-white rounded">
-      <Switcher
+      <ModalSwitcher
         onChange={switchHandler}
         checked={!switchToPlaceBid}
         leftText={"Place Bid"}

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useGetProducts } from "hooks/useGetProducts";
+import { useGetProducts } from "hooks/product/useGetProducts";
 import { search } from "api/navbar/search";
 import { NavbarProducts } from "./NavbarProducts";
 import { NavbarInput } from "./NavbarInput";
 
 export const NavbarSell = () => {
   const [input, setInput] = useState("");
-  const [matchingProducts, setMatchingProducts] = useState<
-    Products | undefined
-  >([]);
+  const [matchingProducts, setMatchingProducts] = useState<Products>([]);
   const [displayProducts, setDisplayProducts] = useState(false);
 
   const { isLoading, data } = useGetProducts();
@@ -18,11 +16,7 @@ export const NavbarSell = () => {
       const matchingProducts = search(data!, input);
       setMatchingProducts(matchingProducts);
     }
-    if (input.length === 0) {
-      setDisplayProducts(false);
-    } else {
-      setDisplayProducts(true);
-    }
+    setDisplayProducts(!(input.trim().length === 0));
   }, [input]);
 
   return (

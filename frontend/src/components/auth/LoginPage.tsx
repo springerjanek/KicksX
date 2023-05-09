@@ -5,8 +5,8 @@ import {
   loginFunction,
   signUpWithGithub,
 } from "redux/authSlice.helpers";
-import { AuthForm } from "./AuthForm";
-import { notify } from "../../hooks/useNotify";
+import { AuthForm } from "./forms/AuthForm";
+import { notify } from "../../hooks/notify/useNotify";
 import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
@@ -15,7 +15,6 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   if (error) {
-    console.log("TEST");
     notify(error, "warning");
   }
   if (success) {

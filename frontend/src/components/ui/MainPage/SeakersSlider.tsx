@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { useGetProducts } from "hooks/useGetProducts";
+import { useGetProducts } from "hooks/product/useGetProducts";
 import { ThreeDots } from "react-loader-spinner";
 
 export const SneakersSlider = () => {

@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { notify } from "../../../../hooks/useNotify";
-import { useAppSelector } from "redux/store";
+import { notify } from "../../../../hooks/notify/useNotify";
 import { EditShippingForm } from "./EditShippingForm";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const EditShipping = () => {
-  const { user } = useAppSelector((state) => state.auth);
-  const uid = user.id;
+  const { uid } = useGetUserAuth();
+
   const navigate = useNavigate();
 
   const formHandler = (data: EditShippingForm) => {

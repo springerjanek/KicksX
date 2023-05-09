@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { useAppSelector } from "redux/store";
 import { useSelectPayout } from "api/dashboard/settings/payout";
+import { useGetUserAuth } from "hooks/user/useGetUserAuth,";
 
 export const SettingsPayout = ({
   userPayout,
@@ -10,10 +10,8 @@ export const SettingsPayout = ({
 }) => {
   const [editPayout, setEditPayout] = useState(false);
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { uid } = useGetUserAuth();
   const { mutate: selectPayout } = useSelectPayout();
-
-  const uid = user.id;
 
   const payoutHandler = () => {
     setEditPayout(true);
