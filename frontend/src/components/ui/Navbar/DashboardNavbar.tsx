@@ -14,7 +14,10 @@ export const DashboardNavbar = () => {
   return (
     <div>
       <div className="sm:absolute top-5 left-2 md:hidden">
-        <button onClick={() => setOpenMobileMenu(!openMobileMenu)}>
+        <button
+          aria-label="dashboard navigation menu"
+          onClick={() => setOpenMobileMenu(!openMobileMenu)}
+        >
           <Bars3Icon className="w-8 h-8" />
         </button>
       </div>
