@@ -11,10 +11,7 @@ export const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { uid } = useGetUserAuth();
 
-  const { isLoading, data } = useGetUserData(
-    `/getUserData/${uid}`,
-    "dashboardData"
-  );
+  const { data } = useGetUserData(`/getUserData/${uid}`, "dashboardData");
 
   return (
     <>
@@ -24,20 +21,14 @@ export const Dashboard = () => {
         </Link>
         <h2 className="text-2xl font-medium">DASHBOARD</h2>
         <div className="text-lg mt-5">
-          {!isLoading ? (
+          {data ? (
             <>
               <p>
-                Hello{" "}
-                {data!.shipping.name.length > 0 ? data!.shipping.name : ""} 😎
+                Hello {data.shipping.name.length > 0 ? data.shipping.name : ""}{" "}
+                😎
               </p>
-              <button
-                onClick={() => dispatch(logout())}
-                className="small-button w-24 m-3 mr-4"
-              >
-                Logout
-              </button>
               <p>
-                {data!.purchases.length - 1} Purchases {data!.sales.length - 1}{" "}
+                {data.purchases.length - 1} Purchases {data.sales.length - 1}{" "}
                 Sales
               </p>
             </>
@@ -54,6 +45,12 @@ export const Dashboard = () => {
               />
             </div>
           )}
+          <button
+            onClick={() => dispatch(logout())}
+            className="small-button w-24 m-3 mr-4"
+          >
+            Logout
+          </button>
           <Link to={"/forgot-password"}>Reset Your Password</Link>
 
           <DashboardNavbar />
