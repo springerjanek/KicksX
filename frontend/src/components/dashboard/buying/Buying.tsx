@@ -33,7 +33,7 @@ export const Buying = () => {
               <p>Item</p>
               {!showHistory ? (
                 <>
-                  <p className="sm:w-16 md:w-20 xl:w-24 ml-20 md:ml-[180px] xl:ml-[268px]">
+                  <p className="sm:w-16 md:w-20 xl:w-24 ml-20 md:ml-[180px] xl:ml-[290px]">
                     Bid Price
                   </p>
                   <p className="sm:w-24 md:w-32">Highest Bid </p>

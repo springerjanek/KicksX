@@ -33,7 +33,7 @@ export const Dashboard = () => {
               </p>
             </>
           ) : (
-            <div className="absolute left-1/2 ml-[-50px]">
+            <div className="absolute left-1/2 ml-[-50px] top-7">
               <ThreeDots
                 height="80"
                 width="100"
@@ -51,7 +51,9 @@ export const Dashboard = () => {
           >
             Logout
           </button>
-          <Link to={"/forgot-password"}>Reset Your Password</Link>
+          <p>
+            <Link to={"/forgot-password"}>Reset Your Password</Link>
+          </p>
 
           <DashboardNavbar />
         </div>

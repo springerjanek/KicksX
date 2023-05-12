@@ -28,7 +28,7 @@ export const Bids = ({
                       <p> Size: {size}</p>
                     </div>
                   </div>
-                  <div className="xl:absolute left-[712px] flex">
+                  <div className="xl:absolute left-[730px] flex">
                     <p className="w-10">${price}</p>
                     <div className="flex ml-10 md:ml-16 lg:ml-[65px] xl:ml-[75px] sm:gap-16 md:gap-x-[100px] lg:gap-x-[98px]">
                       <p className="w-10">
