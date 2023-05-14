@@ -6,7 +6,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f7fb3008-4307-487a-b979-a8961b4e537b/deploy-status)](https://app.netlify.com/sites/famous-tiramisu-a4a400/deploys)
 
-https://github.com/springerjanek/KicksX/assets/54078220/40c93631-40fe-47c3-bbfa-fc07945c76a6
+https://github.com/springerjanek/KicksX/assets/54078220/3fb79341-e2d4-49c6-997b-9aabf8c32327
 
 ---
 
