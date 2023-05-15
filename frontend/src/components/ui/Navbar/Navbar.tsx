@@ -33,7 +33,7 @@ export const Navbar = () => {
     <>
       <div className="flex sm:justify-end  md:justify-center md:gap-x-5 2xl:gap-x-20 mt-5 text-white text-xl">
         <div className="sm:m-auto sm:ml-10 md:m-0">
-          <Link to={"/"} role="navigation">
+          <Link to={"/"}>
             <h2 className=" mt-2 md:ml-0">KicksX</h2>
           </Link>
         </div>
@@ -43,20 +43,20 @@ export const Navbar = () => {
           setInput={setInput}
           isLoggedCondition={isLoggedCondition}
         />
-        <Link to={"/sell"} role="navigation">
+        <Link to={"/sell"}>
           <h3 className="mt-2 sm:hidden md:block">Sell</h3>
         </Link>
 
         {isLoggedCondition ? (
-          <Link to={"/dashboard/profile"} role="navigation">
+          <Link to={"/dashboard/profile"}>
             <h3 className="mt-2 sm:hidden md:block">Dashboard</h3>
           </Link>
         ) : (
           <>
-            <Link to={"/login"} role="navigation">
+            <Link to={"/login"}>
               <h3 className="mt-2 sm:hidden md:block">Log In</h3>
             </Link>
-            <Link to={"/register"} role="navigation">
+            <Link to={"/register"}>
               <h3 className="mt-2 sm:hidden md:block">Sign Up</h3>
             </Link>
           </>

@@ -6,7 +6,7 @@ import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { persistReducer } from "redux-persist";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import storage from "redux-persist/lib/storage";
 
 import type { AppStore, RootState } from "../redux/store";
@@ -44,7 +44,7 @@ export function wrapper(
     return (
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <MemoryRouter>{children}</MemoryRouter>
+          <BrowserRouter>{children}</BrowserRouter>
         </Provider>
       </QueryClientProvider>
     );

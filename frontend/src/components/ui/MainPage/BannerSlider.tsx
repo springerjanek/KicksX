@@ -29,6 +29,7 @@ export const BannerSlider = () => {
     <Slider
       className="sm:w-11/12  lg:w-11/12 2xl:w-8/12 mt-10"
       autoplay={true}
+      autoplaySpeed={7000}
       slidesToShow={1}
       slidesToScroll={1}
       infinite={true}

@@ -32,9 +32,9 @@ export const LastSales = (props: {
             calculated at checkout.
           </p>
           <div className="grid grid-cols-3 mt-4 ml-5 text-xl gap-x-5 ">
-            <h2 className="">Date</h2>
-            <h2 className="">Size</h2>
-            <h2 className="">Sale Price</h2>
+            <h2>Date</h2>
+            <h2>Size</h2>
+            <h2>Sale Price</h2>
 
             {props.lastsales.map((sale) => {
               const { id, size, price, date } = sale;
@@ -43,9 +43,9 @@ export const LastSales = (props: {
                 <>
                   {props.lastsales.length > 0 ? (
                     <>
-                      <div className="">{date.slice(0, 10)}</div>
-                      <div className=""> {size}</div>
-                      <div className=""> {price}</div>
+                      <div>{date.slice(0, 10)}</div>
+                      <div> {size}</div>
+                      <div> {price}</div>
                     </>
                   ) : (
                     <>

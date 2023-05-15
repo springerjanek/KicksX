@@ -4,7 +4,10 @@ import {
   ArrowLongDownIcon,
 } from "@heroicons/react/24/outline";
 
-export const MarketActivity = (props: {
+export const MarketActivity = ({
+  lastSales,
+  showSales,
+}: {
   lastSales: {
     id: string;
     size: string;
@@ -13,11 +16,9 @@ export const MarketActivity = (props: {
   }[];
   showSales: () => void;
 }) => {
-  const lastsales = props.lastSales;
-
-  const lastSale = lastsales[lastsales.length - 1];
-  const saleBeforeLastSale = lastsales[lastsales.length - 2];
-  const lastSalePriceHigherThanSaleBefore =
+  const lastSale = lastSales[lastSales.length - 1];
+  const saleBeforeLastSale = lastSales[lastSales.length - 2];
+  const isLastSalePriceHigherThanPreviousSale =
     lastSale.price > saleBeforeLastSale.price;
   const raisedSalePriceDifferencePercent =
     (lastSale.price - saleBeforeLastSale.price) / saleBeforeLastSale.price;
@@ -26,14 +27,14 @@ export const MarketActivity = (props: {
 
   return (
     <div className="grid grid-cols-2 justify-between">
-      {lastsales.length > 0 ? (
+      {lastSales.length > 0 ? (
         <>
           <p className="text-lg">Last Sale: {lastSale.price}$</p>
-          <button onClick={props.showSales} className="small-button">
+          <button onClick={showSales} className="small-button">
             View Sales
           </button>
 
-          {lastSalePriceHigherThanSaleBefore ? (
+          {isLastSalePriceHigherThanPreviousSale ? (
             <div className="flex gap-1 text-green-600 text-lg">
               <ArrowTrendingUpIcon className="w-8 h-10" />
               <p className="mt-1">
