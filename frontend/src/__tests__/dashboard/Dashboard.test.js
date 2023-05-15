@@ -82,7 +82,7 @@ describe("Dashboard Component", () => {
         },
       },
     });
-    const xd = screen.getByText("Hello Test 😎");
-    expect(xd).toBeInTheDocument();
+    const heading = screen.getByText("Hello Test 😎");
+    expect(heading).toBeInTheDocument();
   });
 });
