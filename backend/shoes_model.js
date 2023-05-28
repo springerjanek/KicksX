@@ -5,6 +5,8 @@ const pool = new Pool({
   connectionString: connectionString,
 });
 
+console.log(connectionString);
+
 const getAllShoes = () => {
   return new Promise(function (resolve, reject) {
     pool.query("SELECT * FROM shoes ORDER BY id ASC", (error, results) => {
