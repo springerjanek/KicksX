@@ -33,7 +33,7 @@ export const SizesBuyModal = ({
     <>
       {data.asksBySize.map((ask) => {
         const { size, asks } = ask;
-        const lowestAsk = asks.length > 0 ? Math.max(...asks) : 0;
+        const lowestAsk = asks.length > 0 ? Math.min(...asks) : 0;
 
         return (
           <div
