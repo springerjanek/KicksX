@@ -1,4 +1,7 @@
 const { Pool } = require("pg");
+var fs = require("fs");
+
+
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -6,7 +9,9 @@ const pool = new Pool({
   database: process.env.POSTGRES_DB_NAME,
   password: process.env.POSTGRES_DB_PASSWORD,
   port: process.env.POSTGRES_DB_PORT,
-  ssl: true
+  ssl: {
+    ca: fs.readFileSync("./prod-ca-2021.crt").toString()
+  }
 });
 
 pool.connect();
