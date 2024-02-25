@@ -1,17 +1,13 @@
 const { Pool } = require("pg");
 var fs = require("fs");
 
-
+const connectionString = `postgres://postgres.${process.env.POSTGRES_HOST}:[${process.env.POSTGRES_DB_PASSWORD}]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres`;
 
 const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB_NAME,
-  password: process.env.POSTGRES_DB_PASSWORD,
-  port: process.env.POSTGRES_DB_PORT,
+  connectionString,
   ssl: {
-    ca: fs.readFileSync("./prod-ca-2021.crt").toString()
-  }
+    ca: fs.readFileSync("./prod-ca-2021.crt").toString(),
+  },
 });
 
 pool.connect();
