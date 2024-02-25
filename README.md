@@ -52,9 +52,5 @@ npm start
 
 ---
 
-TODO:
-
-- tests
-- refactor big components to smaller ones
 
 ### FYI: this is my first time with backend and it's not optimized as it should, I just wanted to have my own endpoints and learn something new :)
