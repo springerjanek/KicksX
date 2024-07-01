@@ -21,14 +21,14 @@ const config = {
   },
 };
 
-const client = new pg.Client(config);
-client.connect(function (err) {
+const pool = new pg.Client(config);
+pool.connect(function (err) {
   if (err) throw err;
-  client.query("SELECT VERSION()", [], function (err, result) {
+  pool.query("SELECT VERSION()", [], function (err, result) {
     if (err) throw err;
 
     console.log(result.rows[0].version);
-    client.end(function (err) {
+    pool.end(function (err) {
       if (err) throw err;
     });
   });
