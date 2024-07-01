@@ -6,22 +6,33 @@ var serviceAccount = require("./firebase.json");
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
 
-const { Pool } = require("pg");
-var fs = require("fs");
+const fs = require("fs");
+const pg = require("pg");
 
-
-const pool = new Pool({
+const config = {
   user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB_NAME,
   password: process.env.POSTGRES_DB_PASSWORD,
+  host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_DB_PORT,
+  database: process.env.POSTGRES_DB_NAME,
   ssl: {
-    ca: fs.readFileSync("./prod-ca-2021.crt").toString(),
+    rejectUnauthorized: true,
+    ca: fs.readFileSync("./ca.pem").toString(),
   },
-});
+};
 
-pool.connect();
+const client = new pg.Client(config);
+client.connect(function (err) {
+  if (err) throw err;
+  client.query("SELECT VERSION()", [], function (err, result) {
+    if (err) throw err;
+
+    console.log(result.rows[0].version);
+    client.end(function (err) {
+      if (err) throw err;
+    });
+  });
+});
 
 const createUserData = (uid) => {
   return new Promise(function (resolve, reject) {
