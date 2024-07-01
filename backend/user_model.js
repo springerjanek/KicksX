@@ -21,18 +21,7 @@ const config = {
   },
 };
 
-const pool = new pg.Client(config);
-pool.connect(function (err) {
-  if (err) throw err;
-  pool.query("SELECT VERSION()", [], function (err, result) {
-    if (err) throw err;
-
-    console.log(result.rows[0].version);
-    pool.end(function (err) {
-      if (err) throw err;
-    });
-  });
-});
+const pool = new pg.Pool(config);
 
 const createUserData = (uid) => {
   return new Promise(function (resolve, reject) {
