@@ -2,7 +2,8 @@
 
 ### Shoes market platform (https://stockx.com/ alike)
 
-### LIVE SITE: https://famous-tiramisu-a4a400.netlify.app/
+### LIVE SITE: https://famous-tiramisu-a4a400.netlify.app/ 
+(TEST ACCOUNT -> mail: test5@essa.com password: 123456)
 
 https://github.com/springerjanek/KicksX/assets/54078220/3fb79341-e2d4-49c6-997b-9aabf8c32327
 
