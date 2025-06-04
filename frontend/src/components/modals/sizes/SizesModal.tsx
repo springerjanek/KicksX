@@ -32,8 +32,11 @@ export const SizesModal = ({
         {type === "sell" && (
           <SizesSellModal
             data={data}
-            modalHandler={() =>
+            modalHandler={({ size, highestBid, asks }) =>
               modalHandler({
+                size: size,
+                highestBid: highestBid,
+                asks: asks,
                 setHighestBid: setHighestBid,
                 setLowestAsk: setLowestAsk,
                 setProductDataToModal: setProductDataToModal,
@@ -45,8 +48,11 @@ export const SizesModal = ({
         {type === "buy" && (
           <SizesBuyModal
             data={data}
-            modalHandler={() =>
+            modalHandler={({ size, lowestAsk, bids }) =>
               modalHandler({
+                size: size,
+                lowestAsk: lowestAsk,
+                bids: bids,
                 setHighestBid: setHighestBid,
                 setLowestAsk: setLowestAsk,
                 setProductDataToModal: setProductDataToModal,

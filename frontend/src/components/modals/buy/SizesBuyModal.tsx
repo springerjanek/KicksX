@@ -38,13 +38,13 @@ export const SizesBuyModal = ({
         return (
           <div
             key={size}
-            onClick={() =>
+            onClick={() => {
               modalHandler({
                 size: size,
                 lowestAsk: lowestAsk,
                 bids: data.bidsBySize,
-              })
-            }
+              });
+            }}
             className="text-center mb-1 rounded border border-white border-solid p-4 cursor-pointer"
           >
             <p> {size}</p>
