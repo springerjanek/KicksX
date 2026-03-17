@@ -9,7 +9,7 @@ const config = {
   database: process.env.POSTGRES_DB_NAME,
   ssl: {
     rejectUnauthorized: true,
-    ca: fs.readFileSync("./ca.pem").toString(),
+    ca: process.env.CA_PEM,
   },
 };
 
@@ -48,7 +48,7 @@ const getSpecificShoeByName = (shoeName) => {
           reject(error);
         }
         resolve(results.rows);
-      }
+      },
     );
   });
 };

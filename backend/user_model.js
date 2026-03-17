@@ -1,7 +1,9 @@
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
 
-var serviceAccount = require("./firebase.json");
+var serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_BASE64, "base64").toString(),
+);
 
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
@@ -17,7 +19,7 @@ const config = {
   database: process.env.POSTGRES_DB_NAME,
   ssl: {
     rejectUnauthorized: true,
-    ca: fs.readFileSync("./ca.pem").toString(),
+    ca: process.env.CA_PEM,
   },
 };
 
@@ -100,7 +102,7 @@ const setUserAsk = (payload) => {
       });
     pool
       .query(
-        `UPDATE shoes SET asks = asks || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET asks = asks || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfully set ask!");
@@ -127,7 +129,7 @@ const setUserBid = (payload) => {
       });
     pool
       .query(
-        `UPDATE shoes SET bids = bids || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET bids = bids || '{"id": "${payload.id}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfully set bid!");
@@ -153,11 +155,11 @@ const setUserPurchases = (payload) => {
         }),
       });
     pool.query(
-      `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+      `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`,
     );
     pool
       .query(
-        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfull Buy!");
@@ -183,12 +185,12 @@ const setUserSales = (payload) => {
         }),
       });
     pool.query(
-      `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+      `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`,
     );
 
     pool
       .query(
-        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`
+        `UPDATE shoes SET lastsales = lastsales || '{"id": "${payload.id}", "date": "${payload.date}", "size": "${payload.size}", "price": ${payload.price}}' ::jsonb WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfully SOLD!");
@@ -215,7 +217,7 @@ const deleteUserBid = (payload) => {
       });
     pool
       .query(
-        `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`
+        `UPDATE shoes SET bids = bids - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(bids) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'id' = '${payload.id}') as int) WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfully deleted bid!");
@@ -242,7 +244,7 @@ const deleteUserAsk = (payload) => {
       });
     pool
       .query(
-        `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`
+        `UPDATE shoes SET asks = asks - Cast((SELECT position - 1 FROM shoes, jsonb_array_elements(asks) with ordinality arr(item_object, position) WHERE name='${payload.name}' and item_object->>'price' = '${payload.price}') as int) WHERE name='${payload.name}'`,
       )
       .then(() => {
         resolve("Successfully deleted ask!");
