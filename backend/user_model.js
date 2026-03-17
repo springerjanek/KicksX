@@ -19,7 +19,7 @@ const config = {
   database: process.env.POSTGRES_DB_NAME,
   ssl: {
     rejectUnauthorized: true,
-    ca: process.env.CA_PEM,
+    ca: process.env.CA_PEM.replace(/\\n/g, "\n"),
   },
 };
 
